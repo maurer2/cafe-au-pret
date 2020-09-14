@@ -4,18 +4,36 @@
       alt="Vue logo"
       src="./assets/logo.png"
     >
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <AppFooter />
+    <AppHeader />
+    <Barcode />
+    <ListDaily />
+    <ListTotal />
+    <Offers />
+    <Order />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import AppFooter from './components/app-footer/app-footer.vue';
+import AppHeader from './components/app-header/app-header.vue';
+import Barcode from './components/barcode/barcode.vue';
+import ListDaily from './components/list-daily/list-daily.vue';
+import ListTotal from './components/list-total/list-total.vue';
+import Offers from './components/offers/offers.vue';
+import Order from './components/order/order.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    AppFooter,
+    AppHeader,
+    Barcode,
+    ListDaily,
+    ListTotal,
+    Offers,
+    Order,
   }
 });
 </script>
