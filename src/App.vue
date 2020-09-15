@@ -3,6 +3,7 @@
     <img
       alt="Vue logo"
       src="./assets/logo.png"
+      class="test"
     >
     <AppFooter />
     <AppHeader />
@@ -47,4 +48,10 @@ export default defineComponent({
   color: #2c3e50;
   margin-top: 60px;
 }
+</style>
+
+<style lang="postcss" scoped>
+  .test {
+    background: red;
+  }
 </style>
