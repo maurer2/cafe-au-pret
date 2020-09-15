@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build:vite": "vite build",
+    "build:run": "yarpm run build:vite && yarn run http-server /dist",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev": "vite",
+    "dev:https": "vite --https",
+    "dev:verbose": "vite --debug"
   },
   "dependencies": {
+    "@koa/cors": "^3.1.0",
     "core-js": "^3.6.5",
+    "vite": "^1.0.0-rc.4",
     "vue": "^v3.0.0-rc.10"
   },
   "devDependencies": {
