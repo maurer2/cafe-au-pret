@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:vite": "vite build",
-    "build:run": "yarpm run build:vite && yarn run http-server /dist",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "build:run": "yarpm run build:vite && yarn run http-server /dist",
+    "build:vite": "vite build",
     "dev": "vite",
     "dev:https": "vite --https",
     "dev:verbose": "vite --debug"
@@ -19,17 +20,20 @@
     "vue": "^v3.0.0-rc.10"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^v3.0.0-rc.10",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-0",
     "add": "^2.0.6",
     "autoprefixer": "^10.0.0",
     "babel-eslint": "^10.1.0",
@@ -44,6 +48,7 @@
     "postcss-scss": "^3.0.0",
     "prettier": "^1.19.1",
     "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-0",
     "yarn": "^1.22.5"
   }
 }
