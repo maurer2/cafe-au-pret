@@ -4,6 +4,7 @@ module.exports = {
     '^.+\\.vue$': 'vue-jest'
   },
   testMatch: [
+    // '^.+\\.js$": "<rootDir>/node_modules/babel-jest',
     '**/*.spec.(js|ts|jsx|tsx)',
   ],
   moduleFileExtensions: [
@@ -12,4 +13,5 @@ module.exports = {
     'json',
     'vue',
   ],
+  snapshotSerializers: ['jest-serializer-vue'],
 }
