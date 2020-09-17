@@ -4,6 +4,12 @@ module.exports = {
     '^.+\\.vue$': 'vue-jest'
   },
   testMatch: [
-    '**/*.spec.(js|ts)',
+    '**/*.spec.(js|ts|jsx|tsx)',
+  ],
+  moduleFileExtensions: [
+    'js',
+    'ts',
+    'json',
+    'vue',
   ],
 }

@@ -8,7 +8,8 @@ module.exports = {
     parser: '@typescript-eslint/parser'
   },
   plugins: [
-    'vue'
+    'vue',
+    'jest',
   ],
   overrides: [
     {
