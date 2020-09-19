@@ -23,14 +23,15 @@ module.exports = {
     'vue',
     'jest',
   ],
-  overrides: [
-    {
-      files: [
-        '**/*.spec.{j,t}s?(x)',
-      ],
-      env: {
-        jest: true
-      }
+  overrides: [{
+    files: [
+      '**/*.spec.{j,t}s?(x)',
+    ],
+    env: {
+      jest: true,
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
     }
-  ]
+  }]
 }

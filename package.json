@@ -9,7 +9,7 @@
     "dev": "vite",
     "dev:https": "vite --https",
     "dev:verbose": "vite --debug",
-    "lint": "vue-cli-service lint",
+    "lint:js": "vue-cli-service lint --no-fix",
     "serve": "vue-cli-service serve",
     "test:unit": "vue-cli-service test:unit",
     "format": "prettier --write '**/*.{vue, ts, jsx, tsx, js, json, md, mdx}';"
