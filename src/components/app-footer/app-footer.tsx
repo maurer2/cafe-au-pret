@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 // import styled from 'vue-styled-components';
 // import * as Styles from './app-footer.styles';
+import { useStore } from '../../store';
 
 /*
 export const Test = styled.span`
@@ -18,6 +19,10 @@ export default defineComponent({
   },
   props: {},
   setup() {
+    const store = useStore();
+
+    console.log(store.state);
+
     return () => (
       <div>
         <footer class="footer">AppFooter</footer>

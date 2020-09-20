@@ -1,15 +1,18 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-
-Vue.use(Vuex);
+import { createStore } from 'vuex';
 
 const defaultStore = {
-  state: {},
+  state: {
+    pretId: '12345',
+  },
   modules: {},
   mutations: {},
   actions: {},
 };
 
-const store = new Vuex.Store(defaultStore);
+const store = createStore(defaultStore);
 
 export default store;
+
+export function useStore() {
+  return store;
+}
