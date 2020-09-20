@@ -6,10 +6,13 @@ const config: UserConfig = {
   configureServer({ app }) {
     app.use(
       cors({
-        origin: '*'
-      })
-    )
-  }
+        origin: '*',
+      }),
+    );
+  },
+  optimizeDeps: {
+    include: ['vue'],
+  },
 };
 
 export default config;
