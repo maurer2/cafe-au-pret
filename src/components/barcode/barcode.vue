@@ -2,7 +2,6 @@
   <div class="barcode">
     <h2>Barcode</h2>
     <svg
-      id="barcode"
       ref="barcode"
       jsbarcode-format="upc"
       :jsbarcode-value="payload"
@@ -22,15 +21,18 @@
     props: {},
     setup() {
       const payload = '123456789012';
-      const barcodeDomElement: Ref<string | null> = ref('barcode');
+      const barcode: Ref<SVGElement | null> = ref(null);
 
       onMounted(() => {
-        // JsBarcode(barcodeDomElement.value).init();
-        JsBarcode('#barcode').init();
+        if (barcode.value === null) {
+          throw new Error('barcode dom element is missing');
+        }
+
+        JsBarcode(barcode.value).init();
       });
 
       return {
-        barcodeDomElement,
+        barcode,
         payload,
       };
     },
