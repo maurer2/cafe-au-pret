@@ -1,5 +1,6 @@
 import { defineComponent, Ref, ref, onMounted } from 'vue';
 import JsBarcode from 'jsbarcode';
+import styles from './barcode.module.css';
 
 export default defineComponent({
   name: 'Barcode',
@@ -19,7 +20,7 @@ export default defineComponent({
 
     return () => (
       <div class="barcode">
-        <h2>Barcode</h2>
+        <h2 class={styles.test}>Barcode</h2>
         <svg
           ref={barcode}
           jsbarcode-value={payload}
