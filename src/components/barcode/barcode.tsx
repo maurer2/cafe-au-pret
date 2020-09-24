@@ -23,6 +23,7 @@ export default defineComponent({
         <h2 class={styles.test}>Barcode</h2>
         <svg
           ref={barcode}
+          class={styles.barcode}
           jsbarcode-value={payload}
           jsbarcode-format="upc"
           jsbarcode-textmargin="0"

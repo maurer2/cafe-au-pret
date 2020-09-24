@@ -1,8 +1,7 @@
-.test {
-  background: red;
+.component {
 }
 
-.barcode {
+.qrcode {
   display: block;
   margin: auto;
   image-rendering: pixelated;
