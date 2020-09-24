@@ -9,7 +9,7 @@ export default defineComponent({
   setup() {
     const payload = 'ABC123456789';
     const qrCodeDomElement: Ref<SVGElement | null> = ref(null);
-    let qrCodeMarkup: string | null = null;
+    const qrCodeMarkup: Ref<string | null> = ref(null);
 
     onMounted(() => {
       if (qrCodeDomElement.value === null) {
@@ -18,10 +18,11 @@ export default defineComponent({
 
       QRCodeGenerator.toString(payload)
         .then((markup: string) => {
-          console.log(markup);
-          qrCodeMarkup = markup;
+          setTimeout(() => {
+            qrCodeMarkup.value = markup;
+          }, 1000);
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           console.log(error);
         });
     });
@@ -29,7 +30,13 @@ export default defineComponent({
     return () => (
       <div class={styles.component}>
         <h2>QRCode</h2>
-        <span>{String(qrCodeMarkup === null)}</span>
+        <span>{String(qrCodeMarkup.value === null)}</span>
+        {qrCodeMarkup.value !== null && (
+          <figure>
+            <div class={styles.qrcode} innerHTML={qrCodeMarkup.value} />
+            <figcaption>{payload}</figcaption>
+          </figure>
+        )}
       </div>
     );
   },

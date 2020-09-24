@@ -3,6 +3,11 @@
 
 .qrcode {
   display: block;
+}
+
+.qrcode > svg {
+  display: block;
+  width: 300px;
   margin: auto;
   image-rendering: pixelated;
 }
