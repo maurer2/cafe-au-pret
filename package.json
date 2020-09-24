@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "build:run": "yarpm run build:vite && yarn run http-server /dist",
+    "build:run": "yarpm run build:vite && yarpm run http-server /dist",
     "build:vite": "vite build",
     "dev": "vite",
     "dev:https": "vite --https",
@@ -56,6 +56,6 @@
     "prettier": "^2.1.2",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0",
-    "yarn": "^1.22.5"
+    "yarpm": "^0.2.1"
   }
 }
