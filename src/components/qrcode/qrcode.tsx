@@ -1,22 +1,24 @@
-import { defineComponent, Ref, ref, onMounted } from 'vue';
+import { defineComponent, Ref, ref, onMounted, onUpdated } from 'vue';
 import QRCodeGenerator from 'qrcode';
 import styles from './qrcode.module.css';
+import { useStore } from '../../store';
 
 export default defineComponent({
   name: 'QRCode',
   components: {},
   props: {},
   setup() {
+    const store = useStore();
     const payload = 'ABC123456789';
-    const qrCodeDomElement: Ref<SVGElement | null> = ref(null);
     const qrCodeMarkup: Ref<string | null> = ref(null);
 
-    onMounted(() => {
-      if (qrCodeDomElement.value === null) {
-        // throw new Error('barcode dom element is missing');
-      }
+    function getQRCodeMarkup(): Promise<string> {
+      const qrCodeSettings = { errorCorrectionLevel: 'H', type: 'svg' };
+      return QRCodeGenerator.toString(payload, qrCodeSettings);
+    }
 
-      QRCodeGenerator.toString(payload)
+    onMounted(() => {
+      getQRCodeMarkup()
         .then((markup: string) => {
           setTimeout(() => {
             qrCodeMarkup.value = markup;
@@ -27,10 +29,14 @@ export default defineComponent({
         });
     });
 
+    onUpdated(() => {
+      console.log('updated');
+    });
+
     return () => (
       <div class={styles.component}>
         <h2>QRCode</h2>
-        <span>{String(qrCodeMarkup.value === null)}</span>
+        {qrCodeMarkup.value === null && <div>Loading QR</div>}
         {qrCodeMarkup.value !== null && (
           <figure>
             <div class={styles.qrcode} innerHTML={qrCodeMarkup.value} />
