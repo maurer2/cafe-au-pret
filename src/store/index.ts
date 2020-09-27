@@ -2,7 +2,8 @@ import { createStore } from 'vuex';
 
 const defaultStore = {
   state: {
-    pretId: '12345',
+    userId: 'ABC123456789',
+    zoomLevel: 1,
   },
   modules: {},
   mutations: {},
