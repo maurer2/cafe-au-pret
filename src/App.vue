@@ -1,14 +1,14 @@
 <template>
   <div>
     <img alt="Vue logo" src="./assets/logo.png" class="" />
-    <AppFooter />
     <AppHeader />
-    <Barcode />
+
     <QRCode />
     <ListDaily />
     <ListTotal />
     <Offers />
     <Order />
+    <AppFooter />
   </div>
 </template>
 
@@ -28,7 +28,7 @@
     components: {
       AppFooter,
       AppHeader,
-      Barcode,
+      // Barcode,
       ListDaily,
       ListTotal,
       Offers,

@@ -28,6 +28,10 @@ export default defineComponent({
       return qrCodeString;
     }
 
+    function handleClick(isZoomInButton = true) {
+      isZoomInButton ? store.dispatch('increaseZoom') : store.dispatch('decreaseZoom');
+    }
+
     onMounted(() => {
       getQRCodeMarkup(store.state.userId)
         .then((markup: string) => {
@@ -56,7 +60,7 @@ export default defineComponent({
 
     return () => (
       <div class={styles.component}>
-        <h2>QRCode</h2>
+        <h2>QRCode (Zoom level {store.state.zoomLevel.toFixed(2)})</h2>
         <>
           {qrCodeMarkup.value === null && <div>Loading QR1</div>}
           {qrCodeMarkup.value !== null && (
@@ -76,6 +80,15 @@ export default defineComponent({
             </figure>
           )}
         </>
+
+        <div class="button-group">
+          <button type="button" onClick={() => handleClick()}>
+            Zoom in
+          </button>
+          <button type="button" onClick={() => handleClick(false)}>
+            Zoom out
+          </button>
+        </div>
       </div>
     );
   },

@@ -6,8 +6,22 @@ const defaultStore = {
     zoomLevel: 1,
   },
   modules: {},
-  mutations: {},
-  actions: {},
+  mutations: {
+    increaseZoom(state: any) {
+      state.zoomLevel += 0.1;
+    },
+    decreaseZoom(state: any) {
+      state.zoomLevel -= 0.1;
+    },
+  },
+  actions: {
+    increaseZoom(context: any) {
+      context.commit('increaseZoom');
+    },
+    decreaseZoom(context: any) {
+      context.commit('decreaseZoom');
+    },
+  },
 };
 
 const store = createStore(defaultStore);

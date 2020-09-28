@@ -1,5 +1,6 @@
 .component {
-  background: #de47be;
+  // background: #de47be;
+  margin-bottom: 1rem;
 }
 
 .qrcode {
