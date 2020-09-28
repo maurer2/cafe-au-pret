@@ -6,7 +6,8 @@
   display: block;
 }
 
-.qrcode > svg {
+.qrcode > svg,
+.qrcode > image {
   display: block;
   width: 300px;
   margin: auto;

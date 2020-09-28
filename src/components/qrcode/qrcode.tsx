@@ -68,18 +68,10 @@ export default defineComponent({
         </>
 
         <>
-          {qrCodeImage.value === null && <div>Loading QR1</div>}
+          {qrCodeImage.value === null && <div>Loading QR2</div>}
           {qrCodeImage.value !== null && (
-            <figure>
-              <div
-                class={styles.qrcode}
-                style={{
-                  width: '200px',
-                  height: '200px',
-                  margin: 'auto',
-                  background: `url(${qrCodeImage.value}) no-repeat`,
-                }}
-              />
+            <figure class={styles.qrcode}>
+              <img class={styles.image} src={qrCodeImage.value} alt="" />
               <figcaption>{store.state.userId}</figcaption>
             </figure>
           )}
