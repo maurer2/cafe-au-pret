@@ -22,14 +22,19 @@ export default defineComponent({
 
     // PNG base64 image
     function getQRCodeImage(payload: string) {
-      const qrCodeSettings = { errorCorrectionLevel: 'H', width: '200', height: '200' };
+      const qrCodeSettings = { errorCorrectionLevel: 'H', width: '200', height: '200', margin: 0 };
       const qrCodeString = QRCodeGenerator.toDataURL(String(payload), qrCodeSettings);
 
       return qrCodeString;
     }
 
     function handleClick(isZoomInButton = true) {
-      isZoomInButton ? store.dispatch('increaseZoom') : store.dispatch('decreaseZoom');
+      if (isZoomInButton) {
+        store.dispatch('increaseZoom');
+        return;
+      }
+
+      store.dispatch('decreaseZoom');
     }
 
     onMounted(() => {
@@ -64,8 +69,10 @@ export default defineComponent({
         <>
           {qrCodeMarkup.value === null && <div>Loading QR1</div>}
           {qrCodeMarkup.value !== null && (
-            <figure>
-              <div class={styles.qrcode} innerHTML={qrCodeMarkup.value} />
+            <figure class={styles.qrcode}>
+              <div class={styles.image}>
+                <div innerHTML={qrCodeMarkup.value} />
+              </div>
               <figcaption>{store.state.userId}</figcaption>
             </figure>
           )}
@@ -75,7 +82,17 @@ export default defineComponent({
           {qrCodeImage.value === null && <div>Loading QR2</div>}
           {qrCodeImage.value !== null && (
             <figure class={styles.qrcode}>
-              <img class={styles.image} src={qrCodeImage.value} alt="" />
+              <img
+                class={styles.image}
+                src={qrCodeImage.value}
+                alt=""
+                style={{
+                  display: 'block',
+                  margin: `calc(1rem + ${store.state.zoomLevel}rem) auto`,
+                  transform: `scale(${store.state.zoomLevel})`,
+                  transformOrigin: 'center',
+                }}
+              />
               <figcaption>{store.state.userId}</figcaption>
             </figure>
           )}

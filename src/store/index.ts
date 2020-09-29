@@ -7,19 +7,21 @@ const defaultStore = {
   },
   modules: {},
   mutations: {
-    increaseZoom(state: any) {
-      state.zoomLevel = Math.clamp(state.zoomLevel + 0.1, 0, 2);
-    },
-    decreaseZoom(state: any) {
-      state.zoomLevel = Math.clamp(state.zoomLevel - 0.1, 0, 2);
+    updateZoom(state: any, change: number) {
+      const { zoomLevel } = state;
+
+      // prettier-ignore
+      const newZoomLevel = zoomLevel + (change / 100);
+
+      state.zoomLevel = Math.clamp(newZoomLevel, 0.5, 2.5);
     },
   },
   actions: {
     increaseZoom(context: any) {
-      context.commit('increaseZoom');
+      context.commit('updateZoom', 10);
     },
     decreaseZoom(context: any) {
-      context.commit('decreaseZoom');
+      context.commit('updateZoom', -10);
     },
   },
 };
