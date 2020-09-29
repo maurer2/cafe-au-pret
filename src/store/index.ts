@@ -3,15 +3,15 @@ import { createStore } from 'vuex';
 const defaultStore = {
   state: {
     userId: 'ABC123456789',
-    zoomLevel: 1,
+    zoomLevel: 1.0,
   },
   modules: {},
   mutations: {
     increaseZoom(state: any) {
-      state.zoomLevel += 0.1;
+      state.zoomLevel = Math.clamp(state.zoomLevel + 0.1, 0, 2);
     },
     decreaseZoom(state: any) {
-      state.zoomLevel -= 0.1;
+      state.zoomLevel = Math.clamp(state.zoomLevel - 0.1, 0, 2);
     },
   },
   actions: {

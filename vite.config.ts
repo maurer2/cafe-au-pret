@@ -11,7 +11,7 @@ const config: UserConfig = {
     );
   },
   optimizeDeps: {
-    include: ['vue'],
+    include: ['vue', 'core-js/features/math/clamp', 'core-js', 'regenerator-runtime/runtime'],
   },
 };
 

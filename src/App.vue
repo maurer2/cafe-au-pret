@@ -16,7 +16,7 @@
   import { defineComponent } from 'vue';
   import AppFooter from './components/app-footer/app-footer';
   import AppHeader from './components/app-header/app-header.vue';
-  import Barcode from './components/barcode/barcode';
+  // import Barcode from './components/barcode/barcode';
   import QRCode from './components/qrcode/qrcode';
   import ListDaily from './components/list-daily/list-daily.vue';
   import ListTotal from './components/list-total/list-total.vue';
