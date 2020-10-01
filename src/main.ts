@@ -3,7 +3,7 @@ import App from './app.vue';
 import store from './store';
 
 import 'core-js';
-import 'core-js/features/math/clamp';
+// import 'core-js/features/math/clamp';
 import 'regenerator-runtime/runtime';
 
 import 'sanitize.css';
