@@ -1,0 +1,12 @@
+:root {
+  --white: #ffffff;
+  --tundora: #404040;
+  --old-brick: #9f1b32;
+  --dove-gray: #737373;
+}
+
+html {
+  font-size: 16px;
+  color: var(--tundora);
+  overflow-x: hidden;
+}

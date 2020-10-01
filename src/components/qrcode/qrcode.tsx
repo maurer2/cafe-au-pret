@@ -1,4 +1,4 @@
-import { defineComponent, Ref, ref, onMounted, onUpdated } from 'vue';
+import { defineComponent, Ref, ref, onMounted } from 'vue';
 import QRCodeGenerator from 'qrcode';
 import styles from './qrcode.module.css';
 import { useStore } from '../../store';
@@ -57,10 +57,6 @@ export default defineComponent({
         .catch((error: Error) => {
           console.log(error);
         });
-    });
-
-    onUpdated(() => {
-      console.log('updated');
     });
 
     return () => (

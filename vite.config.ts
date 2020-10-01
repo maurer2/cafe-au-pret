@@ -15,7 +15,7 @@ const config: UserConfig = {
       'vue',
       'core-js',
       'core-js/stable',
-      'core-js/features/math/clamp',
+      // 'core-js/features/math/clamp',
       'regenerator-runtime/runtime',
     ],
   },
