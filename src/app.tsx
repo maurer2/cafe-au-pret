@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import AppFooter from './components/app-footer/app-footer';
 import AppHeader from './components/app-header/app-header';
 import QRCode from './components/qrcode/qrcode';
-import ListDaily from './components/list-daily/list-daily.vue';
+import ListDaily from './components/list-daily/list-daily';
 import ListTotal from './components/list-total/list-total.vue';
 import Offers from './components/offers/offers.vue';
 import Order from './components/order/order.vue';

@@ -11,7 +11,7 @@ export default defineComponent({
       <header class={styles.header}>
         <h1 class={styles.title}>Coffescript</h1>
         <dl class={styles.status}>
-          <dt class={styles.statusTitle}>Remaining coffees</dt>
+          <dt class={styles.statusTitle}>Remaining daily coffees</dt>
           <dd class={styles.statusValue}>{remainingAmount.value}</dd>
         </dl>
       </header>
