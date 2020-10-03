@@ -1,8 +1,7 @@
 import { defineComponent } from 'vue';
-import styles from './app.module.css';
+// import styles from './app.module.css';
 import AppFooter from './components/app-footer/app-footer';
-import AppHeader from './components/app-header/app-header.vue';
-// import Barcode from './components/barcode/barcode';
+import AppHeader from './components/app-header/app-header';
 import QRCode from './components/qrcode/qrcode';
 import ListDaily from './components/list-daily/list-daily.vue';
 import ListTotal from './components/list-total/list-total.vue';
@@ -16,7 +15,6 @@ export default defineComponent({
   components: {
     AppFooter,
     AppHeader,
-    // Barcode,
     ListDaily,
     ListTotal,
     Offers,
@@ -26,15 +24,17 @@ export default defineComponent({
   props: {},
   setup() {
     return () => (
-      <div class={styles.wrapper}>
+      <>
         <AppHeader />
-        <QRCode />
-        <ListDaily />
-        <ListTotal />
-        <Offers />
-        <Order />
+        <main class="main">
+          <QRCode />
+          <ListDaily />
+          <ListTotal />
+          <Offers />
+          <Order />
+        </main>
         <AppFooter />
-      </div>
+      </>
     );
   },
 });

@@ -10,3 +10,8 @@ html {
   color: var(--tundora);
   overflow-x: hidden;
 }
+
+.app {
+  min-height: 100vh;
+  text-align: center;
+}

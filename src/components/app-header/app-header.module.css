@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  padding: 1rem;
+  flex-wrap: wrap;
+  overflow: hidden; /* contain child margins */
+  background: var(--old-brick);
+  color: var(--white);
+}
+
+@media only screen and (min-width: 480px) {
+  .header {
+    flex-wrap: nowrap;
+    text-align: left;
+  }
+}
+
+.title {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.status {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  flex-grow: 0;
+}
+
+.status::before {
+  content: ':';
+  margin-right: 0.5rem;
+}
+
+.statusTitle {
+  flex-grow: 0;
+  order: -1;
+}
+
+.statusValue {
+  margin: 0;
+  flex-grow: 0;
+}
