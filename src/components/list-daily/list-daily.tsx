@@ -30,6 +30,7 @@ export default defineComponent({
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
+        // hour12: true,
       }),
     );
 
@@ -58,29 +59,37 @@ export default defineComponent({
     return () => (
       <section class={styles.list}>
         <h2>Daily purchases on {getDateFormatted(currentDate)}</h2>
+
         <table class={styles.table}>
-          <caption class={styles.caption}>Caption</caption>
-          <thead>
-            <tr>
+          <caption class={styles.tableCaption}>Caption</caption>
+          <thead class={styles.tableHead}>
+            <tr class={styles.tableHeadRow}>
               <th class={styles.tableHeadColumn}>Counter</th>
               <th class={styles.tableHeadColumn}>Coffee name</th>
-              <th class={styles.tableHeadColumn}>Order date</th>
+              <th class={styles.tableHeadColumn}>Order time</th>
             </tr>
           </thead>
-          <tbody>
-            {orders.map((order, index) => (
-              <tr key={order.name}>
-                <td class={styles.tableColumn}>{index + 1}</td>
-                <td class={styles.tableColumn}>{order.name}</td>
-                <td class={styles.tableColumn}>{getTimeFormatted(order.dateTime)}</td>
-              </tr>
-            ))}
+          <tbody class={styles.tableBody}>
+            {orders.map((order, index) => {
+              const { name } = order;
+              const indexOneBased = index + 1;
+              const time = getTimeFormatted(order.dateTime);
+
+              return (
+                <tr class={styles.tableBodyRow} key={order.name}>
+                  <td class={styles.tableBodyColumn}>{indexOneBased}</td>
+                  <td class={styles.tableBodyColumn}>{name}</td>
+                  <td class={styles.tableBodyColumn}>{time}</td>
+                </tr>
+              );
+            })}
           </tbody>
-          <tfoot>
-            <tr>
-              <td class={styles.tableFootColumn} colspan={3}>
-                {remainingAmount.value}
+          <tfoot class={styles.tableFoot}>
+            <tr class={styles.tableFootRow}>
+              <td class={styles.tableFootColumn} colspan={2}>
+                Number of drinks:
               </td>
+              <td class={styles.tableFootColumn}>{remainingAmount.value}</td>
             </tr>
           </tfoot>
         </table>

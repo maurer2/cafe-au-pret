@@ -8,13 +8,47 @@
   table-layout: fixed;
 }
 
+.tableCaption {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+/* General table components to extend from */
+.tableRow {
+}
+
 .tableColumn {
   text-align: left;
+}
+
+.tableHead {
+}
+
+.tableBody {
+}
+
+.tableFoot {
+}
+
+/* Derived table components */
+.tableHeadRow {
+  border-bottom: 1px solid black;
+}
+
+.tableBodyRow {
+}
+
+.tableFootRow {
+  border-top: 2px solid black;
 }
 
 .tableHeadColumn {
   composes: tableColumn;
   font-weight: bold;
+}
+
+.tableBodyColumn {
+  composes: tableColumn;
 }
 
 .tableFootColumn {
