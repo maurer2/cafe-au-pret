@@ -4,55 +4,75 @@
 }
 
 .table {
+  display: grid;
   width: 100%;
-  table-layout: fixed;
+  /* table-layout: fixed; */
+  grid-template-columns: minmax(2rem, min-content) 1fr max-content;
 }
 
 .tableCaption {
+  grid-column: 1/-1;
   margin-bottom: 1rem;
   text-align: left;
 }
 
 /* General table components to extend from */
+.tableRegion {
+  display: contents;
+}
+
 .tableRow {
+  display: contents;
 }
 
 .tableColumn {
   text-align: left;
 }
 
-.tableHead {
-}
-
-.tableBody {
-}
-
-.tableFoot {
-}
-
 /* Derived table components */
+.tableHead,
+.tableBody,
+.tableFoot {
+  composes: tableRegion;
+}
+
 .tableHeadRow {
-  border-bottom: 1px solid black;
+  composes: tableRow;
+  /* border-bottom: 1px solid black; */
 }
 
 .tableBodyRow {
+  composes: tableRow;
 }
 
 .tableFootRow {
-  border-top: 2px solid black;
+  composes: tableRow;
+  /* border-top: 2px solid black; */
 }
 
 .tableHeadColumn {
   composes: tableColumn;
+
+  border-bottom: 1px solid var(--tundora);
   font-weight: bold;
+  word-break: normal;
 }
 
 .tableBodyColumn {
   composes: tableColumn;
+
+  border-bottom: 1px solid var(--dove-gray);
 }
 
 .tableFootColumn {
   composes: tableColumn;
-  font-weight: bold;
+
+  border-top: 2px solid var(--tundora);
+  word-break: normal;
   text-align: right;
+  font-weight: bold;
+}
+
+.tableFootColumn:nth-child(1) {
+  grid-column: 1 / span 2;
 }

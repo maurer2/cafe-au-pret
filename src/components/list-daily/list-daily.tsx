@@ -21,7 +21,6 @@ export default defineComponent({
     ];
 
     const currentDate = new Date();
-
     const dateFormatter = ref(
       new Intl.DateTimeFormat('en-GB', {
         year: 'numeric',
@@ -64,16 +63,16 @@ export default defineComponent({
           <caption class={styles.tableCaption}>Caption</caption>
           <thead class={styles.tableHead}>
             <tr class={styles.tableHeadRow}>
-              <th class={styles.tableHeadColumn}>Counter</th>
+              <th class={styles.tableHeadColumn}>#</th>
               <th class={styles.tableHeadColumn}>Coffee name</th>
               <th class={styles.tableHeadColumn}>Order time</th>
             </tr>
           </thead>
           <tbody class={styles.tableBody}>
             {orders.map((order, index) => {
-              const { name } = order;
+              const { name, dateTime } = order;
               const indexOneBased = index + 1;
-              const time = getTimeFormatted(order.dateTime);
+              const time = getTimeFormatted(dateTime);
 
               return (
                 <tr class={styles.tableBodyRow} key={order.name}>
@@ -87,7 +86,7 @@ export default defineComponent({
           <tfoot class={styles.tableFoot}>
             <tr class={styles.tableFootRow}>
               <td class={styles.tableFootColumn} colspan={2}>
-                Number of drinks:
+                Number of drinks
               </td>
               <td class={styles.tableFootColumn}>{remainingAmount.value}</td>
             </tr>
