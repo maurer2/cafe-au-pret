@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref } from 'vue';
 import styles from './list-daily.module.css';
 
 export default defineComponent({
@@ -6,7 +6,7 @@ export default defineComponent({
   components: {},
   props: {},
   setup() {
-    const currentDate = new Date();
+    const remainingAmount = ref(5);
     const orders: Order[] = [
       {
         name: 'name',
@@ -19,9 +19,11 @@ export default defineComponent({
         tz: 'Europe/London',
       },
     ];
-    const remainingAmount = ref(5);
+
+    const currentDate = new Date();
+
     const dateFormatter = ref(
-      new Intl.DateTimeFormat('in', {
+      new Intl.DateTimeFormat('en-GB', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -30,21 +32,32 @@ export default defineComponent({
         second: '2-digit',
       }),
     );
-    const dateHumanReadable = computed((): string => {
-      const formatter = dateFormatter.value;
 
-      return `
-        ${formatter.formatToParts(currentDate)[0].value}
-        ${formatter.formatToParts(currentDate)[1].value}
-        ${formatter.formatToParts(currentDate)[2].value}
-        ${formatter.formatToParts(currentDate)[3].value}
-        ${formatter.formatToParts(currentDate)[4].value}
-        `;
-    });
+    function getDateFormatted(dateTime: Date): string {
+      const dateFormatted = dateFormatter.value.formatToParts(dateTime);
+
+      // only contains last literal separator e.g. seconds literal not date literal
+      const { day, month, year } = Object.fromEntries(
+        dateFormatted.map((datePart) => [datePart.type, datePart.value]),
+      );
+
+      return `${day}/${month}/${year}`;
+    }
+
+    function getTimeFormatted(dateTime: Date): string {
+      const dateFormatted = dateFormatter.value.formatToParts(dateTime);
+
+      // only contains last literal separator e.g. seconds literal not date literal
+      const { hour, minute, second } = Object.fromEntries(
+        dateFormatted.map((datePart) => [datePart.type, datePart.value]),
+      );
+
+      return `${hour}:${minute}:${second}`;
+    }
 
     return () => (
       <section class={styles.list}>
-        <h2>Daily purchases on {dateHumanReadable.value}</h2>
+        <h2>Daily purchases on {getDateFormatted(currentDate)}</h2>
         <table class={styles.table}>
           <caption class={styles.caption}>Caption</caption>
           <thead>
@@ -59,7 +72,7 @@ export default defineComponent({
               <tr key={order.name}>
                 <td class={styles.tableColumn}>{index + 1}</td>
                 <td class={styles.tableColumn}>{order.name}</td>
-                <td class={styles.tableColumn}>{order.dateTime.toString()}</td>
+                <td class={styles.tableColumn}>{getTimeFormatted(order.dateTime)}</td>
               </tr>
             ))}
           </tbody>
