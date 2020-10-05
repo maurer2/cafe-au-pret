@@ -1,16 +1,36 @@
-.component {
-  // background: #de47be;
+.qrcode {
   margin-bottom: 1rem;
 }
 
-.qrcode {
+.qrcodePicture {
   display: block;
+  margin: 0;
 }
 
-.qrcode > image,
-.qrcode svg {
+.qrcodeImageWrapper {
+  margin-bottom: 1rem;
+}
+
+.qrcodeImageWrapper > svg {
   display: block;
   width: 300px;
   margin: auto;
   image-rendering: pixelated;
+}
+
+.qrcodeText {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.controls {
+  display: flex;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  justify-content: center;
+}
+
+.control {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
