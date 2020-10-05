@@ -10,6 +10,11 @@ const defaultStore = {
     updateZoom(state: any, change: number) {
       const { zoomLevel } = state;
 
+      if (change === 0) {
+        state.zoomLevel = 1;
+        return;
+      }
+
       // prettier-ignore
       const newZoomLevel = zoomLevel + (change / 100);
 
@@ -22,6 +27,9 @@ const defaultStore = {
     },
     decreaseZoom(context: any) {
       context.commit('updateZoom', -10);
+    },
+    resetZoom(context: any) {
+      context.commit('updateZoom', 0);
     },
   },
 };

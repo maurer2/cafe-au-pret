@@ -33,7 +33,9 @@ export default defineComponent({
       store.dispatch('decreaseZoom');
     }
 
-    function zoomReset() {}
+    function zoomReset() {
+      store.dispatch('resetZoom');
+    }
 
     onMounted(() => {
       getQRCodeMarkup(store.state.userId)
@@ -49,13 +51,19 @@ export default defineComponent({
 
     return () => (
       <div class={styles.qrcode}>
-        <h2>QRCode (Zoom level {zoomLevel.value})</h2>
+        <h2>QRCode (Zoom level: {zoomLevel.value})</h2>
 
         <>
           {qrCodeMarkup.value === null && <div>Loading QR code</div>}
           {qrCodeMarkup.value !== null && (
             <figure class={styles.qrcodePicture}>
-              <div class={styles.qrcodeImageWrapper} innerHTML={qrCodeMarkup.value}></div>
+              <div
+                class={styles.qrcodeImageWrapper}
+                innerHTML={qrCodeMarkup.value}
+                style={{
+                  width: `calc(300px * ${zoomLevel.value})`,
+                }}
+              />
               <figcaption class={styles.qrcodeText}>{userId}</figcaption>
             </figure>
           )}
@@ -65,7 +73,7 @@ export default defineComponent({
           <button class={styles.control} type="button" onClick={() => zoomIn()}>
             Zoom in
           </button>
-          <button class={styles.control} type="button" onClick={() => zoomReset} disabled>
+          <button class={styles.control} type="button" onClick={() => zoomReset()}>
             1x
           </button>
           <button class={styles.control} type="button" onClick={() => zoomOut()}>
