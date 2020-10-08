@@ -4,6 +4,7 @@ declare module '*.module.css' {
 }
 
 interface Order {
+  id: string;
   name: string;
   dateTime: Date;
   tz: string;
