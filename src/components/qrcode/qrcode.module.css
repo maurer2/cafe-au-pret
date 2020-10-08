@@ -8,7 +8,8 @@
 }
 
 .qrcodeImageWrapper {
-  width: 300px;
+  width: 50vw;
+  max-width: 350px;
   margin: auto;
 }
 

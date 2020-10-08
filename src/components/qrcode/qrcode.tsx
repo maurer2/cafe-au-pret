@@ -61,7 +61,7 @@ export default defineComponent({
                 class={styles.qrcodeImageWrapper}
                 innerHTML={qrCodeMarkup.value}
                 style={{
-                  width: `calc(300px * ${zoomLevel.value})`,
+                  width: `calc(50vw * ${zoomLevel.value})`,
                 }}
               />
               <figcaption class={styles.qrcodeText}>{userId}</figcaption>
