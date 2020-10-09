@@ -9,3 +9,8 @@ interface Order {
   dateTime: Date;
   tz: string;
 }
+
+interface MenuItem {
+  id: string;
+  name: string;
+}
