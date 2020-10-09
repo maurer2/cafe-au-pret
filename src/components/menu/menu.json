@@ -1,0 +1,9 @@
+[
+  { "id": "latte", "name": "Latte" },
+  { "id": "cappuccino", "name": "Cappuccino" },
+  { "id": "americanoWhite", "name": "Americano (White)" },
+  { "id": "americanoBlack", "name": "Americano (Black)" },
+  { "id": "filterCoffee", "name": "Filter Coffee" },
+  { "id": "flatWhite", "name": "Flat White" },
+  { "id": "mocha", "name": "Mocha" }
+]
