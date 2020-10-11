@@ -20,13 +20,15 @@ export default defineComponent({
     });
     */
 
-    function changeOrder(_: Event, newOrderIsAlphabetic: boolean) {
-      orderedAlphabetically.value = newOrderIsAlphabetic;
+    function toggleOrder(_: Event) {
+      orderedAlphabetically.value = !orderedAlphabetically.value;
     }
 
     return () => (
       <section class={styles.menu}>
         <h2>Menu ({String(orderedAlphabetically.value)})</h2>
+
+        <button onClick={toggleOrder}>v-model test</button>
 
         <div class={styles.menuHeader}>
           <div class="">
@@ -35,8 +37,7 @@ export default defineComponent({
               name="order-type"
               id="radio-button--alphabetically"
               value="true"
-              checked={orderedAlphabetically.value}
-              onClick={(event) => changeOrder(event, true)}
+              v-model={orderedAlphabetically.value}
             />
             <label for="radio-button--alphabetically">Alphabetical</label>
           </div>
@@ -47,8 +48,7 @@ export default defineComponent({
               name="order-type"
               id="radio-button--popularity"
               value="false"
-              checked={!orderedAlphabetically.value}
-              onClick={(event) => changeOrder(event, false)}
+              v-model={orderedAlphabetically.value}
             />
             <label for="radio-button--popularity">Popularity</label>
           </div>
