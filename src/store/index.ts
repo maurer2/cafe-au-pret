@@ -17,8 +17,7 @@ const defaultStore = {
 
       // prettier-ignore
       const newZoomLevel = zoomLevel + (change / 100);
-
-      state.zoomLevel = Math.clamp(newZoomLevel, 0.5, 2.5);
+      state.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
     },
   },
   actions: {

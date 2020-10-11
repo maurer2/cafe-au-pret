@@ -2,9 +2,10 @@ import { createApp } from 'vue';
 import App from './app';
 import store from './store';
 
-import 'core-js';
+import 'core-js/stable';
 // import 'core-js/features/math/clamp';
 import 'regenerator-runtime/runtime';
+import 'core-js/proposals/math-extensions';
 
 import 'sanitize.css';
 import 'sanitize.css/typography.css';

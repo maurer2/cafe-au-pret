@@ -13,7 +13,6 @@ export default defineComponent({
     const zoomLevel = computed(() => store.state.zoomLevel.toFixed(2));
     const qrCodeMarkup: Ref<string | null> = ref(null);
 
-    // SVG markup string
     function getQRCodeMarkup(payload: string): Promise<string> {
       const qrCodeSettings: QRCodeToStringOptions = {
         errorCorrectionLevel: 'H',
