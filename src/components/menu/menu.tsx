@@ -9,7 +9,8 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const menuListSorted = [...menuList]; // todo
+    const menuListSorted = [...menuList];
+    const menuListSortedAlphabetically = menuListSorted;
     const listOrderedAlphabetically = ref(true);
     const isOrderedAlphabetically = computed({
       get: () => listOrderedAlphabetically.value,
@@ -31,27 +32,37 @@ export default defineComponent({
         </button>
 
         <div class={styles.menuHeader}>
-          <div class="">
+          <code>{JSON.stringify(isOrderedAlphabetically.value, null, 4)}</code>
+          <label
+            class={[
+              styles.menuHeaderLabel,
+              isOrderedAlphabetically.value === true ? styles.menuHeaderLabelIsActive : '',
+            ]}
+          >
             <input
+              class={styles.menuHeaderButton}
               type="radio"
               name="order-type"
-              id="radio-button--alphabetically"
               value="true"
               v-model={isOrderedAlphabetically.value}
             />
-            <label for="radio-button--alphabetically">Alphabetical</label>
-          </div>
-
-          <div class="">
+            Alphabetical {String(isOrderedAlphabetically.value === true)}
+          </label>
+          <label
+            class={[
+              styles.menuHeaderLabel,
+              isOrderedAlphabetically.value === false ? styles.menuHeaderLabelIsActive : '',
+            ]}
+          >
             <input
+              class={styles.menuHeaderButton}
               type="radio"
               name="order-type"
-              id="radio-button--popularity"
               value="false"
               v-model={isOrderedAlphabetically.value}
             />
-            <label for="radio-button--popularity">Popularity</label>
-          </div>
+            Popularity {String(isOrderedAlphabetically.value === false)}
+          </label>
         </div>
 
         <ul class={styles.menuList}>

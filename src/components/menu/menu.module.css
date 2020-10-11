@@ -2,6 +2,29 @@
   padding: 1rem;
 }
 
+.menuHeader {
+  display: flex;
+}
+
+.menuHeaderButton {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.menuHeaderLabel {
+  display: block;
+  flex: 1 1 0;
+}
+
+.menuHeaderLabelIsActive {
+  color: red;
+}
+
 .menuList {
   display: flex;
   padding: 0;
