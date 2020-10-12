@@ -11,9 +11,15 @@ export default defineComponent({
     const store = useStore();
     const menuListSorted = [...menuList];
     const menuListSortedAlphabetically = menuListSorted;
-    const listOrderedAlphabetically = ref(true);
+    const listOrderedAlphabetically: Ref<boolean | string> = ref(true);
     const isOrderedAlphabetically = computed({
-      get: () => listOrderedAlphabetically.value,
+      get: () => {
+        if (typeof listOrderedAlphabetically.value === 'boolean') {
+          return listOrderedAlphabetically.value;
+        }
+
+        return listOrderedAlphabetically.value === 'true';
+      },
       set: (newValue) => {
         listOrderedAlphabetically.value = newValue;
       },
