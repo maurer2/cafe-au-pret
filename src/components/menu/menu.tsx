@@ -1,7 +1,12 @@
-import { defineComponent, ref, Ref, computed } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
 import menuList from './menuData.json';
+
+enum SortType {
+  alphabet = 'alphabet',
+  popularity = 'popularity',
+}
 
 export default defineComponent({
   name: 'Menu',
@@ -10,32 +15,30 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const menuListSorted = [...menuList];
-    const menuListSortedAlphabetically = menuListSorted;
-    const listOrderedAlphabetically: Ref<boolean | string> = ref(true);
-    const isOrderedAlphabetically = computed({
+    // const menuListSortedAlphabetically = menuListSorted;
+    const orderType = ref(SortType.popularity);
+    const orderTypeComputed = computed({
       get: () => {
-        if (typeof listOrderedAlphabetically.value === 'boolean') {
-          return listOrderedAlphabetically.value;
-        }
-
-        return listOrderedAlphabetically.value === 'true';
+        return orderType.value;
       },
       set: (newValue) => {
-        listOrderedAlphabetically.value = newValue;
+        orderType.value = newValue;
       },
     });
 
     function toggleOrder() {
-      isOrderedAlphabetically.value = !isOrderedAlphabetically.value;
+      if (orderTypeComputed.value === SortType.alphabet) {
+        orderTypeComputed.value = SortType.popularity;
+        return;
+      }
+      orderTypeComputed.value = SortType.alphabet;
     }
 
     return () => (
       <section class={styles.menu}>
         <h2>Menu</h2>
 
-        <button onClick={toggleOrder}>
-          v-model test ({String(isOrderedAlphabetically.value)})
-        </button>
+        <button onClick={toggleOrder}>v-model ({String(orderTypeComputed.value)})</button>
 
         <br />
         <br />
@@ -44,30 +47,30 @@ export default defineComponent({
           <label
             class={[
               styles.menuHeaderLabel,
-              isOrderedAlphabetically.value === true ? styles.menuHeaderLabelIsActive : '',
+              orderTypeComputed.value === SortType.alphabet ? styles.menuHeaderLabelIsActive : '',
             ]}
           >
             <input
               class={styles.menuHeaderButton}
               type="radio"
               name="order-type"
-              value="true"
-              v-model={isOrderedAlphabetically.value}
+              value={SortType.alphabet}
+              v-model={orderTypeComputed.value}
             />
-            Alphabetical
+            Alphabet
           </label>
           <label
             class={[
               styles.menuHeaderLabel,
-              isOrderedAlphabetically.value === false ? styles.menuHeaderLabelIsActive : '',
+              orderTypeComputed.value === SortType.popularity ? styles.menuHeaderLabelIsActive : '',
             ]}
           >
             <input
               class={styles.menuHeaderButton}
               type="radio"
               name="order-type"
-              value="false"
-              v-model={isOrderedAlphabetically.value}
+              value={SortType.popularity}
+              v-model={orderTypeComputed.value}
             />
             Popularity
           </label>
