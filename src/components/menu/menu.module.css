@@ -4,25 +4,25 @@
 
 .menuHeader {
   display: flex;
-}
-
-.menuHeaderButton {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+  margin: 0 -1rem;
 }
 
 .menuHeaderLabel {
   display: block;
+  margin: 0 1rem;
+  padding: 1rem 2rem;
   flex: 1 1 0;
+  border-bottom: 3px solid transparent;
+  text-align: center;
+  background: var(--concrete);
 }
 
 .menuHeaderLabelIsActive {
-  color: red;
+  border-bottom-color: var(--old-brick);
+}
+
+.menuHeaderButton {
+  composes: visually-hidden from global;
 }
 
 .menuList {

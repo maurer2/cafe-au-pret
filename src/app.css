@@ -3,6 +3,7 @@
   --tundora: #404040;
   --old-brick: #9f1b32;
   --dove-gray: #737373;
+  --concrete: #f2f2f2;
 }
 
 html {
@@ -14,4 +15,14 @@ html {
 .app {
   min-height: 100vh;
   text-align: center;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

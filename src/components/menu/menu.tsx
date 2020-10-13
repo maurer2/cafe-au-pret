@@ -37,8 +37,10 @@ export default defineComponent({
           v-model test ({String(isOrderedAlphabetically.value)})
         </button>
 
+        <br />
+        <br />
+
         <div class={styles.menuHeader}>
-          <code>{JSON.stringify(isOrderedAlphabetically.value, null, 4)}</code>
           <label
             class={[
               styles.menuHeaderLabel,
@@ -52,7 +54,7 @@ export default defineComponent({
               value="true"
               v-model={isOrderedAlphabetically.value}
             />
-            Alphabetical {String(isOrderedAlphabetically.value === true)}
+            Alphabetical
           </label>
           <label
             class={[
@@ -67,7 +69,7 @@ export default defineComponent({
               value="false"
               v-model={isOrderedAlphabetically.value}
             />
-            Popularity {String(isOrderedAlphabetically.value === false)}
+            Popularity
           </label>
         </div>
 
