@@ -1,32 +1,15 @@
 import { defineComponent } from 'vue';
-// import styled from 'vue-styled-components';
-// import * as Styles from './app-footer.styles';
-import { useStore } from '../../store';
+import styles from './app-footer.module.css';
 
-/*
-export const Test = styled.span`
-  display: block;
-  background: red;
-`;
-*/
+import { useStore } from '../../store';
 
 export default defineComponent({
   name: 'AppFooter',
-  components: {
-    // 'styled-test': Styles.Test,
-    // 'styled-test': Test2,
-    // Test,
-  },
+  components: {},
   props: {},
   setup() {
     const store = useStore();
 
-    // console.log(store.state);
-
-    return () => (
-      <div>
-        <footer class="footer">AppFooter</footer>
-      </div>
-    );
+    return () => <footer class={styles.footer}>AppFooter</footer>;
   },
 });
