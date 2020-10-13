@@ -14,8 +14,6 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const menuListSorted = [...menuList];
-    // const menuListSortedAlphabetically = menuListSorted;
     const orderType = ref(SortType.popularity);
     const orderTypeComputed = computed({
       get: () => {
@@ -25,23 +23,21 @@ export default defineComponent({
         orderType.value = newValue;
       },
     });
+    const menuListSortedByPopularity = ref([...menuList]);
+    const menuListSortedByAlphabet = ref(
+      [...menuList].sort((entry1, entry2) => entry1.name.localeCompare(entry2.name)),
+    );
 
-    function toggleOrder() {
+    const menuListSorted = computed(() => {
       if (orderTypeComputed.value === SortType.alphabet) {
-        orderTypeComputed.value = SortType.popularity;
-        return;
+        return menuListSortedByAlphabet.value;
       }
-      orderTypeComputed.value = SortType.alphabet;
-    }
+      return menuListSortedByPopularity.value;
+    });
 
     return () => (
       <section class={styles.menu}>
         <h2>Menu</h2>
-
-        <button onClick={toggleOrder}>v-model ({String(orderTypeComputed.value)})</button>
-
-        <br />
-        <br />
 
         <div class={styles.menuHeader}>
           <label
@@ -53,7 +49,7 @@ export default defineComponent({
             <input
               class={styles.menuHeaderButton}
               type="radio"
-              name="order-type"
+              name="sort-type"
               value={SortType.alphabet}
               v-model={orderTypeComputed.value}
             />
@@ -68,7 +64,7 @@ export default defineComponent({
             <input
               class={styles.menuHeaderButton}
               type="radio"
-              name="order-type"
+              name="sort-type"
               value={SortType.popularity}
               v-model={orderTypeComputed.value}
             />
@@ -77,7 +73,7 @@ export default defineComponent({
         </div>
 
         <ul class={styles.menuList}>
-          {menuListSorted.map((menuEntry) => (
+          {menuListSorted.value.map((menuEntry) => (
             <li class={styles.menuListEntry}>
               <button class={styles.menuButton} type="button">
                 {menuEntry.name}
