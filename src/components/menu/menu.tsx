@@ -35,17 +35,17 @@ export default defineComponent({
       return menuListSortedByPopularity.value;
     });
 
-    function addItemToOrderedList() {
+    function addItemToOrderedList({ id, name }: MenuItem) {
       const dummyOrder: Order = {
-        id: String(Math.random()),
-        name: `name-${Math.random().toPrecision(2)}`,
+        id,
+        name,
         dateTime: new Date(),
         tz: 'Europe/London',
       };
       store.dispatch('addOrder', dummyOrder);
 
       console.log(store.state.orders['YYYY-MM-DD']);
-      console.log('clicked');
+      console.log(`${name} clicked`);
     }
 
     return () => (
@@ -88,7 +88,11 @@ export default defineComponent({
         <ul class={styles.menuList}>
           {menuListSorted.value.map((menuEntry) => (
             <li class={styles.menuListEntry}>
-              <button class={styles.menuButton} onClick={addItemToOrderedList} type="button">
+              <button
+                class={styles.menuButton}
+                onClick={() => addItemToOrderedList(menuEntry)}
+                type="button"
+              >
                 {menuEntry.name}
               </button>
             </li>
