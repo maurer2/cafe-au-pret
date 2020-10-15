@@ -1,17 +1,7 @@
-import { createStore } from 'vuex';
+import { createStore, ActionContext } from 'vuex';
+import { storeType, MutationsType, ActionsType } from './types';
 
-type storeType = {
-  state: {
-    userId: string;
-    zoomLevel: number;
-    orders: {
-      [orderDate: string]: Order[];
-    };
-  };
-  modules: any;
-  mutations: any;
-  actions: any;
-};
+type stateType = storeType['state'];
 
 const defaultStore: storeType = {
   state: {
@@ -30,7 +20,7 @@ const defaultStore: storeType = {
   },
   modules: {},
   mutations: {
-    updateZoom(state: any, change: number) {
+    [MutationsType.UPDATE_ZOOM](state: stateType, change: number) {
       const { zoomLevel } = state;
 
       if (change === 0) {
@@ -42,25 +32,27 @@ const defaultStore: storeType = {
       const newZoomLevel = zoomLevel + (change / 100);
       state.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
     },
-    addDailyOrder(state: storeType['state'], order: Order) {
+    [MutationsType.ADD_DAILY_ORDER](state: stateType, order: Order) {
       const { orders } = state;
       const currentDate = 'YYYY-MM-DD';
+
+      const newOrders = { ...state.orders };
 
       orders[currentDate].push(order);
     },
   },
   actions: {
-    increaseZoom(context: any): void {
-      context.commit('updateZoom', 10);
+    [ActionsType.INCREASE_ZOOM](context: ActionContext<stateType, stateType>): void {
+      context.commit(MutationsType.UPDATE_ZOOM, 10);
     },
-    decreaseZoom(context: any): void {
-      context.commit('updateZoom', -10);
+    [ActionsType.DECREASE_ZOOM](context: ActionContext<stateType, stateType>): void {
+      context.commit(MutationsType.UPDATE_ZOOM, -10);
     },
-    resetZoom(context: any): void {
-      context.commit('updateZoom', 0);
+    [ActionsType.RESET_ZOOM](context: ActionContext<stateType, stateType>): void {
+      context.commit(MutationsType.UPDATE_ZOOM, 0);
     },
-    addOrder(context: any, order: Order): void {
-      context.commit('addDailyOrder', order);
+    [ActionsType.ADD_ORDER](context: ActionContext<stateType, stateType>, order: Order): void {
+      context.commit(MutationsType.ADD_DAILY_ORDER, order);
     },
   },
 };

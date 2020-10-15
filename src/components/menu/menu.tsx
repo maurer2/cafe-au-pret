@@ -1,6 +1,7 @@
 import { defineComponent, ref, computed } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
+import { ActionsType } from '../../store/types';
 import menuList from './menuData.json';
 
 enum SortType {
@@ -42,7 +43,7 @@ export default defineComponent({
         dateTime: new Date(),
         tz: 'Europe/London',
       };
-      store.dispatch('addOrder', dummyOrder);
+      store.dispatch(ActionsType.ADD_ORDER, dummyOrder);
 
       console.log(store.state.orders['YYYY-MM-DD']);
       console.log(`${name} clicked`);
