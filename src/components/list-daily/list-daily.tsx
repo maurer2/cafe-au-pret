@@ -1,27 +1,29 @@
-import { computed, defineComponent, ref, Ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { mapState } from 'vuex';
 import styles from './list-daily.module.css';
+
+import { useStore } from '../../store';
 
 export default defineComponent({
   name: 'ListDaily',
   components: {},
   props: {},
   setup() {
+    const store = useStore();
     const maxDailyOrders = 5;
-    const orders: Ref<Order[]> = ref([
-      {
-        id: String(Math.random()),
-        name: `name-${Math.random().toPrecision(2)}`,
-        dateTime: new Date(),
-        tz: 'Europe/London',
-      },
-    ]);
-    const hasOrders = computed(() => orders.value.length !== 0);
+    const ordersList = computed(() => {
+      const { orders } = store.state;
+
+      return orders['YYYY-MM-DD'];
+    });
+
+    const hasOrders = computed(() => ordersList.value.length !== 0);
     const remainingOrders = computed(() => {
       if (!hasOrders.value) {
         return maxDailyOrders;
       }
 
-      const orderDifference = maxDailyOrders - orders.value.length;
+      const orderDifference = maxDailyOrders - ordersList.value.length;
 
       return Math.sign(orderDifference) === 1 ? orderDifference : 0;
     });
@@ -61,42 +63,9 @@ export default defineComponent({
       return `${hour}:${minute}:${second}`;
     }
 
-    function addPurchase() {
-      const newEntry = {
-        id: String(Math.random()),
-        name: `name-${Math.random().toPrecision(2)}`,
-        dateTime: new Date(),
-        tz: 'Europe/London',
-      };
-
-      orders.value = [...orders.value, newEntry];
-    }
-
-    function removePurchase() {
-      const newOrders = [...orders.value];
-
-      newOrders.pop();
-
-      orders.value = newOrders;
-    }
-
     return () => (
       <section class={styles.list}>
         <h2>Daily purchases on {getDateFormatted(currentDate)}</h2>
-
-        <div>
-          <h3>Show table: {String(hasOrders.value)}</h3>
-        </div>
-
-        <div>
-          <button type="button" onClick={addPurchase}>
-            Add purchase
-          </button>
-
-          <button type="button" onClick={removePurchase}>
-            Remove purchase
-          </button>
-        </div>
 
         {hasOrders.value && (
           <table class={styles.table}>
@@ -110,7 +79,7 @@ export default defineComponent({
               </tr>
             </thead>
             <tbody class={styles.tableBody}>
-              {orders.value.map((order, index) => {
+              {ordersList.value.map((order, index) => {
                 const { id, name, dateTime } = order;
                 const time = getTimeFormatted(dateTime);
                 const indexOneBased = index + 1;
