@@ -9,6 +9,7 @@ export type StoreType = {
   modules: any;
   mutations: any;
   actions: any;
+  getters: GettersType;
   [key: string]: any;
 };
 
@@ -25,3 +26,10 @@ export enum ActionsType {
   RESET_ZOOM = 'RESET_ZOOM',
   ADD_ORDER = 'ADD_ORDER',
 }
+
+export type GettersType = {
+  getNumberOfDailyOrders(state: StateType): (dateTime: string) => number;
+  getDailyOrders(state: StateType): (dateTime: string) => Order[];
+  hasDailyOrders: (state: StateType) => (dateTime: string) => boolean;
+  [key: string]: any;
+};

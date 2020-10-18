@@ -55,20 +55,20 @@ const defaultStore: StoreType = {
     },
   },
   getters: {
-    getNumberOfDailyOrders: (state: StateType) => (dateTime: string): number => {
+    getNumberOfDailyOrders: (state) => (dateTime): number => {
       if (!(dateTime in state.orders)) {
         return 0;
       }
 
       return state.orders[dateTime].length;
     },
-    getDailyOrders: (state: StateType) => (dateTime: string) => {
+    getDailyOrders: (state) => (dateTime) => {
       if (!(dateTime in state.orders)) {
         return [];
       }
       return state.orders[dateTime];
     },
-    hasDailyOrders: (state: StateType) => (dateTime: string): boolean => {
+    hasDailyOrders: (state) => (dateTime): boolean => {
       if (!(dateTime in state.orders)) {
         return false;
       }
