@@ -66,10 +66,9 @@ export default defineComponent({
               </tr>
             </thead>
             <tbody class={styles.tableBody}>
-              {ordersList.value.map((order, index) => {
-                const { id, name, dateTime } = order;
+              {ordersList.value.map(({ id, name, dateTime }, index) => {
                 const time = getTimeFormatted(dateTime);
-                const indexOneBased = index + 1;
+                const indexOneBased = String(index + 1).padStart(2, '0');
 
                 return (
                   <tr class={styles.tableBodyRow} key={id}>
