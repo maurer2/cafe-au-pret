@@ -1,18 +1,22 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, computed } from 'vue';
 import styles from './app-header.module.css';
+import { useStore } from '../../store';
 
 export default defineComponent({
   name: 'AppHeader',
   components: {},
   props: {},
   setup() {
-    const remainingAmount = ref(5);
+    const store = useStore();
+    const remainingOrders = computed(
+      () => store.getters.getDailyRemainingNumberOfOrders('YYYY-MM-DD') as number,
+    );
     return () => (
       <header class={styles.header}>
-        <h1 class={styles.title}>Coffescript</h1>
+        <h1 class={styles.title}>Coffeescript</h1>
         <dl class={styles.status}>
           <dt class={styles.statusTitle}>Remaining daily coffees</dt>
-          <dd class={styles.statusValue}>{remainingAmount.value}</dd>
+          <dd class={styles.statusValue}>{remainingOrders.value}</dd>
         </dl>
       </header>
     );

@@ -5,6 +5,8 @@ export type StoreType = {
     orders: {
       [orderDate: string]: Order[];
     };
+    maxDailyOrders: number;
+    [key: string]: any;
   };
   modules: any;
   mutations: any;
@@ -31,5 +33,6 @@ export type GettersType = {
   getNumberOfDailyOrders(state: StateType): (dateTime: string) => number;
   getDailyOrders(state: StateType): (dateTime: string) => Order[];
   hasDailyOrders: (state: StateType) => (dateTime: string) => boolean;
+  getDailyRemainingNumberOfOrders: (state: StateType) => (dateTime: string) => number;
   [key: string]: any;
 };
