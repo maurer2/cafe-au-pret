@@ -1,17 +1,16 @@
 import { createStore, ActionContext } from 'vuex';
-import { storeType, MutationsType, ActionsType } from './types';
+import { StoreType, StateType, MutationsType, ActionsType } from './types';
 
-type stateType = storeType['state'];
-
-const defaultStore: storeType = {
+const defaultStore: StoreType = {
+  namespaced: true as true,
   state: {
     userId: 'ABC123456789',
     zoomLevel: 1.0,
     orders: {
       'YYYY-MM-DD': [
         {
-          id: String(Math.random()),
-          name: `name-${Math.random().toPrecision(2)}`,
+          id: 'psl',
+          name: 'PSL',
           dateTime: new Date(),
           tz: 'Europe/London',
         },
@@ -20,7 +19,7 @@ const defaultStore: storeType = {
   },
   modules: {},
   mutations: {
-    [MutationsType.UPDATE_ZOOM](state: stateType, change: number) {
+    [MutationsType.UPDATE_ZOOM](state: StateType, change: number) {
       const { zoomLevel } = state;
 
       if (change === 0) {
@@ -32,7 +31,7 @@ const defaultStore: storeType = {
       const newZoomLevel = zoomLevel + (change / 100);
       state.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
     },
-    [MutationsType.ADD_DAILY_ORDER](state: stateType, order: Order) {
+    [MutationsType.ADD_DAILY_ORDER](state: StateType, order: Order) {
       const { orders } = state;
       const currentDate = 'YYYY-MM-DD';
 
@@ -42,17 +41,39 @@ const defaultStore: storeType = {
     },
   },
   actions: {
-    [ActionsType.INCREASE_ZOOM](context: ActionContext<stateType, stateType>): void {
+    [ActionsType.INCREASE_ZOOM](context: ActionContext<StateType, StateType>): void {
       context.commit(MutationsType.UPDATE_ZOOM, 10);
     },
-    [ActionsType.DECREASE_ZOOM](context: ActionContext<stateType, stateType>): void {
+    [ActionsType.DECREASE_ZOOM](context: ActionContext<StateType, StateType>): void {
       context.commit(MutationsType.UPDATE_ZOOM, -10);
     },
-    [ActionsType.RESET_ZOOM](context: ActionContext<stateType, stateType>): void {
+    [ActionsType.RESET_ZOOM](context: ActionContext<StateType, StateType>): void {
       context.commit(MutationsType.UPDATE_ZOOM, 0);
     },
-    [ActionsType.ADD_ORDER](context: ActionContext<stateType, stateType>, order: Order): void {
+    [ActionsType.ADD_ORDER](context: ActionContext<StateType, StateType>, order: Order): void {
       context.commit(MutationsType.ADD_DAILY_ORDER, order);
+    },
+  },
+  getters: {
+    getNumberOfDailyOrders: (state: StateType) => (dateTime: string): number => {
+      if (!(dateTime in state.orders)) {
+        return 0;
+      }
+
+      return state.orders[dateTime].length;
+    },
+    getDailyOrders: (state: StateType) => (dateTime: string) => {
+      if (!(dateTime in state.orders)) {
+        return [];
+      }
+      return state.orders[dateTime];
+    },
+    hasDailyOrders: (state: StateType) => (dateTime: string): boolean => {
+      if (!(dateTime in state.orders)) {
+        return false;
+      }
+
+      return !!state.orders[dateTime].length;
     },
   },
 };

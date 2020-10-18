@@ -1,4 +1,4 @@
-export type storeType = {
+export type StoreType = {
   state: {
     userId: string;
     zoomLevel: number;
@@ -9,7 +9,10 @@ export type storeType = {
   modules: any;
   mutations: any;
   actions: any;
+  [key: string]: any;
 };
+
+export type StateType = StoreType['state'];
 
 export enum MutationsType {
   UPDATE_ZOOM = 'UPDATE_ZOOM',

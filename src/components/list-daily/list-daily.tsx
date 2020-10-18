@@ -1,5 +1,5 @@
 import { computed, defineComponent, ref } from 'vue';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import styles from './list-daily.module.css';
 
 import { useStore } from '../../store';
@@ -11,13 +11,9 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const maxDailyOrders = 5;
-    const ordersList = computed(() => {
-      const { orders } = store.state;
+    const ordersList = computed(() => store.getters.getDailyOrders('YYYY-MM-DD') as Order[]);
+    const hasOrders = computed(() => store.getters.hasDailyOrders('YYYY-MM-DD') as boolean);
 
-      return orders['YYYY-MM-DD'];
-    });
-
-    const hasOrders = computed(() => ordersList.value.length !== 0);
     const remainingOrders = computed(() => {
       if (!hasOrders.value) {
         return maxDailyOrders;

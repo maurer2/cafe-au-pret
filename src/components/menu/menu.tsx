@@ -45,7 +45,6 @@ export default defineComponent({
       };
       store.dispatch(ActionsType.ADD_ORDER, dummyOrder);
 
-      console.log(store.state.orders['YYYY-MM-DD']);
       console.log(`${name} clicked`);
     }
 
