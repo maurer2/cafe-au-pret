@@ -24,11 +24,13 @@ export type StoreType = {
     [key: string]: any;
   };
   modules: any;
-  mutations: any;
+  mutations: {
+    [key in keyof typeof MutationsType]: (state: StateType, payload?: any) => void;
+  };
   actions: {
     [key in keyof typeof ActionsType]: (
       context: ActionContext<StateType, StateType>,
-      data?: any,
+      payload?: any,
     ) => void;
   };
   getters: GettersType;

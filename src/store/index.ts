@@ -1,5 +1,5 @@
 import { createStore, ActionContext } from 'vuex';
-import { StoreType, StateType, MutationsType, ActionsType } from './types';
+import { StoreType, StateType, MutationsType, ActionsType, SortType } from './types';
 
 const defaultStore: StoreType = {
   namespaced: true as true,
@@ -17,6 +17,7 @@ const defaultStore: StoreType = {
       ],
     },
     maxDailyOrders: 5,
+    sortType: SortType.popularity,
   },
   modules: {},
   mutations: {
