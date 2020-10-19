@@ -1,21 +1,4 @@
-export type StoreType = {
-  state: {
-    userId: string;
-    zoomLevel: number;
-    orders: {
-      [orderDate: string]: Order[];
-    };
-    maxDailyOrders: number;
-    [key: string]: any;
-  };
-  modules: any;
-  mutations: any;
-  actions: any;
-  getters: GettersType;
-  [key: string]: any;
-};
-
-export type StateType = StoreType['state'];
+import { ActionContext } from 'vuex';
 
 export enum MutationsType {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
@@ -29,6 +12,31 @@ export enum ActionsType {
   ADD_ORDER = 'ADD_ORDER',
 }
 
+export type StoreType = {
+  state: {
+    userId: string;
+    zoomLevel: number;
+    orders: {
+      [orderDate: string]: Order[];
+    };
+    maxDailyOrders: number;
+    sortType: SortType;
+    [key: string]: any;
+  };
+  modules: any;
+  mutations: any;
+  actions: {
+    [key in keyof typeof ActionsType]: (
+      context: ActionContext<StateType, StateType>,
+      data?: any,
+    ) => void;
+  };
+  getters: GettersType;
+  [key: string]: any;
+};
+
+export type StateType = StoreType['state'];
+
 export type GettersType = {
   getNumberOfDailyOrders(state: StateType): (dateTime: string) => number;
   getDailyOrders(state: StateType): (dateTime: string) => Order[];
@@ -36,3 +44,8 @@ export type GettersType = {
   getDailyRemainingNumberOfOrders: (state: StateType) => (dateTime: string) => number;
   [key: string]: any;
 };
+
+export enum SortType {
+  alphabet = 'alphabet',
+  popularity = 'popularity',
+}
