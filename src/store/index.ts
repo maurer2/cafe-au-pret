@@ -46,16 +46,16 @@ const defaultStore: StoreType = {
     },
   },
   actions: {
-    [ActionsType.INCREASE_ZOOM](context: ActionContext<StateType, StateType>): void {
+    async [ActionsType.INCREASE_ZOOM](context) {
       context.commit(MutationsType.UPDATE_ZOOM, 10);
     },
-    [ActionsType.DECREASE_ZOOM](context: ActionContext<StateType, StateType>): void {
+    async [ActionsType.DECREASE_ZOOM](context) {
       context.commit(MutationsType.UPDATE_ZOOM, -10);
     },
-    [ActionsType.RESET_ZOOM](context: ActionContext<StateType, StateType>): void {
+    async [ActionsType.RESET_ZOOM](context) {
       context.commit(MutationsType.UPDATE_ZOOM, 0);
     },
-    [ActionsType.ADD_ORDER](context: ActionContext<StateType, StateType>, order: Order): void {
+    async [ActionsType.ADD_ORDER](context, order: Order) {
       const dateTime = 'YYYY-MM-DD';
 
       context.commit(MutationsType.ADD_DAILY_ORDER, { dateTime, order });

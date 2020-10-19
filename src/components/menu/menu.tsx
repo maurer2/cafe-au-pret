@@ -43,9 +43,17 @@ export default defineComponent({
         dateTime: new Date(),
         tz: 'Europe/London',
       };
-      store.dispatch(ActionsType.ADD_ORDER, dummyOrder);
 
       console.log(`${name} clicked`);
+
+      store
+        .dispatch(ActionsType.ADD_ORDER, dummyOrder)
+        .then(() => {
+          console.log(`${name} added to the list`);
+        })
+        .catch(() => {
+          console.log(`${name} couldn't be added to the list`);
+        });
     }
 
     return () => (

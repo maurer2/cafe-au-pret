@@ -31,7 +31,7 @@ export type StoreType = {
     [key in keyof typeof ActionsType]: (
       context: ActionContext<StateType, StateType>,
       payload?: any,
-    ) => void;
+    ) => Promise<void>;
   };
   getters: GettersType;
   [key: string]: any;
