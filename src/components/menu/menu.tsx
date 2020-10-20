@@ -31,6 +31,10 @@ export default defineComponent({
     const menuListSortedByAlphabet = ref(
       [...menuList].sort((entry1, entry2) => entry1.name.localeCompare(entry2.name)),
     );
+    const showOverlay = ref(false);
+    const slots = {
+      overlayContent: () => <span>Order added</span>,
+    };
 
     const menuListSorted = computed(() => {
       if (orderTypeComputed.value === SortType.alphabet) {
@@ -50,7 +54,11 @@ export default defineComponent({
       store
         .dispatch(ActionsType.ADD_ORDER, dummyOrder)
         .then(() => {
-          console.log(`${name} added to the list`);
+          showOverlay.value = true;
+
+          setTimeout(() => {
+            showOverlay.value = false;
+          }, 500);
         })
         .catch(() => {
           console.log(`${name} couldn't be added to the list`);
@@ -107,7 +115,7 @@ export default defineComponent({
             </li>
           ))}
         </ul>
-        <Overlay />
+        {showOverlay.value && <Overlay v-slots={slots} />}
       </section>
     );
   },

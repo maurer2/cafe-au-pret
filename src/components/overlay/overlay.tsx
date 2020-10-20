@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, Teleport } from 'vue';
+import { defineComponent, Teleport } from 'vue';
 import styles from './overlay.module.css';
 import { useStore } from '../../store';
 
@@ -6,14 +6,14 @@ export default defineComponent({
   name: 'Overlay',
   components: {},
   props: {},
-  setup() {
+  setup(_, { slots }) {
     const store = useStore();
 
     return () => (
       <Teleport to="body">
         <div class={styles.overlay}>
           <div class={styles.wrapper}>
-            <template>Overlay</template>
+            <slot>{slots.overlayContent !== undefined && slots.overlayContent()}</slot>
           </div>
         </div>
       </Teleport>
