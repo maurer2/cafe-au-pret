@@ -3,6 +3,7 @@ import styles from './menu.module.css';
 import { useStore } from '../../store';
 import { ActionsType } from '../../store/types';
 import menuList from './menuData.json';
+import Overlay from '../overlay/overlay';
 
 enum SortType {
   alphabet = 'alphabet',
@@ -11,7 +12,9 @@ enum SortType {
 
 export default defineComponent({
   name: 'Menu',
-  components: {},
+  components: {
+    Overlay,
+  },
   props: {},
   setup() {
     const store = useStore();
@@ -43,8 +46,6 @@ export default defineComponent({
         dateTime: new Date(),
         tz: 'Europe/London',
       };
-
-      console.log(`${name} clicked`);
 
       store
         .dispatch(ActionsType.ADD_ORDER, dummyOrder)
@@ -106,6 +107,7 @@ export default defineComponent({
             </li>
           ))}
         </ul>
+        <Overlay />
       </section>
     );
   },
