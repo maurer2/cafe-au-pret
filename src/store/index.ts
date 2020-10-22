@@ -1,5 +1,6 @@
-import { createStore, ActionContext } from 'vuex';
+import { createStore } from 'vuex';
 import { StoreType, StateType, MutationsType, ActionsType, SortType } from './types';
+import menuList from '../data/menuList.json';
 
 const defaultStore: StoreType = {
   namespaced: true as true,
@@ -18,6 +19,7 @@ const defaultStore: StoreType = {
     },
     maxDailyOrders: 5,
     sortType: SortType.popularity,
+    menuList,
   },
   modules: {},
   mutations: {
@@ -92,6 +94,18 @@ const defaultStore: StoreType = {
       const orderDifference = maxDailyOrders - state.orders[dateTime].length;
 
       return Math.sign(orderDifference) === 1 ? orderDifference : 0;
+    },
+    getMenuListSortedByPopularity: (state) => {
+      const sortedList = [...state.menuList];
+
+      return sortedList;
+    },
+    getMenuListSortedByAlphabet: (state) => {
+      const sortedList = [...state.menuList].sort((entry1, entry2) =>
+        entry1.name.localeCompare(entry2.name),
+      );
+
+      return sortedList;
     },
   },
 };

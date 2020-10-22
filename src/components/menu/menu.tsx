@@ -2,7 +2,6 @@ import { defineComponent, ref, computed } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
 import { ActionsType } from '../../store/types';
-import menuList from './menuData.json';
 import Overlay from '../overlay/overlay';
 
 enum SortType {
@@ -18,6 +17,7 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
+    const { menuList } = store.state;
     const orderType = ref(SortType.popularity);
     const orderTypeComputed = computed({
       get: () => {
@@ -27,6 +27,7 @@ export default defineComponent({
         orderType.value = newValue;
       },
     });
+
     const menuListSortedByPopularity = ref([...menuList]);
     const menuListSortedByAlphabet = ref(
       [...menuList].sort((entry1, entry2) => entry1.name.localeCompare(entry2.name)),

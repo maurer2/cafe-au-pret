@@ -34,6 +34,7 @@ export type StoreType = {
     ) => Promise<void>;
   };
   getters: GettersType;
+  menuList: MenuItem[];
   [key: string]: any;
 };
 
@@ -44,6 +45,8 @@ export type GettersType = {
   getDailyOrders(state: StateType): (dateTime: string) => Order[];
   hasDailyOrders: (state: StateType) => (dateTime: string) => boolean;
   getDailyRemainingNumberOfOrders: (state: StateType) => (dateTime: string) => number;
+  getMenuListSortedByPopularity: (state: StateType) => MenuItem[];
+  getMenuListSortedByAlphabet: (state: StateType) => MenuItem[];
   [key: string]: any;
 };
 
