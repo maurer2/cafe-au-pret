@@ -3,11 +3,7 @@ import styles from './menu.module.css';
 import { useStore } from '../../store';
 import { ActionsType } from '../../store/types';
 import Overlay from '../overlay/overlay';
-
-enum SortType {
-  alphabet = 'alphabet',
-  popularity = 'popularity',
-}
+import { SortType } from './menu.types';
 
 export default defineComponent({
   name: 'Menu',
@@ -17,7 +13,6 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const { menuList } = store.state;
     const orderType = ref(SortType.popularity);
     const orderTypeComputed = computed({
       get: () => {
@@ -28,9 +23,11 @@ export default defineComponent({
       },
     });
 
-    const menuListSortedByPopularity = ref([...menuList]);
-    const menuListSortedByAlphabet = ref(
-      [...menuList].sort((entry1, entry2) => entry1.name.localeCompare(entry2.name)),
+    const menuListSortedByPopularity = computed(
+      () => store.getters.getMenuListSortedByPopularity as MenuItem[],
+    );
+    const menuListSortedByAlphabet = computed(
+      () => store.getters.getMenuListSortedByAlphabet as MenuItem[],
     );
     const showOverlay = ref(false);
     const slots = {
