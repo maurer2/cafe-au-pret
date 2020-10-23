@@ -12,34 +12,6 @@ export enum ActionsType {
   ADD_ORDER = 'ADD_ORDER',
 }
 
-export type StoreType = {
-  state: {
-    userId: string;
-    zoomLevel: number;
-    orders: {
-      [orderDate: string]: Order[];
-    };
-    maxDailyOrders: number;
-    sortType: SortType;
-    [key: string]: any;
-  };
-  modules: any;
-  mutations: {
-    [key in keyof typeof MutationsType]: (state: StateType, payload?: any) => void;
-  };
-  actions: {
-    [key in keyof typeof ActionsType]: (
-      context: ActionContext<StateType, StateType>,
-      payload?: any,
-    ) => Promise<void>;
-  };
-  getters: GettersType;
-  menuList: MenuItem[];
-  [key: string]: any;
-};
-
-export type StateType = StoreType['state'];
-
 export type GettersType = {
   getNumberOfDailyOrders(state: StateType): (dateTime: string) => number;
   getDailyOrders(state: StateType): (dateTime: string) => Order[];
@@ -54,3 +26,31 @@ export enum SortType {
   alphabet = 'alphabet',
   popularity = 'popularity',
 }
+
+export type StoreType = {
+  state: {
+    userId: string;
+    zoomLevel: number;
+    orders: {
+      [orderDate: string]: Order[];
+    };
+    maxDailyOrders: number;
+    sortType: SortType;
+    menuList: MenuItem[];
+    [key: string]: any;
+  };
+  modules: any;
+  mutations: {
+    [key in keyof typeof MutationsType]: (state: StateType, payload?: any) => void;
+  };
+  actions: {
+    [key in keyof typeof ActionsType]: (
+      context: ActionContext<StateType, StateType>,
+      payload?: any,
+    ) => Promise<void>;
+  };
+  getters: GettersType;
+  [key: string]: any;
+};
+
+export type StateType = StoreType['state'];
