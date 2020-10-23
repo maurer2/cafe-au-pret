@@ -1,16 +1,27 @@
 import { ActionContext } from 'vuex';
 
-export enum MutationsType {
+export enum Mutations {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
   ADD_DAILY_ORDER = 'ADD_DAILY_ORDER',
 }
 
-export enum ActionsType {
+export type MutationsType = {
+  [key in keyof typeof Mutations]: (state: StateType, payload?: any) => void;
+};
+
+export enum Actions {
   INCREASE_ZOOM = 'INCREASE_ZOOM',
   DECREASE_ZOOM = 'DECREASE_ZOOM',
   RESET_ZOOM = 'RESET_ZOOM',
   ADD_ORDER = 'ADD_ORDER',
 }
+
+export type ActionsType = {
+  [key in keyof typeof Actions]: (
+    context: ActionContext<StateType, StateType>,
+    payload?: any,
+  ) => Promise<void>;
+};
 
 export type GettersType = {
   getNumberOfDailyOrders(state: StateType): (dateTime: string) => number;
@@ -40,17 +51,10 @@ export type StoreType = {
     [key: string]: any;
   };
   modules: any;
-  mutations: {
-    [key in keyof typeof MutationsType]: (state: StateType, payload?: any) => void;
-  };
-  actions: {
-    [key in keyof typeof ActionsType]: (
-      context: ActionContext<StateType, StateType>,
-      payload?: any,
-    ) => Promise<void>;
-  };
+  mutations: MutationsType;
+  actions: ActionsType;
   getters: GettersType;
-  [key: string]: any;
+  namespaced: boolean;
 };
 
 export type StateType = StoreType['state'];

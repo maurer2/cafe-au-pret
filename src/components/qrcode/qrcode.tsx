@@ -2,7 +2,7 @@ import { defineComponent, Ref, ref, onMounted, computed } from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode.module.css';
 import { useStore } from '../../store';
-import { ActionsType } from '../../store/types';
+import { Actions } from '../../store/types';
 
 export default defineComponent({
   name: 'QRCode',
@@ -26,15 +26,15 @@ export default defineComponent({
     }
 
     function zoomIn() {
-      store.dispatch(ActionsType.INCREASE_ZOOM);
+      store.dispatch(Actions.INCREASE_ZOOM);
     }
 
     function zoomOut() {
-      store.dispatch(ActionsType.DECREASE_ZOOM);
+      store.dispatch(Actions.DECREASE_ZOOM);
     }
 
     function zoomReset() {
-      store.dispatch(ActionsType.RESET_ZOOM);
+      store.dispatch(Actions.RESET_ZOOM);
     }
 
     onMounted(() => {

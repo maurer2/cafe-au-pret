@@ -1,7 +1,7 @@
 import { defineComponent, ref, computed } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
-import { ActionsType } from '../../store/types';
+import { Actions } from '../../store/types';
 import Overlay from '../overlay/overlay';
 import { SortType } from './menu.types';
 
@@ -50,7 +50,7 @@ export default defineComponent({
       };
 
       store
-        .dispatch(ActionsType.ADD_ORDER, dummyOrder)
+        .dispatch(Actions.ADD_ORDER, dummyOrder)
         .then(() => {
           showOverlay.value = true;
 

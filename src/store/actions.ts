@@ -1,27 +1,19 @@
-import { ActionContext } from 'vuex';
-import { MutationsType, ActionsType, StateType } from './types';
+import { Mutations, Actions, ActionsType } from './types';
 
-type Actions = {
-  [key in keyof typeof ActionsType]: (
-    context: ActionContext<StateType, StateType>,
-    payload?: any,
-  ) => Promise<void>;
-};
-
-const actions: Actions = {
-  async [ActionsType.INCREASE_ZOOM](context) {
-    context.commit(MutationsType.UPDATE_ZOOM, 10);
+const actions: ActionsType = {
+  async [Actions.INCREASE_ZOOM](context) {
+    context.commit(Mutations.UPDATE_ZOOM, 10);
   },
-  async [ActionsType.DECREASE_ZOOM](context) {
-    context.commit(MutationsType.UPDATE_ZOOM, -10);
+  async [Actions.DECREASE_ZOOM](context) {
+    context.commit(Mutations.UPDATE_ZOOM, -10);
   },
-  async [ActionsType.RESET_ZOOM](context) {
-    context.commit(MutationsType.UPDATE_ZOOM, 0);
+  async [Actions.RESET_ZOOM](context) {
+    context.commit(Mutations.UPDATE_ZOOM, 0);
   },
-  async [ActionsType.ADD_ORDER](context, order: Order) {
+  async [Actions.ADD_ORDER](context, order: Order) {
     const dateTime = 'YYYY-MM-DD';
 
-    context.commit(MutationsType.ADD_DAILY_ORDER, { dateTime, order });
+    context.commit(Mutations.ADD_DAILY_ORDER, { dateTime, order });
   },
 };
 
