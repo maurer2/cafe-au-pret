@@ -23,6 +23,8 @@ const defaultStore: StoreType = {
     maxDailyOrders: 5,
     sortType: SortType.popularity,
     menuList,
+    isBlocked: false,
+    blockingDuration: 30,
   },
   modules: {},
   mutations,

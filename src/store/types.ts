@@ -24,12 +24,19 @@ export type ActionsType = {
 };
 
 export type GettersType = {
-  getNumberOfDailyOrders(state: StateType): (dateTime: string) => number;
-  getDailyOrders(state: StateType): (dateTime: string) => Order[];
-  hasDailyOrders: (state: StateType) => (dateTime: string) => boolean;
-  getDailyRemainingNumberOfOrders: (state: StateType) => (dateTime: string) => number;
-  getMenuListSortedByPopularity: (state: StateType) => MenuItem[];
-  getMenuListSortedByAlphabet: (state: StateType) => MenuItem[];
+  getNumberOfDailyOrders(state: StateType, getters?: GettersType): (dateTime: string) => number;
+  getDailyOrders(state: StateType, getters: GettersType): (dateTime: string) => Order[];
+  hasDailyOrders: (state: StateType, getters?: GettersType) => (dateTime: string) => boolean;
+  hasOrderWithinBlockingDuration: (
+    state: StateType,
+    getters: GettersType,
+  ) => (dateTime: string) => boolean;
+  getDailyRemainingNumberOfOrders: (
+    state: StateType,
+    getters?: GettersType,
+  ) => (dateTime: string) => number;
+  getMenuListSortedByPopularity: (state: StateType, getters?: GettersType) => MenuItem[];
+  getMenuListSortedByAlphabet: (state: StateType, getters?: GettersType) => MenuItem[];
   [key: string]: any;
 };
 
@@ -48,6 +55,8 @@ export type StoreType = {
     maxDailyOrders: number;
     sortType: SortType;
     menuList: MenuItem[];
+    isBlocked: boolean;
+    blockingDuration: number;
     [key: string]: any;
   };
   modules: any;
