@@ -21,10 +21,10 @@ export default defineComponent({
       <header class={styles.header}>
         <h1 class={styles.title}>Coffeescript</h1>
         <dl class={styles.status}>
-          <dt class={styles.statusTitle}>Remaining daily coffees</dt>
+          <dt class={styles.statusTitle}>Remaining coffees:</dt>
           <dd class={styles.statusValue}>{remainingOrders.value}</dd>
 
-          <dt class={styles.statusTitle}>Status</dt>
+          <dt class={styles.statusTitle}>Status (Blocked):</dt>
           <dd class={styles.statusValue}>{String(isBlocked.value)}</dd>
         </dl>
       </header>
