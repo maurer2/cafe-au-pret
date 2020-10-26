@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import styles from './list-daily.module.css';
 
 import { useStore } from '../../store';
@@ -15,32 +15,10 @@ export default defineComponent({
       () => store.getters.getDailyRemainingNumberOfOrders('YYYY-MM-DD') as number,
     );
     const currentDate = computed(() => store.getters.getCurrentDate as string);
-
-    const dateFormatter = ref(
-      new Intl.DateTimeFormat('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-      }),
-    );
-
-    function getDateFormatted(dateTime: Date): string {
-      const dateFormatted = dateFormatter.value.formatToParts(dateTime);
-
-      // only contains last literal separator e.g. seconds literal not date literal
-      const { day, month, year } = Object.fromEntries(
-        dateFormatted.map((datePart) => [datePart.type, datePart.value]),
-      );
-
-      return `${day}/${month}/${year}`;
-    }
+    const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
 
     function getTimeFormatted(dateTime: Date): string {
-      const dateFormatted = dateFormatter.value.formatToParts(dateTime);
+      const dateFormatted = dateTimeFormatter.value.formatToParts(dateTime);
 
       // only contains last literal separator e.g. seconds literal not date literal
       const { hour, minute, second } = Object.fromEntries(
