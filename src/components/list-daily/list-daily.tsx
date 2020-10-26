@@ -2,6 +2,7 @@ import { computed, defineComponent } from 'vue';
 import styles from './list-daily.module.css';
 
 import { useStore } from '../../store';
+import { getTimeFormatted } from '../../util/dateUtil';
 
 export default defineComponent({
   name: 'ListDaily',
@@ -16,17 +17,6 @@ export default defineComponent({
     );
     const currentDate = computed(() => store.getters.getCurrentDate as string);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
-
-    function getTimeFormatted(dateTime: Date): string {
-      const dateFormatted = dateTimeFormatter.value.formatToParts(dateTime);
-
-      // only contains last literal separator e.g. seconds literal not date literal
-      const { hour, minute, second } = Object.fromEntries(
-        dateFormatted.map((datePart) => [datePart.type, datePart.value]),
-      );
-
-      return `${hour}:${minute}:${second}`;
-    }
 
     return () => (
       <section class={styles.list}>
@@ -45,7 +35,7 @@ export default defineComponent({
             </thead>
             <tbody class={styles.tableBody}>
               {ordersList.value.map(({ id, name, dateTime }, index) => {
-                const time = getTimeFormatted(dateTime);
+                const time = getTimeFormatted(dateTimeFormatter.value, dateTime);
                 const indexOneBased = String(index + 1).padStart(2, '0');
 
                 return (
