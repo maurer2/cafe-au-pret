@@ -14,8 +14,8 @@ export default defineComponent({
     const remainingOrders = computed(
       () => store.getters.getDailyRemainingNumberOfOrders('YYYY-MM-DD') as number,
     );
+    const currentDate = computed(() => store.getters.getCurrentDate as string);
 
-    const currentDate = new Date();
     const dateFormatter = ref(
       new Intl.DateTimeFormat('en-GB', {
         year: 'numeric',
@@ -52,7 +52,7 @@ export default defineComponent({
 
     return () => (
       <section class={styles.list}>
-        <h2>Daily purchases on {getDateFormatted(currentDate)}</h2>
+        <h2>Daily purchases on {currentDate.value}</h2>
 
         {hasOrders.value && (
           <table class={styles.table}>

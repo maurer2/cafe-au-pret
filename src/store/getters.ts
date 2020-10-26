@@ -1,6 +1,32 @@
 import { GettersType } from './types';
 
 const getters: GettersType = {
+  getCurrentDate: (state) => {
+    const { currentDateTime } = state;
+    const formatter = state.dateTimeFormatter;
+
+    const dateFormatted = formatter.formatToParts(currentDateTime);
+
+    // only contains last literal separator e.g. seconds literal not date literal
+    const { day, month, year } = Object.fromEntries(
+      dateFormatted.map((datePart) => [datePart.type, datePart.value]),
+    );
+
+    return `${day}/${month}/${year}`;
+  },
+  getCurrentTime: (state) => {
+    const { currentDateTime } = state;
+    const formatter = state.dateTimeFormatter;
+
+    const dateFormatted = formatter.formatToParts(currentDateTime);
+
+    // only contains last literal separator e.g. seconds literal not date literal
+    const { hour, minute, second } = Object.fromEntries(
+      dateFormatted.map((datePart) => [datePart.type, datePart.value]),
+    );
+
+    return `${hour}:${minute}:${second}`;
+  },
   getNumberOfDailyOrders: (state) => (dateTime) => {
     if (!(dateTime in state.orders)) {
       return 0;
@@ -34,7 +60,10 @@ const getters: GettersType = {
 
     const [lastOrder] = dailyOrders.slice(-1);
 
-    // const hasDailyOrdersToday = gettersList.hasDailyOrders(state)(dateTime);
+    const currentDate = new Date();
+    const previousDate = lastOrder.dateTime;
+
+    console.log(currentDate.getTime() - previousDate.getTime());
 
     console.log(lastOrder);
 

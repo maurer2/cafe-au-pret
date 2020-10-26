@@ -15,6 +15,9 @@ const actions: ActionsType = {
 
     context.commit(Mutations.ADD_DAILY_ORDER, { dateTime, order });
   },
+  async [Actions.UPDATE_CURRENT_DATE](context, dateTime) {
+    context.commit(Mutations.UPDATE_CURRENT_DATE, dateTime);
+  },
 };
 
 export default actions;

@@ -24,6 +24,9 @@ const mutations: MutationsType = {
 
     state.orders = newOrders;
   },
+  [Mutations.UPDATE_CURRENT_DATE](state: StateType, dateTime: Date) {
+    state.currentDateTime = dateTime;
+  },
 };
 
 export default mutations;

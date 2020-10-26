@@ -3,6 +3,7 @@ import { ActionContext } from 'vuex';
 export enum Mutations {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
   ADD_DAILY_ORDER = 'ADD_DAILY_ORDER',
+  UPDATE_CURRENT_DATE = 'UPDATE_CURRENT_DATE',
 }
 
 export type MutationsType = {
@@ -14,6 +15,7 @@ export enum Actions {
   DECREASE_ZOOM = 'DECREASE_ZOOM',
   RESET_ZOOM = 'RESET_ZOOM',
   ADD_ORDER = 'ADD_ORDER',
+  UPDATE_CURRENT_DATE = 'UPDATE_CURRENT_DATE',
 }
 
 export type ActionsType = {
@@ -24,6 +26,8 @@ export type ActionsType = {
 };
 
 export type GettersType = {
+  getCurrentDate(state: StateType, getters?: GettersType): string;
+  getCurrentTime(state: StateType, getters?: GettersType): string;
   getNumberOfDailyOrders(state: StateType, getters?: GettersType): (dateTime: string) => number;
   getDailyOrders(state: StateType, getters: GettersType): (dateTime: string) => Order[];
   hasDailyOrders: (state: StateType, getters?: GettersType) => (dateTime: string) => boolean;
@@ -49,6 +53,8 @@ export type StoreType = {
   state: {
     userId: string;
     zoomLevel: number;
+    currentDateTime: Date;
+    dateTimeFormatter: Intl.DateTimeFormat;
     orders: {
       [orderDate: string]: Order[];
     };
