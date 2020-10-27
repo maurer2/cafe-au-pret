@@ -1,4 +1,4 @@
-import { defineComponent, computed, ref } from 'vue';
+import { defineComponent, computed } from 'vue';
 import styles from './app-header.module.css';
 import { useStore } from '../../store';
 
@@ -11,7 +11,6 @@ export default defineComponent({
     const remainingOrders = computed(
       () => store.getters.getDailyRemainingNumberOfOrders('YYYY-MM-DD') as number,
     );
-    // const isBlocked = ref(store.state.isBlocked as boolean);
     const isBlocked = computed(
       () => store.getters.hasOrderWithinBlockingDuration('YYYY-MM-DD') as boolean,
     );

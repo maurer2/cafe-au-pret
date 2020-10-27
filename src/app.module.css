@@ -2,3 +2,7 @@
   min-height: 100vh; /* temp */
   text-align: center;
 }
+
+.main {
+  overflow: hidden; /* contain child margins */
+}

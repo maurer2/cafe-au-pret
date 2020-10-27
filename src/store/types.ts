@@ -26,6 +26,7 @@ export type ActionsType = {
 };
 
 export type GettersType = {
+  getCurrentDateKey(state: StateType, getters?: GettersType): string;
   getCurrentDate(state: StateType, getters?: GettersType): string;
   getCurrentTime(state: StateType, getters?: GettersType): string;
   getNumberOfDailyOrders(state: StateType, getters?: GettersType): (dateTime: string) => number;

@@ -17,10 +17,13 @@ export default defineComponent({
     );
     const currentDate = computed(() => store.getters.getCurrentDate as string);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
+    const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
 
     return () => (
       <section class={styles.list}>
-        <h2>Daily purchases on {currentDate.value}</h2>
+        <h2>
+          Daily purchases on {currentDate.value} ({dateTimeKey.value})
+        </h2>
 
         <table class={styles.table}>
           <caption class={styles.tableCaption}>Caption</caption>
