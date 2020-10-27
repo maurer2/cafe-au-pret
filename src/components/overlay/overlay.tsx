@@ -1,4 +1,4 @@
-import { defineComponent, Teleport } from 'vue';
+import { defineComponent, Teleport, Slot } from 'vue';
 import styles from './overlay.module.css';
 
 export default defineComponent({
@@ -6,7 +6,7 @@ export default defineComponent({
   components: {},
   props: {},
   setup(_, { slots }) {
-    const content = slots.overlayContent;
+    const content: Maybe<Slot> = slots.overlayContent;
 
     return () => (
       <Teleport to="body">

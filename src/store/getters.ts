@@ -1,31 +1,20 @@
 import { GettersType } from './types';
+import { getTimeFormatted, getDateFormatted } from '../util/dateUtil';
 
 const getters: GettersType = {
   getCurrentDate: (state) => {
-    const { currentDateTime } = state;
-    const formatter = state.dateTimeFormatter;
+    const { currentDateTime, dateTimeFormatter } = state;
 
-    const dateFormatted = formatter.formatToParts(currentDateTime);
+    const dateFormatted = getDateFormatted(dateTimeFormatter, currentDateTime);
 
-    // only contains last literal separator e.g. seconds literal not date literal
-    const { day, month, year } = Object.fromEntries(
-      dateFormatted.map((datePart) => [datePart.type, datePart.value]),
-    );
-
-    return `${day}/${month}/${year}`;
+    return dateFormatted;
   },
   getCurrentTime: (state) => {
-    const { currentDateTime } = state;
-    const formatter = state.dateTimeFormatter;
+    const { currentDateTime, dateTimeFormatter } = state;
 
-    const dateFormatted = formatter.formatToParts(currentDateTime);
+    const timeFormatted = getTimeFormatted(dateTimeFormatter, currentDateTime);
 
-    // only contains last literal separator e.g. seconds literal not date literal
-    const { hour, minute, second } = Object.fromEntries(
-      dateFormatted.map((datePart) => [datePart.type, datePart.value]),
-    );
-
-    return `${hour}:${minute}:${second}`;
+    return timeFormatted;
   },
   getNumberOfDailyOrders: (state) => (dateTime) => {
     if (!(dateTime in state.orders)) {

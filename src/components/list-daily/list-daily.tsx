@@ -22,17 +22,17 @@ export default defineComponent({
       <section class={styles.list}>
         <h2>Daily purchases on {currentDate.value}</h2>
 
-        {hasOrders.value && (
-          <table class={styles.table}>
-            <caption class={styles.tableCaption}>Caption</caption>
-            <thead class={styles.tableHead}>
-              <tr class={styles.tableHeadRow}>
-                <th class={styles.tableHeadColumn}>#</th>
-                <th class={styles.tableHeadColumn}>Coffee name</th>
-                <th class={styles.tableHeadColumn}>Order time</th>
-                <th class={styles.tableHeadColumn}></th>
-              </tr>
-            </thead>
+        <table class={styles.table}>
+          <caption class={styles.tableCaption}>Caption</caption>
+          <thead class={styles.tableHead}>
+            <tr class={styles.tableHeadRow}>
+              <th class={styles.tableHeadColumn}>#</th>
+              <th class={styles.tableHeadColumn}>Coffee name</th>
+              <th class={styles.tableHeadColumn}>Order time</th>
+              <th class={styles.tableHeadColumn}></th>
+            </tr>
+          </thead>
+          {hasOrders.value && (
             <tbody class={styles.tableBody}>
               {ordersList.value.map(({ id, name, dateTime }, index) => {
                 const time = getTimeFormatted(dateTimeFormatter.value, dateTime);
@@ -48,16 +48,16 @@ export default defineComponent({
                 );
               })}
             </tbody>
-            <tfoot class={styles.tableFoot}>
-              <tr class={styles.tableFootRow}>
-                <td class={styles.tableFootColumn} colspan={3}>
-                  Number of drinks remaining:
-                </td>
-                <td class={styles.tableFootColumn}>{remainingOrders.value}</td>
-              </tr>
-            </tfoot>
-          </table>
-        )}
+          )}
+          <tfoot class={styles.tableFoot}>
+            <tr class={styles.tableFootRow}>
+              <td class={styles.tableFootColumn} colspan={3}>
+                Number of drinks remaining:
+              </td>
+              <td class={styles.tableFootColumn}>{remainingOrders.value}</td>
+            </tr>
+          </tfoot>
+        </table>
       </section>
     );
   },
