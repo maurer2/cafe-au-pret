@@ -1,11 +1,13 @@
 import { GettersType } from './types';
-import { getTimeFormatted, getDateFormatted } from '../util/dateUtil';
+import { getTimeFormatted, getDateFormatted, getCurrentDateISO } from '../util/dateUtil';
 
 const getters: GettersType = {
   getCurrentDateKey: (state) => {
-    const dateString = getters.getCurrentDate(state);
+    const { currentDateTime, dateTimeFormatter } = state;
 
-    return dateString.replaceAll('/', '-');
+    const isoString = getCurrentDateISO(dateTimeFormatter, currentDateTime);
+
+    return isoString;
   },
   getCurrentDate: (state) => {
     const { currentDateTime, dateTimeFormatter } = state;
