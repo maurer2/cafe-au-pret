@@ -11,7 +11,7 @@ const actions: ActionsType = {
     context.commit(Mutations.UPDATE_ZOOM, 0);
   },
   async [Actions.ADD_ORDER](context, order: Order) {
-    const dateTime = 'YYYY-MM-DD';
+    const dateTime: string = context.getters.getCurrentDateKey;
 
     context.commit(Mutations.ADD_DAILY_ORDER, { dateTime, order });
   },

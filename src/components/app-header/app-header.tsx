@@ -8,14 +8,16 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
+    const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
+
     const remainingOrders = computed(
-      () => store.getters.getDailyRemainingNumberOfOrders('YYYY-MM-DD') as number,
+      () => store.getters.getDailyRemainingNumberOfOrders(dateTimeKey.value) as number,
     );
     const isBlocked = computed(
-      () => store.getters.hasOrderWithinBlockingDuration('YYYY-MM-DD') as boolean,
+      () => store.getters.hasOrderWithinBlockingDuration(dateTimeKey.value) as boolean,
     );
 
-    console.log(isBlocked);
+    // console.log(isBlocked);
     return () => (
       <header class={styles.header}>
         <h1 class={styles.title}>Coffeescript</h1>

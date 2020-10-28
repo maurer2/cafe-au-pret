@@ -10,14 +10,14 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const ordersList = computed(() => store.getters.getDailyOrders('YYYY-MM-DD') as Order[]);
-    const hasOrders = computed(() => store.getters.hasDailyOrders('YYYY-MM-DD') as boolean);
+    const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
+    const ordersList = computed(() => store.getters.getDailyOrders(dateTimeKey.value) as Order[]);
+    const hasOrders = computed(() => store.getters.hasDailyOrders(dateTimeKey.value) as boolean);
     const remainingOrders = computed(
-      () => store.getters.getDailyRemainingNumberOfOrders('YYYY-MM-DD') as number,
+      () => store.getters.getDailyRemainingNumberOfOrders(dateTimeKey.value) as number,
     );
     const currentDate = computed(() => store.getters.getCurrentDate as string);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
-    const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
 
     return () => (
       <section class={styles.list}>

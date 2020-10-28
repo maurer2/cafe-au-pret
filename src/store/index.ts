@@ -24,16 +24,7 @@ const defaultStore: StoreType = {
     zoomLevel: 1.0,
     currentDateTime: new Date(),
     dateTimeFormatter,
-    orders: {
-      'YYYY-MM-DD': [
-        {
-          id: 'psl',
-          name: 'PSL',
-          dateTime: new Date(),
-          tz: 'Europe/London',
-        },
-      ],
-    },
+    orders: {},
     maxDailyOrders: 5,
     sortType: SortType.popularity,
     menuList,

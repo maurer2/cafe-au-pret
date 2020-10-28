@@ -13,12 +13,15 @@ const mutations: MutationsType = {
     const newZoomLevel = zoomLevel + (change / 100);
     state.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
   },
-  [Mutations.ADD_DAILY_ORDER](
-    state: StateType,
-    { dateTime, order }: { dateTime: string; order: Order },
-  ) {
+  [Mutations.ADD_DAILY_ORDER](state: StateType, payload: { dateTime: string; order: Order }) {
+    const { dateTime, order } = payload;
+
     const { orders } = state;
     const newOrders = { ...orders };
+
+    if (!(dateTime in newOrders)) {
+      newOrders[dateTime] = [];
+    }
 
     newOrders[dateTime].push(order);
 
