@@ -42,7 +42,7 @@ export default defineComponent({
     });
 
     function addItemToOrderedList({ id, name }: MenuItem) {
-      const dummyOrder: Order = {
+      const order: Order = {
         id,
         name,
         dateTime: new Date(),
@@ -50,7 +50,7 @@ export default defineComponent({
       };
 
       store
-        .dispatch(Actions.ADD_ORDER, dummyOrder)
+        .dispatch(Actions.ADD_ORDER, order)
         .then(() => {
           showOverlay.value = true;
 

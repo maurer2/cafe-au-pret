@@ -7,6 +7,7 @@ import ListDaily from './components/list-daily/list-daily';
 import Menu from './components/menu/menu';
 
 import { useStore } from './store';
+import { Actions } from './store/types';
 
 import './app.css';
 
@@ -30,7 +31,9 @@ export default defineComponent({
       tz: 'Europe/London',
     };
 
-    // onMounted(() => {});
+    onMounted(() => {
+      store.dispatch(Actions.ADD_ORDER, dummyOrder);
+    });
 
     return () => (
       <>
