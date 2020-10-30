@@ -42,6 +42,7 @@ export type GettersType = {
   ) => (dateTime: string) => number;
   getMenuListSortedByPopularity: (state: StateType, getters?: GettersType) => MenuItem[];
   getMenuListSortedByAlphabet: (state: StateType, getters?: GettersType) => MenuItem[];
+  getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
   [key: string]: any;
 };
 

@@ -88,6 +88,11 @@ const getters: GettersType = {
 
     return sortedList;
   },
+  getZoomLevelFormatted: (state) => {
+    const { zoomLevel } = state;
+
+    return zoomLevel.toFixed(2);
+  },
 };
 
 export default getters;

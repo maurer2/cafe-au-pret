@@ -11,7 +11,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const { userId } = store.state;
-    const zoomLevel = computed(() => store.state.zoomLevel.toFixed(2));
+    const zoomLevel = computed(() => store.getters.getZoomLevelFormatted as string);
     const qrCodeMarkup: Ref<string | null> = ref(null);
 
     function getQRCodeMarkup(payload: string): Promise<string> {
@@ -42,7 +42,7 @@ export default defineComponent({
         .then((markup: string) => {
           setTimeout(() => {
             qrCodeMarkup.value = markup;
-          }, 1);
+          }, 0);
         })
         .catch((error: Error) => {
           console.log(error);
