@@ -50,7 +50,7 @@ export default defineComponent({
     });
 
     return () => (
-      <div class={styles.qrcode}>
+      <section class={styles.qrcode}>
         <h2>QRCode (Zoom level: {zoomLevel.value})</h2>
 
         <>
@@ -80,7 +80,7 @@ export default defineComponent({
             Zoom out
           </button>
         </div>
-      </div>
+      </section>
     );
   },
 });
