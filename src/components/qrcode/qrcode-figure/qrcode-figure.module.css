@@ -1,0 +1,28 @@
+.qrcodePicture {
+  display: block;
+  margin: 0;
+}
+
+.qrcodeImageWrapper {
+  width: 50vw;
+  max-width: 350px;
+  margin: auto;
+}
+
+.qrcodeImageWrapper > svg {
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: pixelated;
+}
+
+.qrcodeText {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center;
+}

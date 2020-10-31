@@ -1,29 +1,22 @@
-import { defineComponent, Ref, ref, onMounted, computed } from 'vue';
-import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
+import { defineComponent, computed } from 'vue';
 import styles from './qrcode.module.css';
 import { useStore } from '../../store';
 import { Actions } from '../../store/types';
 
+import QRCodeFigure from './qrcode-figure/qrcode-figure';
+import QRCodeControls from './qrcode-controls/qrcode-controls';
+
 export default defineComponent({
   name: 'QRCode',
-  components: {},
+  components: {
+    'qr-code-figure': QRCodeFigure,
+    'qr-code-controls': QRCodeControls,
+  },
   props: {},
   setup() {
     const store = useStore();
     const { userId } = store.state;
     const zoomLevel = computed(() => store.getters.getZoomLevelFormatted as string);
-    const qrCodeMarkup: Ref<string | null> = ref(null);
-
-    function getQRCodeMarkup(payload: string): Promise<string> {
-      const qrCodeSettings: QRCodeToStringOptions = {
-        errorCorrectionLevel: 'H',
-        type: 'svg',
-        margin: 0,
-      };
-      const qrCodeString = QRCodeGenerator.toString(payload, qrCodeSettings);
-
-      return qrCodeString;
-    }
 
     function zoomIn() {
       store.dispatch(Actions.INCREASE_ZOOM);
@@ -37,49 +30,17 @@ export default defineComponent({
       store.dispatch(Actions.RESET_ZOOM);
     }
 
-    onMounted(() => {
-      getQRCodeMarkup(store.state.userId)
-        .then((markup: string) => {
-          setTimeout(() => {
-            qrCodeMarkup.value = markup;
-          }, 0);
-        })
-        .catch((error: Error) => {
-          console.log(error);
-        });
-    });
-
     return () => (
       <section class={styles.qrcode}>
         <h2>QRCode (Zoom level: {zoomLevel.value})</h2>
 
-        <>
-          {qrCodeMarkup.value === null && <div>Loading QR code</div>}
-          {qrCodeMarkup.value !== null && (
-            <figure class={styles.qrcodePicture}>
-              <div
-                class={styles.qrcodeImageWrapper}
-                innerHTML={qrCodeMarkup.value}
-                style={{
-                  width: `calc(50vw * ${zoomLevel.value})`,
-                }}
-              />
-              <figcaption class={styles.qrcodeText}>{userId}</figcaption>
-            </figure>
-          )}
-        </>
+        <qr-code-figure zoomLevel={zoomLevel.value} userId={userId} />
 
-        <div class={styles.controls}>
-          <button class={styles.control} type="button" onClick={() => zoomIn()}>
-            Zoom in
-          </button>
-          <button class={styles.control} type="button" onClick={() => zoomReset()}>
-            1x
-          </button>
-          <button class={styles.control} type="button" onClick={() => zoomOut()}>
-            Zoom out
-          </button>
-        </div>
+        <qr-code-controls
+          onIncreaseZoom={zoomIn}
+          onDecreaseZoom={zoomOut}
+          onResetZoom={zoomReset}
+        />
       </section>
     );
   },
