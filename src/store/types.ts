@@ -29,17 +29,16 @@ export type GettersType = {
   getCurrentDateKey(state: StateType, getters?: GettersType): string;
   getCurrentDate(state: StateType, getters?: GettersType): string;
   getCurrentTime(state: StateType, getters?: GettersType): string;
-  getNumberOfDailyOrders(state: StateType, getters?: GettersType): (dateTime: string) => number;
-  getDailyOrders(state: StateType, getters: GettersType): (dateTime: string) => Order[];
-  hasDailyOrders: (state: StateType, getters?: GettersType) => (dateTime: string) => boolean;
+  // getNumberOfDailyOrders(state: StateType, getters?: GettersType): (dateTime: string) => number;
+  getDailyOrders(state: StateType, getters?: GettersType): Order[];
+  hasDailyOrders: (state: StateType, getters?: GettersType) => boolean;
+  /*
   hasOrderWithinBlockingDuration: (
     state: StateType,
     getters: GettersType,
   ) => (dateTime: string) => boolean;
-  getDailyRemainingNumberOfOrders: (
-    state: StateType,
-    getters?: GettersType,
-  ) => (dateTime: string) => number;
+  */
+  getDailyRemainingNumberOfOrders: (state: StateType, getters?: GettersType) => number;
   getMenuListSortedByPopularity: (state: StateType, getters?: GettersType) => MenuItem[];
   getMenuListSortedByAlphabet: (state: StateType, getters?: GettersType) => MenuItem[];
   getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;

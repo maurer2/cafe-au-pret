@@ -23,6 +23,7 @@ const getters: GettersType = {
 
     return timeFormatted;
   },
+  /*
   getNumberOfDailyOrders: (state) => (dateTime) => {
     if (!(dateTime in state.orders)) {
       return 0;
@@ -30,19 +31,27 @@ const getters: GettersType = {
 
     return state.orders[dateTime].length;
   },
-  getDailyOrders: (state, gettersList) => (dateTime) => {
-    if (!(dateTime in state.orders)) {
-      return [];
-    }
-    return state.orders[dateTime];
-  },
-  hasDailyOrders: (state) => (dateTime) => {
-    if (!(dateTime in state.orders)) {
+  */
+  hasDailyOrders: (state) => {
+    const dateKey = getters.getCurrentDateKey(state);
+
+    if (!(dateKey in state.orders)) {
       return false;
     }
 
-    return !!state.orders[dateTime].length;
+    return !!state.orders[dateKey].length;
   },
+  getDailyOrders: (state) => {
+    const dateKey = getters.getCurrentDateKey(state);
+    const hasOrders = getters.hasDailyOrders(state);
+
+    if (!hasOrders) {
+      return [];
+    }
+
+    return state.orders[dateKey];
+  },
+  /*
   hasOrderWithinBlockingDuration: (state, gettersList) => (dateTime) => {
     const { blockingDuration } = state;
     const hasOrdersForDateTime = gettersList.hasDailyOrders(dateTime as any);
@@ -65,14 +74,18 @@ const getters: GettersType = {
 
     return false;
   },
-  getDailyRemainingNumberOfOrders: (state) => (dateTime) => {
+  */
+  getDailyRemainingNumberOfOrders: (state) => {
+    const dailyOrders = getters.getDailyOrders(state);
+    const hasOrders = getters.hasDailyOrders(state);
+
     const { maxDailyOrders } = state;
 
-    if (!(dateTime in state.orders)) {
+    if (!hasOrders) {
       return maxDailyOrders;
     }
 
-    const orderDifference = maxDailyOrders - state.orders[dateTime].length;
+    const orderDifference = maxDailyOrders - dailyOrders.length;
 
     return Math.sign(orderDifference) === 1 ? orderDifference : 0;
   },
