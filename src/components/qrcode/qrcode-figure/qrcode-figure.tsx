@@ -20,25 +20,37 @@ export default defineComponent({
       errorCorrectionLevel: 'H',
       type: 'svg',
       margin: 0,
+      color: {
+        dark: '#000',
+        light: '#fff',
+      },
     };
 
-    function getQRCodeMarkup(payload: string): Promise<string> {
+    async function getQRCodeMarkup(payload: string): Promise<string> {
       const qrCodeString = QRCodeGenerator.toString(payload, qrCodeSettings);
 
       return qrCodeString;
     }
 
-    onMounted(() => {
-      getQRCodeMarkup(props.userId)
-        .then((markup: string) => {
-          setTimeout(() => {
-            qrCodeMarkup.value = markup;
-          }, 500);
-        })
-        .catch((error: Error) => {
+    async function setQRCodeMarkup(): Promise<void> {
+      try {
+        const markup = await getQRCodeMarkup(props.userId);
+
+        qrCodeMarkup.value = markup;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    onMounted(
+      async (): Promise<void> => {
+        try {
+          setQRCodeMarkup();
+        } catch (error) {
           console.log(error);
-        });
-    });
+        }
+      },
+    );
 
     return () => {
       const { zoomLevel, userId } = props;
