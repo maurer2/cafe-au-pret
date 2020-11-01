@@ -26,3 +26,8 @@
   font-weight: bold;
   text-align: center;
 }
+
+.qrcodeLoader {
+  margin: 1rem auto;
+  width: fit-content;
+}

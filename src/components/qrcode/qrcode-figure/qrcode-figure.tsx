@@ -1,4 +1,4 @@
-import { defineComponent, Ref, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, PropType } from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
 
@@ -6,17 +6,16 @@ export default defineComponent({
   name: 'QRCodeFigure',
   props: {
     userId: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
     zoomLevel: {
-      type: String,
+      type: String as PropType<string>,
       default: '',
     },
   },
-  emits: [],
   setup(props) {
-    const qrCodeMarkup: Ref<string | null> = ref(null);
+    const qrCodeMarkup = ref(undefined as string | undefined);
     const qrCodeSettings: QRCodeToStringOptions = {
       errorCorrectionLevel: 'H',
       type: 'svg',
@@ -34,7 +33,7 @@ export default defineComponent({
         .then((markup: string) => {
           setTimeout(() => {
             qrCodeMarkup.value = markup;
-          }, 0);
+          }, 500);
         })
         .catch((error: Error) => {
           console.log(error);
@@ -45,9 +44,8 @@ export default defineComponent({
       const { zoomLevel, userId } = props;
 
       return (
-        <section class={styles.qrcode}>
-          {qrCodeMarkup.value === null && <div>Loading QR code</div>}
-          {qrCodeMarkup.value !== null && (
+        <>
+          {qrCodeMarkup.value ? (
             <figure class={styles.qrcodePicture}>
               <div
                 class={styles.qrcodeImageWrapper}
@@ -58,8 +56,10 @@ export default defineComponent({
               />
               <figcaption class={styles.qrcodeText}>{userId}</figcaption>
             </figure>
+          ) : (
+            <div class={styles.qrcodeLoader}>Loading</div>
           )}
-        </section>
+        </>
       );
     };
   },

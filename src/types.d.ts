@@ -15,4 +15,4 @@ interface MenuItem {
   name: string;
 }
 
-type Maybe<T> = T | undefined;
+type Maybe<Type> = Type | undefined;
