@@ -19,11 +19,25 @@ export default defineComponent({
     const ordersList = computed(() => store.getters.getDailyOrders as Order[]);
     const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
     const currentDate = computed(() => store.getters.getCurrentDate as string);
+    // const currentDateFull = computed(() => store.state.currentDateTime);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
+    const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);
+
+    const remainingMinutes = computed(() => {
+      if (!blockingTimeoutEnd.value) {
+        return 0 as number;
+      }
+      const differenceMS = blockingTimeoutEnd.value.getTime() - Date.now();
+      const difference = differenceMS / 1000 / 60;
+
+      return difference;
+    });
 
     return () => (
       <section class={styles.list}>
-        <h2>Purchases on {currentDate.value}</h2>
+        <h2>
+          Purchases on {currentDate.value} ({remainingMinutes.value})
+        </h2>
         <table class={styles.table}>
           <caption class={styles.tableCaption}>Caption</caption>
           <thead class={styles.tableHead}>

@@ -4,6 +4,7 @@ export enum Mutations {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
   ADD_DAILY_ORDER = 'ADD_DAILY_ORDER',
   UPDATE_CURRENT_DATE = 'UPDATE_CURRENT_DATE',
+  SET_BLOCKING_TIMEOUT = 'SET_BLOCKING_TIMEOUT',
 }
 
 export type MutationsType = {
@@ -64,6 +65,7 @@ export type StoreType = {
     menuList: MenuItem[];
     isBlocked: boolean;
     blockingDuration: number;
+    blockingTimeoutEnd: Date | null;
     [key: string]: any;
   };
   modules: any;

@@ -11,9 +11,16 @@ const actions: ActionsType = {
     context.commit(Mutations.UPDATE_ZOOM, 0);
   },
   async [Actions.ADD_ORDER](context, order: Order) {
-    const dateTime: string = context.getters.getCurrentDateKey;
+    const dateKey: string = context.getters.getCurrentDateKey;
+    const { isBlocked } = context.state;
+    const { dateTime } = order;
 
-    context.commit(Mutations.ADD_DAILY_ORDER, { dateTime, order });
+    if (isBlocked) {
+      throw new Error('blocked');
+    } else {
+      context.commit(Mutations.ADD_DAILY_ORDER, { dateKey, order });
+      context.commit(Mutations.SET_BLOCKING_TIMEOUT, dateTime);
+    }
   },
   async [Actions.UPDATE_CURRENT_DATE](context, dateTime) {
     context.commit(Mutations.UPDATE_CURRENT_DATE, dateTime);
