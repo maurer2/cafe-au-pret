@@ -1,5 +1,5 @@
 import { defineComponent, computed } from 'vue';
-import styles from './qrcode.module.css';
+import styles from './index.module.css';
 
 import { useStore } from '../../store';
 import { Actions } from '../../store/types';

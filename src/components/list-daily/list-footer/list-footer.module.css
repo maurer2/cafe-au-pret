@@ -1,9 +1,9 @@
 .tableFootRow {
-  composes: tableRow from '../list-daily.module.css';
+  composes: tableRow from '../index.module.css';
 }
 
 .tableFootColumn {
-  composes: tableColumn from '../list-daily.module.css';
+  composes: tableColumn from '../index.module.css';
 
   border-top: 2px solid var(--tundora);
   word-break: normal;

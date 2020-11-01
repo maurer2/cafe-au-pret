@@ -1,5 +1,5 @@
 import { computed, defineComponent } from 'vue';
-import styles from './list-daily.module.css';
+import styles from './index.module.css';
 
 import { useStore } from '../../store';
 
