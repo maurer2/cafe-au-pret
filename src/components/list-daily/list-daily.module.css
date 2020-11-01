@@ -37,16 +37,6 @@
 
 .tableHeadRow {
   composes: tableRow;
-  /* border-bottom: 1px solid black; */
-}
-
-.tableBodyRow {
-  composes: tableRow;
-}
-
-.tableFootRow {
-  composes: tableRow;
-  /* border-top: 2px solid black; */
 }
 
 .tableHeadColumn {
@@ -55,23 +45,4 @@
   border-bottom: 1px solid var(--tundora);
   font-weight: bold;
   word-break: normal;
-}
-
-.tableBodyColumn {
-  composes: tableColumn;
-
-  border-bottom: 1px solid var(--dove-gray);
-}
-
-.tableFootColumn {
-  composes: tableColumn;
-
-  border-top: 2px solid var(--tundora);
-  word-break: normal;
-  text-align: right;
-  font-weight: bold;
-}
-
-.tableFootColumn:nth-child(1) {
-  grid-column: 1 / span 3;
 }

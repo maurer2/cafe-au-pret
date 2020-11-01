@@ -4,16 +4,17 @@ import styles from './list-daily.module.css';
 import { useStore } from '../../store';
 
 import ListBody from './list-body/list-body';
+import ListFooter from './list-footer/list-footer';
 
 export default defineComponent({
   name: 'ListDaily',
   components: {
-    'list-body': ListBody,
+    ListBody,
+    ListFooter,
   },
   props: {},
   setup() {
     const store = useStore();
-    const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
     const hasOrders = computed(() => store.getters.hasDailyOrders as boolean);
     const ordersList = computed(() => store.getters.getDailyOrders as Order[]);
     const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
@@ -23,7 +24,6 @@ export default defineComponent({
     return () => (
       <section class={styles.list}>
         <h2>Purchases on {currentDate.value}</h2>
-
         <table class={styles.table}>
           <caption class={styles.tableCaption}>Caption</caption>
           <thead class={styles.tableHead}>
@@ -46,12 +46,7 @@ export default defineComponent({
             </tbody>
           )}
           <tfoot class={styles.tableFoot}>
-            <tr class={styles.tableFootRow}>
-              <td class={styles.tableFootColumn} colspan={3}>
-                Number of drinks remaining:
-              </td>
-              <td class={styles.tableFootColumn}>{remainingOrders.value}</td>
-            </tr>
+            <list-footer remainingOrders={remainingOrders.value} />
           </tfoot>
         </table>
       </section>

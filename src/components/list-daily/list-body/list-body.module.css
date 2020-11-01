@@ -1,17 +1,9 @@
-.tableRow {
-  display: contents;
-}
-
-.tableColumn {
-  text-align: left;
-}
-
 .tableBodyRow {
-  composes: tableRow;
+  composes: tableRow from '../list-daily.module.css';
 }
 
 .tableBodyColumn {
-  composes: tableColumn;
+  composes: tableColumn from '../list-daily.module.css';
 
   border-bottom: 1px solid var(--dove-gray);
 }
