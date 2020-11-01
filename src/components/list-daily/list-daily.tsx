@@ -2,11 +2,14 @@ import { computed, defineComponent } from 'vue';
 import styles from './list-daily.module.css';
 
 import { useStore } from '../../store';
-import { getTimeFormatted } from '../../util/dateUtil';
+
+import ListBody from './list-body/list-body';
 
 export default defineComponent({
   name: 'ListDaily',
-  components: {},
+  components: {
+    'list-body': ListBody,
+  },
   props: {},
   setup() {
     const store = useStore();
@@ -19,9 +22,7 @@ export default defineComponent({
 
     return () => (
       <section class={styles.list}>
-        <h2>
-          Daily purchases on {currentDate.value} ({dateTimeKey.value})
-        </h2>
+        <h2>Purchases on {currentDate.value}</h2>
 
         <table class={styles.table}>
           <caption class={styles.tableCaption}>Caption</caption>
@@ -35,19 +36,13 @@ export default defineComponent({
           </thead>
           {hasOrders.value && (
             <tbody class={styles.tableBody}>
-              {ordersList.value.map(({ id, name, dateTime }, index) => {
-                const time = getTimeFormatted(dateTimeFormatter.value, dateTime);
-                const indexOneBased = String(index + 1).padStart(2, '0');
-
-                return (
-                  <tr class={styles.tableBodyRow} key={id}>
-                    <td class={styles.tableBodyColumn}>{indexOneBased}</td>
-                    <td class={styles.tableBodyColumn}>{name}</td>
-                    <td class={styles.tableBodyColumn}>{time}</td>
-                    <td class={styles.tableBodyColumn}></td>
-                  </tr>
-                );
-              })}
+              {ordersList.value.map((order, index) => (
+                <list-body
+                  index={index}
+                  rowData={order}
+                  dateTimeFormatter={dateTimeFormatter.value}
+                />
+              ))}
             </tbody>
           )}
           <tfoot class={styles.tableFoot}>

@@ -1,0 +1,17 @@
+.tableRow {
+  display: contents;
+}
+
+.tableColumn {
+  text-align: left;
+}
+
+.tableBodyRow {
+  composes: tableRow;
+}
+
+.tableBodyColumn {
+  composes: tableColumn;
+
+  border-bottom: 1px solid var(--dove-gray);
+}
