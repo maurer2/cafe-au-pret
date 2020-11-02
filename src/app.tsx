@@ -29,26 +29,34 @@ export default defineComponent({
       dateTime: new Date(),
       tz: 'Europe/London',
     };
-    let timerId: any = -1;
+    let timeoutId = -1;
 
-    function updateTime() {
+    function updateTime(): void {
       const newDate = new Date();
 
       store.dispatch(Actions.UPDATE_CURRENT_DATE, newDate);
+    }
 
-      timerId = global.setTimeout(() => {
-        updateTime();
-      }, 1000);
+    function runUpdateTimer(): void {
+      updateTime();
+
+      timeoutId = window.setTimeout(() => {
+        runUpdateTimer();
+      }, 10_000);
+    }
+
+    function stopUpdateTimer(): void {
+      window.clearTimeout(timeoutId);
     }
 
     onMounted(() => {
       store.dispatch(Actions.ADD_ORDER, dummyOrder);
 
-      updateTime();
+      runUpdateTimer();
     });
 
     onUnmounted(() => {
-      // cancel timeout
+      stopUpdateTimer();
     });
 
     return () => (
