@@ -29,7 +29,7 @@ const defaultStore: StoreType = {
     sortType: SortType.popularity,
     menuList,
     isBlocked: false,
-    blockingDuration: 30,
+    blockingDuration: 2,
     blockingTimeoutEnd: null,
   },
   modules: {},

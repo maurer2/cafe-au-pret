@@ -51,30 +51,17 @@ const getters: GettersType = {
 
     return state.orders[dateKey];
   },
-  /*
-  hasOrderWithinBlockingDuration: (state, gettersList) => (dateTime) => {
-    const { blockingDuration } = state;
-    const hasOrdersForDateTime = gettersList.hasDailyOrders(dateTime as any);
+  isBlocked: (state) => {
+    const { blockingTimeoutEnd, currentDateTime } = state;
 
-    if (!hasOrdersForDateTime) {
+    if (!blockingTimeoutEnd) {
       return false;
     }
 
-    const dailyOrdersCB = getters.getDailyOrders(state, gettersList);
-    const dailyOrders = dailyOrdersCB(dateTime);
+    const differenceMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
 
-    const [lastOrder] = dailyOrders.slice(-1);
-
-    const currentDate = new Date();
-    const previousDate = lastOrder.dateTime;
-
-    console.log(currentDate.getTime() - previousDate.getTime());
-
-    console.log(lastOrder);
-
-    return false;
+    return Math.sign(differenceMS) === 1;
   },
-  */
   getDailyRemainingNumberOfOrders: (state) => {
     const dailyOrders = getters.getDailyOrders(state);
     const hasOrders = getters.hasDailyOrders(state);
