@@ -19,7 +19,7 @@ export default defineComponent({
     const ordersList = computed(() => store.getters.getDailyOrders as Order[]);
     const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
     const currentDate = computed(() => store.getters.getCurrentDate as string);
-    // const currentDateFull = computed(() => store.state.currentDateTime);
+    const currentDateFull = computed(() => store.state.currentDateTime);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
     const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);
 
@@ -27,7 +27,7 @@ export default defineComponent({
       if (!blockingTimeoutEnd.value) {
         return 0 as number;
       }
-      const differenceMS = blockingTimeoutEnd.value.getTime() - Date.now();
+      const differenceMS = blockingTimeoutEnd.value.getTime() - currentDateFull.value.getTime();
       const difference = differenceMS / 1000 / 60;
 
       return difference;
