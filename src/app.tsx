@@ -1,7 +1,8 @@
-import { defineComponent, onMounted, computed, onUnmounted } from 'vue';
+import { defineComponent, onMounted, onUnmounted } from 'vue';
 import styles from './app.module.css';
 import AppFooter from './components/app-footer/app-footer';
 import AppHeader from './components/app-header/app-header';
+import ProgressBar from './components/progress-bar/progress-bar';
 import QRCode from './components/qrcode';
 import ListDaily from './components/list-daily';
 import Menu from './components/menu/menu';
@@ -16,9 +17,10 @@ export default defineComponent({
   components: {
     AppFooter,
     AppHeader,
+    ProgressBar,
     ListDaily,
     Menu,
-    QRCode,
+    'qr-code': QRCode,
   },
   props: {},
   setup() {
@@ -61,13 +63,14 @@ export default defineComponent({
 
     return () => (
       <>
-        <AppHeader />
+        <app-header />
+        <progress-bar />
         <main class={styles.main}>
-          <QRCode />
-          <ListDaily />
+          <qr-code />
           <Menu />
+          <list-daily />
         </main>
-        <AppFooter />
+        <app-footer />
       </>
     );
   },

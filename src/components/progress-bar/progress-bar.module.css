@@ -1,0 +1,34 @@
+.progressBar {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 5px;
+  -webkit-appearance: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.progressBar::before,
+.progressBar::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-size: 100%;
+  content: '';
+}
+
+.progressBar::before {
+  background-color: white;
+}
+
+.progressBar::after {
+  display: block;
+  left: -100%;
+  background-image: linear-gradient(to right, black 0%, black 100%);
+  transform: translateX(var(--progress-animation-position));
+  transition: transform var(--progress-animation-duration) linear;
+  will-change: transform;
+}
