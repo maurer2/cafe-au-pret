@@ -1,5 +1,7 @@
 /* eslint-disable no-debugger */
 import { defineComponent, computed, onMounted, ref, watch } from 'vue';
+import { nanoid } from 'nanoid';
+
 // import { Properties } from 'csstype';
 import styles from './progress-bar.module.css';
 
@@ -13,9 +15,10 @@ export default defineComponent({
     const currentTime = computed(() => store.getters.getCurrentTime as string);
     const refreshTimeout = computed(() => store.state.refreshTimeoutInMinutes as number);
     const progressBarDomElement = ref(null as HTMLElement | null);
+    const animationKey = ref(`id-${nanoid(5)}`); // reset animation
 
     // const currentAnimationState = ref('paused' as Properties<AnimationPlayState>);
-    const currentAnimationState = ref('paused' as 'paused' | 'running');
+    const currentAnimationState = ref('running' as 'paused' | 'running');
     const cssVars = computed(() => {
       return {
         '--progress-animation-duration': `${refreshTimeout.value * 60}s`,
@@ -23,18 +26,16 @@ export default defineComponent({
       };
     });
 
+    function resetAnimation() {
+      animationKey.value = `id-${nanoid(5)}`;
+    }
+
     function startAnimation() {
       if (progressBarDomElement.value === null) {
         return;
       }
 
-      currentAnimationState.value = 'paused';
-      progressBarDomElement.value.getBoundingClientRect();
       currentAnimationState.value = 'running';
-    }
-
-    function endAnimation() {
-      currentAnimationState.value = 'paused';
     }
 
     onMounted(() => {
@@ -46,21 +47,23 @@ export default defineComponent({
     // temp watcher
     watch(currentTime, (newTime) => {
       console.log('update', newTime);
+      resetAnimation();
       startAnimation();
     });
 
     return () => (
-      <>
+      <section class={styles.progressBar}>
         <progress
           ref={progressBarDomElement}
-          class={styles.progressBar}
+          class={styles.progressBarElement}
           max="100"
           value="100"
           style={cssVars.value as any}
+          key={animationKey.value}
         >
           <span class="visually-hidden">50%</span>
         </progress>
-      </>
+      </section>
     );
   },
 });
