@@ -20,6 +20,7 @@
     "@babel/plugin-syntax-jsx": "^7.10.4",
     "@koa/cors": "^3.1.0",
     "core-js": "^3.6.5",
+    "csstype": "^3.0.4",
     "jsbarcode": "^3.11.0",
     "qrcode": "^1.4.4",
     "regenerator-runtime": "^0.13.7",

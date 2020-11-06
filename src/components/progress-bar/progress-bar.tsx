@@ -1,4 +1,6 @@
+/* eslint-disable no-debugger */
 import { defineComponent, computed, onMounted, ref } from 'vue';
+// import { Properties } from 'csstype';
 import styles from './progress-bar.module.css';
 
 // import { useStore } from '../../store';
@@ -6,29 +8,32 @@ import styles from './progress-bar.module.css';
 export default defineComponent({
   name: 'ProgressBar',
   props: {},
-  setup(_, context) {
-    const currentPosition = ref(0);
+  setup() {
+    // const currentAnimationState = ref('paused' as Properties<AnimationPlayState>);
+    const currentAnimationState = ref('paused' as 'paused' | 'running');
     // const store = useStore();
     const cssVars = computed(() => {
       return {
-        '--progress-animation-duration': '10s',
-        '--progress-animation-position': `${currentPosition.value}%`,
+        '--progress-animation-duration': '5s',
+        '--progress-animation-state': `${currentAnimationState.value}`,
       };
     });
-
-    function updateProgressBar() {
-      if (currentPosition.value === 0) {
-        currentPosition.value = 100;
-      } else {
-        currentPosition.value = 0;
-      }
-    }
 
     onMounted(() => {
       // updateProgressBar();
       // test timeout
       window.setInterval(() => {
-        updateProgressBar();
+        const refElement = document.querySelector('#progress-bar');
+
+        if (!refElement) {
+          return;
+        }
+        currentAnimationState.value = 'paused';
+        refElement.getBoundingClientRect();
+        window.setTimeout(() => {
+          currentAnimationState.value = 'running';
+        }, 100);
+        // updateProgressBar();
         /*
         if (currentPosition.value === 0) {
           currentPosition.value = 100;
@@ -40,11 +45,17 @@ export default defineComponent({
         // document.body.getBoundingClientRect();
         // currentPosition.value = 100;
         // currentPosition.value *= -1;
-      }, 10_000);
+      }, 5_000);
     });
 
     return () => (
-      <progress class={styles.progressBar} max="100" value="100" style={cssVars.value as any}>
+      <progress
+        id="progress-bar"
+        class={styles.progressBar}
+        max="100"
+        value="100"
+        style={cssVars.value as any}
+      >
         <span class="visually-hidden">50%</span>
       </progress>
     );
