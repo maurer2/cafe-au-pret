@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, onUnmounted } from 'vue';
+import { defineComponent, onMounted, onUnmounted, computed } from 'vue';
 import styles from './app.module.css';
 import AppFooter from './components/app-footer/app-footer';
 import AppHeader from './components/app-header/app-header';
@@ -25,6 +25,7 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
+    const refreshTimeout = computed(() => store.state.refreshTimeoutInMinutes as number);
     const dummyOrder: Order = {
       id: 'psl',
       name: 'PSL',
@@ -44,7 +45,7 @@ export default defineComponent({
 
       timeoutId = window.setTimeout(() => {
         runUpdateTimer();
-      }, 10_000);
+      }, refreshTimeout.value * 60 * 1_000);
     }
 
     function stopUpdateTimer(): void {
@@ -67,8 +68,8 @@ export default defineComponent({
         <progress-bar />
         <main class={styles.main}>
           <qr-code />
-          <Menu />
           <list-daily />
+          <Menu />
         </main>
         <app-footer />
       </>

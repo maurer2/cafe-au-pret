@@ -1,63 +1,66 @@
 /* eslint-disable no-debugger */
-import { defineComponent, computed, onMounted, ref } from 'vue';
+import { defineComponent, computed, onMounted, ref, watch } from 'vue';
 // import { Properties } from 'csstype';
 import styles from './progress-bar.module.css';
 
-// import { useStore } from '../../store';
+import { useStore } from '../../store';
 
 export default defineComponent({
   name: 'ProgressBar',
   props: {},
   setup() {
+    const store = useStore();
+    const currentTime = computed(() => store.getters.getCurrentTime as string);
+    const refreshTimeout = computed(() => store.state.refreshTimeoutInMinutes as number);
+    const progressBarDomElement = ref(null as HTMLElement | null);
+
     // const currentAnimationState = ref('paused' as Properties<AnimationPlayState>);
     const currentAnimationState = ref('paused' as 'paused' | 'running');
-    // const store = useStore();
     const cssVars = computed(() => {
       return {
-        '--progress-animation-duration': '5s',
+        '--progress-animation-duration': `${refreshTimeout.value * 60}s`,
         '--progress-animation-state': `${currentAnimationState.value}`,
       };
     });
 
-    onMounted(() => {
-      // updateProgressBar();
-      // test timeout
-      window.setInterval(() => {
-        const refElement = document.querySelector('#progress-bar');
+    function startAnimation() {
+      if (progressBarDomElement.value === null) {
+        return;
+      }
 
-        if (!refElement) {
-          return;
-        }
-        currentAnimationState.value = 'paused';
-        refElement.getBoundingClientRect();
-        window.setTimeout(() => {
-          currentAnimationState.value = 'running';
-        }, 100);
-        // updateProgressBar();
-        /*
-        if (currentPosition.value === 0) {
-          currentPosition.value = 100;
-        } else {
-          currentPosition.value = 0;
-        }
-        */
-        // currentPosition.value = 0;
-        // document.body.getBoundingClientRect();
-        // currentPosition.value = 100;
-        // currentPosition.value *= -1;
-      }, 5_000);
+      currentAnimationState.value = 'paused';
+      progressBarDomElement.value.getBoundingClientRect();
+      currentAnimationState.value = 'running';
+    }
+
+    function endAnimation() {
+      currentAnimationState.value = 'paused';
+    }
+
+    onMounted(() => {
+      if (progressBarDomElement.value === null) {
+        throw new Error('progressBarDomElement not found');
+      }
+    });
+
+    // temp watcher
+    watch(currentTime, (newTime) => {
+      console.log('update', newTime);
+      startAnimation();
     });
 
     return () => (
-      <progress
-        id="progress-bar"
-        class={styles.progressBar}
-        max="100"
-        value="100"
-        style={cssVars.value as any}
-      >
-        <span class="visually-hidden">50%</span>
-      </progress>
+      <>
+        <progress
+          ref={progressBarDomElement}
+          class={styles.progressBar}
+          max="100"
+          value="100"
+          style={cssVars.value as any}
+        >
+          <span class="visually-hidden">50%</span>
+        </progress>
+      </>
     );
   },
 });

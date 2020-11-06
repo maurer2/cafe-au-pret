@@ -31,6 +31,7 @@ const defaultStore: StoreType = {
     isBlocked: false,
     blockingDuration: 2,
     blockingTimeoutEnd: null,
+    refreshTimeoutInMinutes: 0.25,
   },
   modules: {},
   mutations,

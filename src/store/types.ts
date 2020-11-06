@@ -61,6 +61,7 @@ export type StoreType = {
     isBlocked: boolean;
     blockingDuration: number;
     blockingTimeoutEnd: Date | null;
+    refreshTimeoutInMinutes: number;
     [key: string]: any;
   };
   modules: any;
