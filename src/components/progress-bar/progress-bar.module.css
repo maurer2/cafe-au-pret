@@ -62,3 +62,7 @@
   animation-play-state: var(--progress-animation-state);
   animation-fill-mode: forwards;
 }
+
+.progressBarValue {
+  composes: visually-hidden from global;
+}
