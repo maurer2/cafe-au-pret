@@ -58,11 +58,9 @@ export type StoreType = {
     maxDailyOrders: number;
     sortType: SortType;
     menuList: MenuItem[];
-    isBlocked: boolean;
     blockingDuration: number;
     blockingTimeoutEnd: Date | null;
     refreshTimeoutInMinutes: number;
-    [key: string]: any;
   };
   modules: any;
   mutations: MutationsType;

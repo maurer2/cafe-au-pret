@@ -12,7 +12,7 @@ const actions: ActionsType = {
   },
   async [Actions.ADD_ORDER](context, order: Order) {
     const dateKey: string = context.getters.getCurrentDateKey;
-    const { isBlocked } = context.state;
+    const { isBlocked }: { isBlocked: boolean } = context.getters;
     const { dateTime } = order;
 
     if (isBlocked) {

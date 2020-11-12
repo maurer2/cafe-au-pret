@@ -11,11 +11,7 @@ export default defineComponent({
     const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
 
     const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
-    /*
-    const isBlocked = computed(
-      () => store.getters.hasOrderWithinBlockingDuration(dateTimeKey.value) as boolean,
-    );
-    */
+
     const isBlocked = { value: false };
 
     // console.log(isBlocked);

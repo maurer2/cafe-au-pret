@@ -28,7 +28,6 @@ const defaultStore: StoreType = {
     maxDailyOrders: 5,
     sortType: SortType.popularity,
     menuList,
-    isBlocked: false,
     blockingDuration: 2,
     blockingTimeoutEnd: null,
     refreshTimeoutInMinutes: 0.25,
