@@ -53,7 +53,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      store.dispatch(Actions.ADD_ORDER, dummyOrder);
+      // store.dispatch(Actions.ADD_ORDER, dummyOrder);
 
       runUpdateTimer();
     });

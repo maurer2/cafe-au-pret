@@ -14,6 +14,9 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const orderType = ref(SortType.popularity);
+    const slots = {
+      overlayContent: () => <span>Order added</span>,
+    };
     const orderTypeComputed = computed({
       get: () => {
         return orderType.value;
@@ -30,9 +33,6 @@ export default defineComponent({
       () => store.getters.getMenuListSortedByAlphabet as MenuItem[],
     );
     const showOverlay = ref(false);
-    const slots = {
-      overlayContent: () => <span>Order added</span>,
-    };
 
     const menuListSorted = computed(() => {
       if (orderTypeComputed.value === SortType.alphabet) {
