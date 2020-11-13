@@ -22,7 +22,7 @@ export default defineComponent({
     const currentDateFull = computed(() => store.state.currentDateTime);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
     const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);
-    const isBlocked = computed(() => store.getters.isBlocked as boolean);
+    // const isBlocked = computed(() => store.getters.isBlocked as boolean);
 
     const remainingMinutes = computed(() => {
       if (!blockingTimeoutEnd.value) {
@@ -36,9 +36,7 @@ export default defineComponent({
 
     return () => (
       <section class={styles.list}>
-        <h2>
-          Purchases on {currentDate.value} (Blocked: {String(isBlocked.value)})
-        </h2>
+        <h2>Purchases on {currentDate.value}</h2>
         <table class={styles.table}>
           <caption class={styles.tableCaption}>Caption</caption>
           <thead class={styles.tableHead}>

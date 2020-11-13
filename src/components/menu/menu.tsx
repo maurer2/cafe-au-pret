@@ -22,7 +22,7 @@ export default defineComponent({
         orderType.value = newValue;
       },
     });
-
+    const isBlocked = computed(() => store.getters.isBlocked as boolean);
     const menuListSortedByPopularity = computed(
       () => store.getters.getMenuListSortedByPopularity as MenuItem[],
     );
@@ -106,6 +106,7 @@ export default defineComponent({
               <button
                 class={styles.menuButton}
                 onClick={() => addItemToOrderedList(menuEntry)}
+                disabled={isBlocked.value}
                 type="button"
               >
                 {menuEntry.name}
