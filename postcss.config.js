@@ -1,14 +1,15 @@
-// const autoprefixer = require('autoprefixer');
+/* eslint-disable global-require */
+const autoprefixer = require('autoprefixer');
 // const cssnano = require('cssnano');
-// const postcssNested = require('postcss-nested'); // needed for unwrapping media queries
+const postcssNested = require('postcss-nested'); // needed for unwrapping media queries
 const postcssImport = require('postcss-import');
 
 module.exports = {
   syntax: 'postcss-scss',
   plugins: [
     postcssImport,
-    // postcssNested,
-    // autoprefixer,
+    postcssNested,
+    autoprefixer,
     // cssnano,
   ],
   preset: {
