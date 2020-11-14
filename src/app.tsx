@@ -26,12 +26,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const refreshTimeout = computed(() => store.state.refreshTimeoutInMinutes as number);
-    const dummyOrder: Order = {
-      id: 'psl',
-      name: 'PSL',
-      dateTime: new Date(),
-      tz: 'Europe/London',
-    };
     let timeoutId = -1;
 
     function updateTime(): void {
@@ -54,7 +48,6 @@ export default defineComponent({
 
     onMounted(() => {
       // store.dispatch(Actions.ADD_ORDER, dummyOrder);
-
       runUpdateTimer();
     });
 
