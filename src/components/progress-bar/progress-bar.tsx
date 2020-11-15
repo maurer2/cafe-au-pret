@@ -17,22 +17,38 @@ export default defineComponent({
     const animationKey = ref(`key-${nanoid(5)}`);
     const progressBarValue = ref(0);
     const intervalId = ref(-1);
+    const storeSubscription = ref();
+    const progressBarAnimation = ref<null | Animation>(null);
+
+    const animationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)' },
+      { transform: 'translateX(100%)' },
+    ];
+
+    const animationOptions: KeyframeAnimationOptions = {
+      duration: refreshTimeout.value * 60 * 1000,
+      iterations: 1,
+      easing: 'linear',
+    };
 
     // const currentAnimationState = ref('paused' as Properties<AnimationPlayState>);
-    const currentAnimationState = ref('running' as 'paused' | 'running');
-    const cssVars = computed(() => {
-      return {
-        '--progress-animation-duration': `${refreshTimeout.value * 60}s`,
-        '--progress-animation-state': `${currentAnimationState.value}`,
-      };
-    });
+    // const currentAnimationState = ref('running' as 'paused' | 'running');
+    const currentAnimationState = ref<AnimationPlayState>('paused');
+    const cssVars = computed(() => ({
+      // '--progress-animation-duration': `${refreshTimeout.value * 60}s`,
+      // '--progress-animation-state': `${currentAnimationState.value}`,
+    }));
 
     function startAnimation() {
-      if (progressBarDomElement.value === null) {
+      if (progressBarAnimation.value === null) {
         return;
       }
 
+      progressBarAnimation.value.finish();
+      progressBarAnimation.value.play();
       currentAnimationState.value = 'running';
+
+      console.log('play');
     }
 
     function resetAnimation() {
@@ -56,10 +72,10 @@ export default defineComponent({
       }, timeoutInMS / parts);
     }
 
-    store.subscribe((mutation) => {
+    storeSubscription.value = store.subscribe((mutation) => {
       if (mutation.type === Mutations.UPDATE_CURRENT_DATE) {
         updateProgressBarValues();
-        resetAnimation();
+        // resetAnimation();
         startAnimation();
       }
     });
@@ -68,22 +84,36 @@ export default defineComponent({
       if (progressBarDomElement.value === null) {
         throw new Error('progressBarDomElement not found');
       }
+
+      progressBarAnimation.value = progressBarDomElement.value.animate(
+        animationKeyframes,
+        animationOptions,
+      );
+
+      progressBarAnimation.value.pause();
     });
 
     onUnmounted(() => {
       if (intervalId.value !== -1) {
         window.clearInterval(intervalId.value);
       }
+
+      // unsubscribe
+      storeSubscription.value();
+
+      if (progressBarAnimation.value !== null) {
+        progressBarAnimation.value.cancel();
+      }
     });
 
     return () => (
-      <div class={styles.progressBar} style={cssVars.value as any} key={animationKey.value}>
-        <progress
+      <div class={styles.progressBar} style={cssVars.value as any}>
+        <div
+          class={styles.progressBarElementInner}
           ref={progressBarDomElement}
-          class={styles.progressBarElement}
-          max="100"
-          value={progressBarValue.value}
-        >
+          key={animationKey.value}
+        ></div>
+        <progress class={styles.progressBarElement} max="100" value={progressBarValue.value}>
           {progressBarValue.value}%
         </progress>
       </div>

@@ -32,6 +32,7 @@ export default defineComponent({
       const newDate = new Date();
 
       store.dispatch(Actions.UPDATE_CURRENT_DATE, newDate);
+      console.log('update');
     }
 
     function runUpdateTimer(): void {

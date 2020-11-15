@@ -13,8 +13,7 @@
   height: 3px;
 }
 
-.progressBar::before {
-  content: '';
+.progressBarElementInner {
   position: absolute;
   top: 0;
   left: -100%;
@@ -23,14 +22,7 @@
   width: 100%;
   display: block;
   transform: translateX(0%);
-  background: var(--dove-gray);
-
-  animation-duration: var(--progress-animation-duration);
-  animation-iteration-count: 1;
-  animation-name: progressBarAnimation;
-  animation-timing-function: linear;
-  animation-play-state: var(--progress-animation-state);
-  animation-fill-mode: forwards;
+  background: var(--white);
 }
 
 .progressBarElement {
