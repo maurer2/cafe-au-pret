@@ -1,6 +1,7 @@
-import { defineComponent, ref, onMounted, PropType } from 'vue';
+import { defineComponent, ref, onMounted, PropType, computed, watch } from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
+import { useStore } from '../../../store';
 
 export default defineComponent({
   name: 'QRCodeFigure',
@@ -15,7 +16,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const qrCodeMarkup = ref(undefined as string | undefined);
+    const store = useStore();
+    const isBlocked = computed((): boolean => store.getters.isBlocked);
+    const qrCodeMarkup = ref<string | undefined>(undefined);
     const qrCodeSettings: QRCodeToStringOptions = {
       errorCorrectionLevel: 'H',
       type: 'svg',
@@ -25,9 +28,19 @@ export default defineComponent({
         light: '#fff',
       },
     };
+    const qrCodeSettingsInactive: QRCodeToStringOptions = {
+      ...qrCodeSettings,
+      ...{
+        color: {
+          dark: '#c3c3c3',
+          light: '#fff',
+        },
+      },
+    };
 
     async function getQRCodeMarkup(payload: string): Promise<string> {
-      const qrCodeString = QRCodeGenerator.toString(payload, qrCodeSettings);
+      const settings = isBlocked.value ? qrCodeSettingsInactive : qrCodeSettings;
+      const qrCodeString = QRCodeGenerator.toString(payload, settings);
 
       return qrCodeString;
     }
@@ -51,6 +64,10 @@ export default defineComponent({
         }
       },
     );
+
+    watch(isBlocked, () => {
+      setQRCodeMarkup();
+    });
 
     return () => {
       const { zoomLevel, userId } = props;
