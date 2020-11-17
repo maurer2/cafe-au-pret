@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, PropType, computed, watch } from 'vue';
+import { defineComponent, ref, onMounted, PropType, computed, watch, onBeforeMount } from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
 import { useStore } from '../../../store';
@@ -19,6 +19,7 @@ export default defineComponent({
     const store = useStore();
     const isBlocked = computed((): boolean => store.getters.isBlocked);
     const qrCodeMarkup = ref<string | undefined>(undefined);
+    const qrCodeColorBlocked = ref<string>('#c3c3c3');
     const qrCodeSettings: QRCodeToStringOptions = {
       errorCorrectionLevel: 'H',
       type: 'svg',
@@ -28,18 +29,18 @@ export default defineComponent({
         light: '#fff',
       },
     };
-    const qrCodeSettingsInactive: QRCodeToStringOptions = {
+    const qrCodeSettingsInactive = ref<QRCodeToStringOptions>({
       ...qrCodeSettings,
       ...{
         color: {
-          dark: '#c3c3c3',
+          dark: qrCodeColorBlocked.value,
           light: '#fff',
         },
       },
-    };
+    });
 
     async function getQRCodeMarkup(payload: string): Promise<string> {
-      const settings = isBlocked.value ? qrCodeSettingsInactive : qrCodeSettings;
+      const settings = isBlocked.value ? qrCodeSettingsInactive.value : qrCodeSettings;
       const qrCodeString = QRCodeGenerator.toString(payload, settings);
 
       return qrCodeString;
@@ -54,6 +55,12 @@ export default defineComponent({
         console.log(error);
       }
     }
+
+    onBeforeMount(() => {
+      qrCodeColorBlocked.value = getComputedStyle(document.documentElement).getPropertyValue(
+        '--concrete',
+      );
+    });
 
     onMounted(
       async (): Promise<void> => {
@@ -88,6 +95,7 @@ export default defineComponent({
           ) : (
             <div class={styles.qrcodeLoader}>Loading</div>
           )}
+          <span>{qrCodeColorBlocked.value}</span>
         </>
       );
     };
