@@ -15,20 +15,17 @@ export default defineComponent({
     const progressBarAnimation = ref<null | Animation>(null);
     const progressBarValue = ref(0);
     const intervalId = ref(-1);
-    const storeSubscription = ref();
-
+    const storeSubscription = ref<() => void>();
     const animationKeyframes: Keyframe[] = [
       { transform: 'translateX(0%)' },
       { transform: 'translateX(100%)' },
     ];
-
     const animationOptions: KeyframeAnimationOptions = {
       duration: refreshTimeout.value * 60 * 1000,
       iterations: 1,
       easing: 'linear',
+      delay: 0,
     };
-
-    const animationState = ref<AnimationPlayState>('paused');
 
     function startAnimation() {
       if (progressBarAnimation.value === null) {
@@ -36,9 +33,6 @@ export default defineComponent({
       }
 
       progressBarAnimation.value.play();
-      animationState.value = 'running';
-
-      console.log('play');
     }
 
     function resetAnimation() {
@@ -67,11 +61,13 @@ export default defineComponent({
     }
 
     storeSubscription.value = store.subscribe((mutation) => {
-      if (mutation.type === Mutations.UPDATE_CURRENT_DATE) {
-        resetAnimation();
-        startAnimation();
-        updateProgressBarValues();
+      if (mutation.type !== Mutations.UPDATE_CURRENT_DATE) {
+        return;
       }
+
+      resetAnimation();
+      startAnimation();
+      updateProgressBarValues();
     });
 
     onMounted(() => {
@@ -79,7 +75,7 @@ export default defineComponent({
         throw new Error('progressBarAnimationDomElement not found');
       }
 
-      if (!('animate' in progressBarAnimationDomElement.value)) {
+      if (!('animate' in HTMLElement.prototype)) {
         return;
       }
 
@@ -96,11 +92,12 @@ export default defineComponent({
         window.clearInterval(intervalId.value);
       }
 
-      // unsubscribe
-      storeSubscription.value();
-
       if (progressBarAnimation.value !== null) {
         progressBarAnimation.value.cancel();
+      }
+
+      if (storeSubscription.value !== undefined) {
+        storeSubscription.value();
       }
     });
 
