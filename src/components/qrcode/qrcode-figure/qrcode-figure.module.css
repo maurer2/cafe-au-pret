@@ -4,9 +4,21 @@
 }
 
 .qrcodeImageWrapper {
+  position: relative;
   width: 50vw;
   max-width: 350px;
   margin: auto;
+
+  &::before {
+    content: '';
+    background: conic-gradient(transparent 0deg 45deg, rgba(255, 255, 255, 0.85) 45deg 360deg);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    // backdrop-filter: grayscale(0.85);
+  }
 }
 
 .qrcodeImageWrapper > svg {
