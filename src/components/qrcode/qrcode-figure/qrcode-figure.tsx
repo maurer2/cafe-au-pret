@@ -15,7 +15,7 @@ export default defineComponent({
       default: '',
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const store = useStore();
     const isBlocked = computed((): boolean => store.getters.isBlocked);
     const qrCodeMarkup = ref<string | undefined>(undefined);
@@ -38,6 +38,8 @@ export default defineComponent({
         },
       },
     });
+
+    console.log(slots.default);
 
     async function getQRCodeMarkup(payload: string): Promise<string> {
       const settings = isBlocked.value ? qrCodeSettingsInactive.value : qrCodeSettings;
@@ -83,13 +85,16 @@ export default defineComponent({
         <>
           {qrCodeMarkup.value ? (
             <figure class={styles.qrcodePicture}>
-              <div
-                class={styles.qrcodeImageWrapper}
-                innerHTML={qrCodeMarkup.value}
-                style={{
-                  width: `calc(50vw * ${zoomLevel})`,
-                }}
-              />
+              <div class={styles.qrcodeImageWrapperOuter}>
+                {slots.default !== undefined ? slots.default() : null}
+                <div
+                  class={styles.qrcodeImageWrapper}
+                  innerHTML={qrCodeMarkup.value}
+                  style={{
+                    width: `calc(50vw * ${zoomLevel})`,
+                  }}
+                />
+              </div>
               <figcaption class={styles.qrcodeText}>{userId}</figcaption>
             </figure>
           ) : (

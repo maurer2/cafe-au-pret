@@ -1,0 +1,17 @@
+.qrcodeOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: conic-gradient(
+    transparent 0deg calc(1deg * var(--gradient-end, 45)),
+    rgba(255, 255, 255, 0.85) calc(1deg * var(--gradient-end, 45)) 360deg
+  );
+  // background: conic-gradient(transparent 0deg 180deg, rgba(255, 255, 255, 0.85) 180deg 360deg);
+  // backdrop-filter: grayscale(0.85);
+}
+
+.qrcodeOverlayValue {
+  composes: visually-hidden from global; // temp
+}
