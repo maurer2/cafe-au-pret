@@ -85,15 +85,14 @@ export default defineComponent({
         <>
           {qrCodeMarkup.value ? (
             <figure class={styles.qrcodePicture}>
-              <div class={styles.qrcodeImageWrapperOuter}>
+              <div
+                class={styles.qrcodeImageWrapperOuter}
+                style={{
+                  width: `calc(50vw * ${zoomLevel})`,
+                }}
+              >
                 {slots.default !== undefined ? slots.default() : null}
-                <div
-                  class={styles.qrcodeImageWrapper}
-                  innerHTML={qrCodeMarkup.value}
-                  style={{
-                    width: `calc(50vw * ${zoomLevel})`,
-                  }}
-                />
+                <div class={styles.qrcodeImageWrapper} innerHTML={qrCodeMarkup.value} />
               </div>
               <figcaption class={styles.qrcodeText}>{userId}</figcaption>
             </figure>
