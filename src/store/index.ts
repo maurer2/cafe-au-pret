@@ -30,7 +30,7 @@ const defaultStore: StoreType = {
     menuList,
     blockingDuration: 2,
     blockingTimeoutEnd: null,
-    refreshTimeoutInMinutes: 0.25,
+    refreshTimeoutInSeconds: 30,
   },
   modules: {},
   mutations,

@@ -60,7 +60,7 @@ export type StoreType = {
     menuList: MenuItem[];
     blockingDuration: number;
     blockingTimeoutEnd: Date | null;
-    refreshTimeoutInMinutes: number;
+    refreshTimeoutInSeconds: number;
   };
   modules: any;
   mutations: MutationsType;

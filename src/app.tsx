@@ -25,7 +25,7 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const refreshTimeout = computed(() => store.state.refreshTimeoutInMinutes as number);
+    const refreshTimeout = computed((): number => store.state.refreshTimeoutInSeconds);
     let timeoutId = -1;
 
     function updateTime(): void {
@@ -40,7 +40,7 @@ export default defineComponent({
 
       timeoutId = window.setTimeout(() => {
         runUpdateTimer();
-      }, refreshTimeout.value * 60 * 1_000);
+      }, refreshTimeout.value * 1_000);
     }
 
     function stopUpdateTimer(): void {

@@ -10,7 +10,7 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const refreshTimeout = computed(() => store.state.refreshTimeoutInMinutes);
+    const refreshTimeout = computed((): number => store.state.refreshTimeoutInSeconds);
     const progressBarAnimationDomElement = ref<HTMLElement | null>(null);
     const progressBarAnimation = ref<null | Animation>(null);
     const progressBarValue = ref(0);
@@ -21,7 +21,7 @@ export default defineComponent({
       { transform: 'translateX(100%)' },
     ];
     const animationOptions: KeyframeAnimationOptions = {
-      duration: refreshTimeout.value * 60 * 1000,
+      duration: refreshTimeout.value * 1000,
       iterations: 1,
       easing: 'linear',
       delay: 0,
@@ -44,7 +44,7 @@ export default defineComponent({
     }
 
     function updateProgressBarValues() {
-      const timeoutInMS = refreshTimeout.value * 60 * 1000;
+      const timeoutInMS = refreshTimeout.value * 1000;
       const parts = 20;
       let step = 1;
 

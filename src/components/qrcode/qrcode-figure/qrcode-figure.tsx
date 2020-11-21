@@ -39,8 +39,6 @@ export default defineComponent({
       },
     });
 
-    console.log(slots.default);
-
     async function getQRCodeMarkup(payload: string): Promise<string> {
       const settings = isBlocked.value ? qrCodeSettingsInactive.value : qrCodeSettings;
       const qrCodeString = QRCodeGenerator.toString(payload, settings);
