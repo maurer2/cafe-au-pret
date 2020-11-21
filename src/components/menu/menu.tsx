@@ -25,7 +25,7 @@ export default defineComponent({
         orderType.value = newValue;
       },
     });
-    const isBlocked = computed(() => store.getters.isBlocked as boolean);
+    const isBlocked = computed((): boolean => store.getters.isBlocked);
     const menuListSortedByPopularity = computed(
       () => store.getters.getMenuListSortedByPopularity as MenuItem[],
     );

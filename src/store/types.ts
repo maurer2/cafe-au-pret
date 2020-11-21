@@ -34,6 +34,7 @@ export type GettersType = {
   getDailyOrders(state: StateType, getters?: GettersType): Order[];
   hasDailyOrders: (state: StateType, getters?: GettersType) => boolean;
   isBlocked: (state: StateType, getters?: GettersType) => boolean;
+  getRemainingBlockingTime: (state: StateType, getters?: GettersType) => number;
   getDailyRemainingNumberOfOrders: (state: StateType, getters?: GettersType) => number;
   getMenuListSortedByPopularity: (state: StateType, getters?: GettersType) => MenuItem[];
   getMenuListSortedByAlphabet: (state: StateType, getters?: GettersType) => MenuItem[];

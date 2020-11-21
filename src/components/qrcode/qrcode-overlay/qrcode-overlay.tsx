@@ -1,4 +1,5 @@
 import { defineComponent, PropType, computed, CSSProperties } from 'vue';
+import { useStore } from '../../../store';
 import styles from './qrcode-overlay.module.css';
 
 export default defineComponent({
@@ -10,11 +11,13 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = useStore();
+    const remainingTime = computed((): number => store.getters.getRemainingBlockingTime);
     const gradientPercentage = computed(() => {
       return (props.percentageDone * 360) / 100;
     });
     const gradientTime = computed(() => {
-      return (props.percentageDone * 360) / 100;
+      return remainingTime.value / 1000 / 60;
     });
     const cssVars = computed(() => ({
       '--gradient-switch': `${gradientPercentage.value}`,
@@ -22,7 +25,9 @@ export default defineComponent({
 
     return () => (
       <div class={styles.qrcodeOverlay} style={cssVars.value as CSSProperties}>
-        <span class={styles.qrcodeOverlayValue}>{String(gradientPercentage.value)}%</span>
+        <span class={styles.qrcodeOverlayValue}>
+          {String(gradientTime.value.toFixed(0))} Minutes
+        </span>
       </div>
     );
   },

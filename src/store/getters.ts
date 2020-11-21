@@ -58,9 +58,20 @@ const getters: GettersType = {
       return false;
     }
 
-    const differenceMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
+    const differenceInMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
 
-    return Math.sign(differenceMS) === 1;
+    return Math.sign(differenceInMS) === 1;
+  },
+  getRemainingBlockingTime: (state) => {
+    const { blockingTimeoutEnd, currentDateTime } = state;
+
+    if (!blockingTimeoutEnd) {
+      return 0;
+    }
+
+    const differenceInMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
+
+    return Math.sign(differenceInMS) === 1 ? differenceInMS : 0;
   },
   getDailyRemainingNumberOfOrders: (state) => {
     const dailyOrders = getters.getDailyOrders(state);

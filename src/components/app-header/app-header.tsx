@@ -8,9 +8,8 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const dateTimeKey = computed(() => store.getters.getCurrentDateKey as string);
     const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
-    const isBlocked = computed(() => store.getters.isBlocked as boolean);
+    const isBlocked = computed((): boolean => store.getters.isBlocked);
 
     return () => (
       <header class={styles.header}>

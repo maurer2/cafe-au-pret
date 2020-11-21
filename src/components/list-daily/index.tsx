@@ -22,7 +22,6 @@ export default defineComponent({
     const currentDateFull = computed(() => store.state.currentDateTime);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
     const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);
-    // const isBlocked = computed(() => store.getters.isBlocked as boolean);
 
     const remainingMinutes = computed(() => {
       if (!blockingTimeoutEnd.value) {
