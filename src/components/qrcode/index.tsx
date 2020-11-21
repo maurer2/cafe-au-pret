@@ -18,7 +18,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const { userId } = store.state;
-    const zoomLevel = computed(() => store.getters.getZoomLevelFormatted as string);
+    const zoomLevel = computed((): string => store.getters.getZoomLevelFormatted);
 
     function zoomIn() {
       store.dispatch(Actions.INCREASE_ZOOM);

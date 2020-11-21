@@ -19,7 +19,7 @@ export default defineComponent({
     const store = useStore();
     const isBlocked = computed((): boolean => store.getters.isBlocked);
     const qrCodeMarkup = ref<string | undefined>(undefined);
-    const qrCodeColorBlocked = ref<string>('#c3c3c3');
+    const qrCodeColorBlocked = ref<string>('#00000');
     const qrCodeSettings: QRCodeToStringOptions = {
       errorCorrectionLevel: 'H',
       type: 'svg',
@@ -97,7 +97,6 @@ export default defineComponent({
           ) : (
             <div class={styles.qrcodeLoader}>Loading</div>
           )}
-          <span>{qrCodeColorBlocked.value}</span>
         </>
       );
     };
