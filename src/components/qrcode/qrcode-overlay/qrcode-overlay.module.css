@@ -7,12 +7,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(242, 242, 242, 0.85); // --concrete: #f2f2f2;
+  background: rgba(255, 255, 255, 0.85); // --white;
 
   @supports (background: conic-gradient(red 90deg, green 360deg)) {
     background: conic-gradient(
       transparent 0deg calc(1deg * var(--gradient-switch)),
-      rgba(242, 242, 242, 0.85) calc(1deg * var(--gradient-switch)) 360deg
+      rgba(255, 255, 255, 0.85) calc(1deg * var(--gradient-switch)) 360deg
     );
   }
 }
