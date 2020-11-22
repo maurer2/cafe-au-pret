@@ -4,12 +4,11 @@
 
 .menuHeader {
   display: flex;
-  margin: 0 -1rem;
+  margin: 0;
 }
 
 .menuHeaderLabel {
   display: block;
-  margin: 0 1rem;
   padding: 1rem 2rem;
   flex: 1 1 0;
   border-bottom: 3px solid transparent;
@@ -23,6 +22,34 @@
 
 .menuHeaderButton {
   composes: visually-hidden from global;
+}
+
+.menuHeaderStateHighlighter {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  height: 5px;
+  background: var(--concrete);
+}
+
+.menuHeaderStateHighlighterBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: #000;
+  transform: translateX(100%);
+}
+
+.menuListsContainer {
+  display: flex;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.menuListContainer {
+  flex: 1 0 100%;
 }
 
 .menuList {
