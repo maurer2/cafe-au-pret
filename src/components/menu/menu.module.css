@@ -11,13 +11,13 @@
   display: block;
   padding: 1rem 2rem;
   flex: 1 1 0;
-  border-bottom: 3px solid transparent;
+  // border-bottom: 3px solid transparent;
   text-align: center;
   background: var(--concrete);
 }
 
 .menuHeaderLabelIsActive {
-  border-bottom-color: var(--old-brick);
+  // border-bottom-color: var(--old-brick);
 }
 
 .menuHeaderButton {
@@ -26,7 +26,6 @@
 
 .menuHeaderStateHighlighter {
   position: relative;
-  margin-top: 1rem;
   margin-bottom: 1rem;
   height: 5px;
   background: var(--concrete);
@@ -39,7 +38,8 @@
   width: 50%;
   height: 100%;
   background: #000;
-  transform: translateX(100%);
+  transform: translateX(calc(1% * var(--menu-scroll-position)));
+  transition: transform 0.5s;
 }
 
 .menuListsContainer {

@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, watch, CSSProperties } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
 import { Actions } from '../../store/types';
@@ -13,7 +13,7 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const orderType = ref(SortType.popularity);
+    const orderType = ref(SortType.alphabet);
     const slots = {
       overlayContent: () => <span>Order added</span>,
     };
@@ -33,6 +33,16 @@ export default defineComponent({
       () => store.getters.getMenuListSortedByAlphabet as MenuItem[],
     );
     const showOverlay = ref(false);
+    const scrollbarPositionX = ref(0);
+
+    watch(orderType, (newValue) => {
+      if (newValue === SortType.popularity) {
+        scrollbarPositionX.value = 100;
+        return;
+      }
+
+      scrollbarPositionX.value = 0;
+    });
 
     const menuListSorted = computed(() => {
       if (orderTypeComputed.value === SortType.alphabet) {
@@ -40,6 +50,10 @@ export default defineComponent({
       }
       return menuListSortedByPopularity.value;
     });
+
+    const cssVars = computed(() => ({
+      '--menu-scroll-position': `${scrollbarPositionX.value}`,
+    }));
 
     function addItemToOrderedList({ id, name }: MenuItem) {
       const order: Order = {
@@ -101,7 +115,10 @@ export default defineComponent({
         </div>
 
         <div class={styles.menuHeaderStateHighlighter}>
-          <div class={styles.menuHeaderStateHighlighterBar}></div>
+          <div
+            class={styles.menuHeaderStateHighlighterBar}
+            style={cssVars.value as CSSProperties}
+          />
         </div>
 
         <div class={styles.menuListsContainer}>
