@@ -159,39 +159,43 @@ export default defineComponent({
           onPointerdown={startDragging}
           onPointermove={updateDragging}
           onPointerup={stopDragging}
-          style={cssVars.value as CSSProperties}
         >
-          <div class={styles.menuListContainer}>
-            <ul class={styles.menuList}>
-              {menuListSorted.value.map((menuEntry) => (
-                <li class={styles.menuListEntry}>
-                  <button
-                    class={styles.menuButton}
-                    onClick={() => addItemToOrderedList(menuEntry)}
-                    disabled={isBlocked.value}
-                    type="button"
-                  >
-                    {menuEntry.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div class={styles.menuListContainer}>
-            <ul class={styles.menuList}>
-              {menuListSorted.value.map((menuEntry) => (
-                <li class={styles.menuListEntry}>
-                  <button
-                    class={styles.menuButton}
-                    onClick={() => addItemToOrderedList(menuEntry)}
-                    disabled={isBlocked.value}
-                    type="button"
-                  >
-                    {menuEntry.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
+          <div
+            class={styles.menuListsContainerInner}
+            style={cssVars.value as CSSProperties}
+          >
+            <div class={styles.menuListContainer}>
+              <ul class={styles.menuList}>
+                {menuListSorted.value.map((menuEntry) => (
+                  <li class={styles.menuListEntry}>
+                    <button
+                      class={styles.menuButton}
+                      onClick={() => addItemToOrderedList(menuEntry)}
+                      disabled={isBlocked.value}
+                      type="button"
+                    >
+                      {menuEntry.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class={styles.menuListContainer}>
+              <ul class={styles.menuList}>
+                {menuListSorted.value.map((menuEntry) => (
+                  <li class={styles.menuListEntry}>
+                    <button
+                      class={styles.menuButton}
+                      onClick={() => addItemToOrderedList(menuEntry)}
+                      disabled={isBlocked.value}
+                      type="button"
+                    >
+                      {menuEntry.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
         {showOverlay.value && <Overlay v-slots={slots} />}

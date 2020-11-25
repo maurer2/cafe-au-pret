@@ -48,10 +48,19 @@
 }
 
 .menuListsContainer {
+  position: relative;
   display: flex;
   overflow: hidden;
   touch-action: pan-y;
+  height: 500px;
+}
+
+.menuListsContainerInner {
+  position: absolute;
+  left: 0;
+  top: 0;
   transform: translateX(calc(1px * var(--content-faux-scroll-position)));
+  will-change: transform;
 }
 
 .menuListContainer {
