@@ -51,10 +51,6 @@ export default defineComponent({
       return menuListSortedByPopularity.value;
     });
 
-    const cssVars = computed(() => ({
-      '--menu-scroll-position': `${scrollbarPositionX.value}`,
-    }));
-
     function addItemToOrderedList({ id, name }: MenuItem) {
       const order: Order = {
         id,
@@ -77,6 +73,37 @@ export default defineComponent({
         });
     }
 
+    const isDragging = ref(false);
+    const dragPositionX = ref(0);
+
+    function startDragging(event: PointerEvent) {
+      isDragging.value = true;
+      dragPositionX.value = 0;
+    }
+
+    function updateDragging(event: PointerEvent) {
+      if (!isDragging.value) {
+        return;
+      }
+
+      // const bb = (event.target as HTMLElement).getBoundingClientRect();
+      // const newPosition = event.clientX - bb.left;
+      const newPosition = event.clientX - 16;
+
+      dragPositionX.value = newPosition;
+
+      console.log(newPosition);
+    }
+
+    function stopDragging(event: PointerEvent) {
+      isDragging.value = false;
+    }
+
+    const cssVars = computed(() => ({
+      '--menu-scroll-position': `${scrollbarPositionX.value}`,
+      '--content-faux-scroll-position': `${dragPositionX.value}`,
+    }));
+
     return () => (
       <section class={styles.menu}>
         <h2>Menu</h2>
@@ -85,8 +112,11 @@ export default defineComponent({
           <label
             class={[
               styles.menuHeaderLabel,
-              orderTypeComputed.value === SortType.alphabet ? styles.menuHeaderLabelIsActive : '',
+              orderTypeComputed.value === SortType.alphabet
+                ? styles.menuHeaderLabelIsActive
+                : '',
             ]}
+            data-label="Alphabet"
           >
             <input
               class={styles.menuHeaderButton}
@@ -100,8 +130,11 @@ export default defineComponent({
           <label
             class={[
               styles.menuHeaderLabel,
-              orderTypeComputed.value === SortType.popularity ? styles.menuHeaderLabelIsActive : '',
+              orderTypeComputed.value === SortType.popularity
+                ? styles.menuHeaderLabelIsActive
+                : '',
             ]}
+            data-label="Popularity"
           >
             <input
               class={styles.menuHeaderButton}
@@ -121,7 +154,13 @@ export default defineComponent({
           />
         </div>
 
-        <div class={styles.menuListsContainer}>
+        <div
+          class={styles.menuListsContainer}
+          onPointerdown={startDragging}
+          onPointermove={updateDragging}
+          onPointerup={stopDragging}
+          style={cssVars.value as CSSProperties}
+        >
           <div class={styles.menuListContainer}>
             <ul class={styles.menuList}>
               {menuListSorted.value.map((menuEntry) => (

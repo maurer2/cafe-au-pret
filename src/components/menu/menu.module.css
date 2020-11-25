@@ -14,6 +14,11 @@
   // border-bottom: 3px solid transparent;
   text-align: center;
   background: var(--concrete);
+
+  &::after {
+    content: attr(data-label);
+    font-weight: bold;
+  }
 }
 
 .menuHeaderLabelIsActive {
@@ -46,6 +51,7 @@
   display: flex;
   overflow: hidden;
   touch-action: pan-y;
+  transform: translateX(calc(1px * var(--content-faux-scroll-position)));
 }
 
 .menuListContainer {
