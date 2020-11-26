@@ -75,28 +75,32 @@ export default defineComponent({
 
     const isDragging = ref(false);
     const dragPositionX = ref(0);
+    // const pointerId = ref(null);
 
-    function startDragging(event: PointerEvent) {
-      isDragging.value = true;
-      dragPositionX.value = 0;
-    }
+    const mau = ref<HTMLElement | null>(null);
 
     function updateDragging(event: PointerEvent) {
-      if (!isDragging.value) {
+      dragPositionX.value += event.movementX;
+
+      console.log(dragPositionX.value);
+    }
+
+    function startDragging(event: PointerEvent) {
+      if (mau.value === null) {
         return;
       }
 
-      // const bb = (event.target as HTMLElement).getBoundingClientRect();
-      // const newPosition = event.clientX - bb.left;
-      const newPosition = event.clientX - 16;
-
-      dragPositionX.value = newPosition;
-
-      console.log(newPosition);
+      mau.value.onpointermove = updateDragging;
+      mau.value.setPointerCapture(event.pointerId);
     }
 
     function stopDragging(event: PointerEvent) {
-      isDragging.value = false;
+      if (mau.value === null) {
+        return;
+      }
+
+      mau.value.onpointermove = null;
+      mau.value.releasePointerCapture(event.pointerId);
     }
 
     const cssVars = computed(() => ({
@@ -157,8 +161,8 @@ export default defineComponent({
         <div
           class={styles.menuListsContainer}
           onPointerdown={startDragging}
-          onPointermove={updateDragging}
           onPointerup={stopDragging}
+          ref={mau}
         >
           <div
             class={styles.menuListsContainerInner}
