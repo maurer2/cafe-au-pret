@@ -1,9 +1,19 @@
 [
-  { "id": "latte", "name": "Latte" },
-  { "id": "cappuccino", "name": "Cappuccino" },
-  { "id": "americanoWhite", "name": "Americano (White)" },
-  { "id": "americanoBlack", "name": "Americano (Black)" },
-  { "id": "filterCoffee", "name": "Filter Coffee" },
-  { "id": "flatWhite", "name": "Flat White" },
-  { "id": "mocha", "name": "Mocha" }
+  { "id": "latte", "name": "Latte", "type": "COFFEE" },
+  { "id": "cappuccino", "name": "Cappuccino", "type": "COFFEE" },
+  { "id": "americanoWhite", "name": "Americano (White)", "type": "COFFEE" },
+  { "id": "americanoBlack", "name": "Americano (Black)", "type": "COFFEE" },
+  { "id": "filterCoffee", "name": "Filter Coffee", "type": "COFFEE" },
+  { "id": "flatWhite", "name": "Flat White", "type": "COFFEE" },
+  { "id": "mocha", "name": "Mocha", "type": "COFFEE" },
+  { "id": "espresso", "name": "Espresso", "type": "COFFEE" },
+  { "id": "berryBlast", "name": "Berry Blast", "type": "SMOOTHIE" },
+  { "id": "strawberryBanana", "name": "Strawberry Banana", "type": "SMOOTHIE" },
+  { "id": "icedLatte", "name": "Iced Latte", "type": "ICED" },
+  { "id": "icedAmericano", "name": "Iced Americano", "type": "ICED" },
+  { "id": "classicFrappe", "name": "Classic Frappe", "type": "FRAPPE" },
+  { "id": "chocolateFrappe", "name": "Chocolate Frappe", "type": "FRAPPE" },
+  { "id": "earlGrey", "name": "Earl Grey", "type": "TEA" },
+  { "id": "chaiLatte", "name": "Chai Latte", "type": "TEA" },
+  { "id": "hotChocolate", "name": "Hot Chocolate", "type": "Other" }
 ]

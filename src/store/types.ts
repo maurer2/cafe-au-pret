@@ -35,16 +35,29 @@ export type GettersType = {
   hasDailyOrders: (state: StateType, getters?: GettersType) => boolean;
   isBlocked: (state: StateType, getters?: GettersType) => boolean;
   getRemainingBlockingTime: (state: StateType, getters?: GettersType) => number;
-  getDailyRemainingNumberOfOrders: (state: StateType, getters?: GettersType) => number;
-  getMenuListSortedByPopularity: (state: StateType, getters?: GettersType) => MenuItem[];
-  getMenuListSortedByAlphabet: (state: StateType, getters?: GettersType) => MenuItem[];
+  getDailyRemainingNumberOfOrders: (
+    state: StateType,
+    getters?: GettersType,
+  ) => number;
+  getMenuListSortedByPopularity: (
+    state: StateType,
+    getters?: GettersType,
+  ) => MenuItem[];
+  getMenuListSortedByAlphabet: (
+    state: StateType,
+    getters?: GettersType,
+  ) => MenuItem[];
   getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
   [key: string]: any;
 };
 
-export enum SortType {
-  alphabet = 'alphabet',
-  popularity = 'popularity',
+export enum DrinkType {
+  COFFEE = 'coffee',
+  ICED = 'iced',
+  TEA = 'tea',
+  FRAPPE = 'frappe',
+  SMOOTHIE = 'smoothie',
+  OTHER = 'other',
 }
 
 export type StoreType = {
@@ -57,7 +70,6 @@ export type StoreType = {
       [orderDate: string]: Order[];
     };
     maxDailyOrders: number;
-    sortType: SortType;
     menuList: MenuItem[];
     blockingDuration: number;
     blockingTimeoutEnd: Date | null;
