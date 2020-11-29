@@ -1,9 +1,15 @@
-import { defineComponent, ref, computed, watch, CSSProperties } from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  watch,
+  CSSProperties,
+  reactive,
+} from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
-import { Actions } from '../../store/types';
+import { Actions, DrinkType } from '../../store/types';
 import Overlay from '../overlay/overlay';
-import { SortType } from './menu.types';
 
 export default defineComponent({
   name: 'Menu',
@@ -13,28 +19,27 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const orderType = ref(SortType.alphabet);
+    const activeDrinkType = ref(DrinkType.COFFEE);
     const slots = {
       overlayContent: () => <span>Order added</span>,
     };
-    const orderTypeComputed = computed({
+    const activeDrinkTypeComputed = computed({
       get: () => {
-        return orderType.value;
+        return activeDrinkType.value;
       },
       set: (newValue) => {
-        orderType.value = newValue;
+        activeDrinkType.value = newValue;
       },
     });
     const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const menuListSortedByPopularity = computed(
-      () => store.getters.getMenuListSortedByPopularity as MenuItem[],
-    );
-    const menuListSortedByAlphabet = computed(
-      () => store.getters.getMenuListSortedByAlphabet as MenuItem[],
+    const menuList = computed(
+      (): MenuItem[] => store.getters.getMenuEntriesOfType,
     );
     const showOverlay = ref(false);
     const scrollbarPositionX = ref(0);
+    const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
 
+    /*
     watch(orderType, (newValue) => {
       if (newValue === SortType.popularity) {
         scrollbarPositionX.value = 100;
@@ -43,13 +48,7 @@ export default defineComponent({
 
       scrollbarPositionX.value = 0;
     });
-
-    const menuListSorted = computed(() => {
-      if (orderTypeComputed.value === SortType.alphabet) {
-        return menuListSortedByAlphabet.value;
-      }
-      return menuListSortedByPopularity.value;
-    });
+    */
 
     function addItemToOrderedList({ id, name }: MenuItem) {
       const order: Order = {
@@ -116,38 +115,38 @@ export default defineComponent({
           <label
             class={[
               styles.menuHeaderLabel,
-              orderTypeComputed.value === SortType.alphabet
+              activeDrinkTypeComputed.value === DrinkType.COFFEE
                 ? styles.menuHeaderLabelIsActive
                 : '',
             ]}
-            data-label="Alphabet"
+            data-label={DrinkType.COFFEE}
           >
             <input
               class={styles.menuHeaderButton}
               type="radio"
               name="sort-type"
-              value={SortType.alphabet}
-              v-model={orderTypeComputed.value}
+              value={DrinkType.COFFEE}
+              v-model={activeDrinkTypeComputed.value}
             />
-            Alphabet
+            {DrinkType.COFFEE}
           </label>
           <label
             class={[
               styles.menuHeaderLabel,
-              orderTypeComputed.value === SortType.popularity
+              activeDrinkTypeComputed.value === DrinkType.FRAPPE
                 ? styles.menuHeaderLabelIsActive
                 : '',
             ]}
-            data-label="Popularity"
+            data-label={DrinkType.FRAPPE}
           >
             <input
               class={styles.menuHeaderButton}
               type="radio"
               name="sort-type"
-              value={SortType.popularity}
-              v-model={orderTypeComputed.value}
+              value={DrinkType.FRAPPE}
+              v-model={activeDrinkTypeComputed.value}
             />
-            Popularity
+            {DrinkType.FRAPPE}
           </label>
         </div>
 
@@ -170,7 +169,7 @@ export default defineComponent({
           >
             <div class={styles.menuListContainer}>
               <ul class={styles.menuList}>
-                {menuListSorted.value.map((menuEntry) => (
+                {menuList.value.map((menuEntry) => (
                   <li class={styles.menuListEntry}>
                     <button
                       class={styles.menuButton}
@@ -186,7 +185,7 @@ export default defineComponent({
             </div>
             <div class={styles.menuListContainer}>
               <ul class={styles.menuList}>
-                {menuListSorted.value.map((menuEntry) => (
+                {menuList.value.map((menuEntry) => (
                   <li class={styles.menuListEntry}>
                     <button
                       class={styles.menuButton}

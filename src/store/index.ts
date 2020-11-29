@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { StoreType, SortType } from './types';
+import { StoreType } from './types';
 import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
@@ -26,7 +26,6 @@ const defaultStore: StoreType = {
     dateTimeFormatter,
     orders: {},
     maxDailyOrders: 5,
-    sortType: SortType.popularity,
     menuList,
     blockingDuration: 5,
     blockingTimeoutEnd: null,

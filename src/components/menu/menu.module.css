@@ -22,7 +22,7 @@
 }
 
 .menuHeaderLabelIsActive {
-  // border-bottom-color: var(--old-brick);
+  color: var(--old-brick);
 }
 
 .menuHeaderButton {

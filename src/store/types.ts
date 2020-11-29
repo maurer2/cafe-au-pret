@@ -39,25 +39,18 @@ export type GettersType = {
     state: StateType,
     getters?: GettersType,
   ) => number;
-  getMenuListSortedByPopularity: (
-    state: StateType,
-    getters?: GettersType,
-  ) => MenuItem[];
-  getMenuListSortedByAlphabet: (
-    state: StateType,
-    getters?: GettersType,
-  ) => MenuItem[];
+  getMenuEntriesOfType: (state: StateType, getters?: GettersType) => MenuItem[];
   getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
   [key: string]: any;
 };
 
 export enum DrinkType {
-  COFFEE = 'coffee',
-  ICED = 'iced',
-  TEA = 'tea',
-  FRAPPE = 'frappe',
-  SMOOTHIE = 'smoothie',
-  OTHER = 'other',
+  COFFEE = 'Coffee',
+  ICED = 'Iced',
+  TEA = 'Tea',
+  FRAPPE = 'Frappe',
+  SMOOTHIE = 'Smoothie',
+  OTHER = 'Other',
 }
 
 export type StoreType = {

@@ -1,5 +1,9 @@
-import { GettersType } from './types';
-import { getTimeFormatted, getDateFormatted, getCurrentDateISO } from '../util/dateUtil';
+import { GettersType, DrinkType } from './types';
+import {
+  getTimeFormatted,
+  getDateFormatted,
+  getCurrentDateISO,
+} from '../util/dateUtil';
 
 const getters: GettersType = {
   getCurrentDateKey: (state) => {
@@ -58,7 +62,8 @@ const getters: GettersType = {
       return false;
     }
 
-    const differenceInMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
+    const differenceInMS =
+      blockingTimeoutEnd.getTime() - currentDateTime.getTime();
 
     return Math.sign(differenceInMS) === 1;
   },
@@ -69,7 +74,8 @@ const getters: GettersType = {
       return 0;
     }
 
-    const differenceInMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
+    const differenceInMS =
+      blockingTimeoutEnd.getTime() - currentDateTime.getTime();
 
     return Math.sign(differenceInMS) === 1 ? differenceInMS : 0;
   },
@@ -87,15 +93,8 @@ const getters: GettersType = {
 
     return Math.sign(orderDifference) === 1 ? orderDifference : 0;
   },
-  getMenuListSortedByPopularity: (state) => {
+  getMenuEntriesOfType: (state) => {
     const sortedList = [...state.menuList];
-
-    return sortedList;
-  },
-  getMenuListSortedByAlphabet: (state) => {
-    const sortedList = [...state.menuList].sort((entry1, entry2) =>
-      entry1.name.localeCompare(entry2.name),
-    );
 
     return sortedList;
   },
