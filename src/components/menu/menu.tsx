@@ -9,12 +9,17 @@ import {
 import styles from './menu.module.css';
 import { useStore } from '../../store';
 import { Actions, DrinkType } from '../../store/types';
+
 import Overlay from '../overlay/overlay';
+import MenuHead from './menu-head/menu-head';
+import MenuBody from './menu-body/menu-body';
 
 export default defineComponent({
   name: 'Menu',
   components: {
     Overlay,
+    MenuHead,
+    MenuBody,
   },
   props: {},
   setup() {
@@ -23,14 +28,6 @@ export default defineComponent({
     const slots = {
       overlayContent: () => <span>Order added</span>,
     };
-    const activeDrinkTypeComputed = computed({
-      get: () => {
-        return activeDrinkType.value;
-      },
-      set: (newValue) => {
-        activeDrinkType.value = newValue;
-      },
-    });
     const isBlocked = computed((): boolean => store.getters.isBlocked);
     const menuList = computed(
       (): MenuItem[] => store.getters.getMenuEntriesOfType,
@@ -102,6 +99,10 @@ export default defineComponent({
       mau.value.releasePointerCapture(event.pointerId);
     }
 
+    function updateActiveDrinkType(newValue: DrinkType) {
+      activeDrinkType.value = newValue;
+    }
+
     const cssVars = computed(() => ({
       '--menu-scroll-position': `${scrollbarPositionX.value}`,
       '--content-faux-scroll-position': `${dragPositionX.value}`,
@@ -111,96 +112,12 @@ export default defineComponent({
       <section class={styles.menu}>
         <h2>Menu</h2>
 
-        <div class={styles.menuHeader}>
-          <label
-            class={[
-              styles.menuHeaderLabel,
-              activeDrinkTypeComputed.value === DrinkType.COFFEE
-                ? styles.menuHeaderLabelIsActive
-                : '',
-            ]}
-            data-label={DrinkType.COFFEE}
-          >
-            <input
-              class={styles.menuHeaderButton}
-              type="radio"
-              name="sort-type"
-              value={DrinkType.COFFEE}
-              v-model={activeDrinkTypeComputed.value}
-            />
-            {DrinkType.COFFEE}
-          </label>
-          <label
-            class={[
-              styles.menuHeaderLabel,
-              activeDrinkTypeComputed.value === DrinkType.FRAPPE
-                ? styles.menuHeaderLabelIsActive
-                : '',
-            ]}
-            data-label={DrinkType.FRAPPE}
-          >
-            <input
-              class={styles.menuHeaderButton}
-              type="radio"
-              name="sort-type"
-              value={DrinkType.FRAPPE}
-              v-model={activeDrinkTypeComputed.value}
-            />
-            {DrinkType.FRAPPE}
-          </label>
-        </div>
+        <menu-head
+          activeDrinkType={activeDrinkType.value}
+          onUpdateActiveDrinkType={updateActiveDrinkType}
+        />
+        <menu-body></menu-body>
 
-        <div class={styles.menuHeaderStateHighlighter}>
-          <div
-            class={styles.menuHeaderStateHighlighterBar}
-            style={cssVars.value as CSSProperties}
-          />
-        </div>
-
-        <div
-          class={styles.menuListsContainer}
-          onPointerdown={startDragging}
-          onPointerup={stopDragging}
-          ref={mau}
-        >
-          <div
-            class={styles.menuListsContainerInner}
-            style={cssVars.value as CSSProperties}
-          >
-            <div class={styles.menuListContainer}>
-              <ul class={styles.menuList}>
-                {menuList.value.map((menuEntry) => (
-                  <li class={styles.menuListEntry}>
-                    <button
-                      class={styles.menuButton}
-                      onClick={() => addItemToOrderedList(menuEntry)}
-                      disabled={isBlocked.value}
-                      type="button"
-                    >
-                      {menuEntry.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div class={styles.menuListContainer}>
-              <ul class={styles.menuList}>
-                {menuList.value.map((menuEntry) => (
-                  <li class={styles.menuListEntry}>
-                    <button
-                      class={styles.menuButton}
-                      onClick={() => addItemToOrderedList(menuEntry)}
-                      disabled={isBlocked.value}
-                      type="button"
-                    >
-                      {menuEntry.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
         {showOverlay.value && <Overlay v-slots={slots} />}
       </section>
     );

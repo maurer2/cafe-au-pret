@@ -14,7 +14,7 @@ export default defineComponent({
   components: {},
   props: {
     activeDrinkType: {
-      type: String as PropType<DrinkType.COFFEE>,
+      type: String as PropType<DrinkType>,
       default: DrinkType.COFFEE,
     },
   },
