@@ -18,7 +18,7 @@ export default defineComponent({
       default: DrinkType.COFFEE,
     },
   },
-  emits: ['update-active-drink-type'],
+  emits: ['update-active-drink-type', 'updateActiveDrinkType'], // todo fix updateActiveDrinkType warning
   setup(props, { emit }) {
     const activeDrinkTypeComputed = computed({
       get: () => {
