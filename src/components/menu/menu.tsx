@@ -1,11 +1,4 @@
-import {
-  defineComponent,
-  ref,
-  computed,
-  watch,
-  CSSProperties,
-  reactive,
-} from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
 import { Actions, DrinkType } from '../../store/types';
@@ -29,25 +22,13 @@ export default defineComponent({
       overlayContent: () => <span>Order added</span>,
     };
     const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const menuList = computed(
+    const menuItems = computed(
       (): MenuItem[] => store.getters.getMenuEntriesOfType,
     );
     const showOverlay = ref(false);
-    const scrollbarPositionX = ref(0);
-    const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
+    // const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
 
-    /*
-    watch(orderType, (newValue) => {
-      if (newValue === SortType.popularity) {
-        scrollbarPositionX.value = 100;
-        return;
-      }
-
-      scrollbarPositionX.value = 0;
-    });
-    */
-
-    function addItemToOrderedList({ id, name }: MenuItem) {
+    function addDrink({ id, name }: MenuItem) {
       const order: Order = {
         id,
         name,
@@ -69,44 +50,9 @@ export default defineComponent({
         });
     }
 
-    const isDragging = ref(false);
-    const dragPositionX = ref(0);
-    // const pointerId = ref(null);
-
-    const mau = ref<HTMLElement | null>(null);
-
-    function updateDragging(event: PointerEvent) {
-      dragPositionX.value += event.movementX;
-
-      console.log(dragPositionX.value);
-    }
-
-    function startDragging(event: PointerEvent) {
-      if (mau.value === null) {
-        return;
-      }
-
-      mau.value.onpointermove = updateDragging;
-      mau.value.setPointerCapture(event.pointerId);
-    }
-
-    function stopDragging(event: PointerEvent) {
-      if (mau.value === null) {
-        return;
-      }
-
-      mau.value.onpointermove = null;
-      mau.value.releasePointerCapture(event.pointerId);
-    }
-
     function updateActiveDrinkType(newValue: DrinkType) {
       activeDrinkType.value = newValue;
     }
-
-    const cssVars = computed(() => ({
-      '--menu-scroll-position': `${scrollbarPositionX.value}`,
-      '--content-faux-scroll-position': `${dragPositionX.value}`,
-    }));
 
     return () => (
       <section class={styles.menu}>
@@ -116,7 +62,11 @@ export default defineComponent({
           activeDrinkType={activeDrinkType.value}
           onUpdateActiveDrinkType={updateActiveDrinkType}
         />
-        <menu-body></menu-body>
+        <menu-body
+          menuItems={menuItems.value}
+          isBlocked={isBlocked.value}
+          onAddDrink={addDrink}
+        />
 
         {showOverlay.value && <Overlay v-slots={slots} />}
       </section>

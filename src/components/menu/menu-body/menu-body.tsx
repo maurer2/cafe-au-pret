@@ -30,8 +30,8 @@ export default defineComponent({
       },
     });
 
-    function addDrink({ id }: MenuItem) {
-      emit('add-drink', id);
+    function addDrink(drink: MenuItem) {
+      emit('add-drink', drink);
     }
 
     const isDragging = ref(false);
