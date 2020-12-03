@@ -6,13 +6,15 @@ import { Actions, DrinkType } from '../../store/types';
 import Overlay from '../overlay/overlay';
 import MenuHead from './menu-head/menu-head';
 import MenuBody from './menu-body/menu-body';
+import MenuBodyScrollable from './menu-body-scrollable/menu-body-scrollable';
 
 export default defineComponent({
   name: 'Menu',
   components: {
     Overlay,
     MenuHead,
-    MenuBody,
+    // MenuBody,
+    MenuBodyScrollable,
   },
   props: {},
   setup() {
@@ -62,7 +64,7 @@ export default defineComponent({
           activeDrinkType={activeDrinkType.value}
           onUpdateActiveDrinkType={updateActiveDrinkType}
         />
-        <menu-body
+        <menu-body-scrollable
           menuItems={menuItems.value}
           isBlocked={isBlocked.value}
           onAddDrink={addDrink}
