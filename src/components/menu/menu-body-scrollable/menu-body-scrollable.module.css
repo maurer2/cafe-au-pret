@@ -1,11 +1,13 @@
 .menuListsContainer {
   position: relative;
-  display: flex;
-  overflow: scroll;
-  overflow-y: scroll;
+}
 
+.menuListsContainerInner {
+  display: flex;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .menuListContainer {
