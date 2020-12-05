@@ -23,7 +23,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const activeDrinkTypeComputed = computed({
       get: () => {
-        return props.activeDrinkTyspe;
+        return props.activeDrinkType;
       },
       set: (newValue: DrinkType) => {
         emit('update-active-drink-type', newValue);

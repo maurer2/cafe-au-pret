@@ -24,8 +24,8 @@ export default defineComponent({
       overlayContent: () => <span>Order added</span>,
     };
     const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const menuItems = computed(
-      (): MenuItem[] => store.getters.getMenuEntriesOfType,
+    const menuItems = computed((): MenuItem[] =>
+      store.getters.getMenuEntriesOfType(DrinkType.COFFEE),
     );
     const showOverlay = ref(false);
     // const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];

@@ -93,10 +93,25 @@ const getters: GettersType = {
 
     return Math.sign(orderDifference) === 1 ? orderDifference : 0;
   },
-  getMenuEntriesOfType: (state) => {
-    const sortedList = [...state.menuList];
+  getAllMenuEntries: (state) => {
+    return [...state.menuList];
+  },
+  getMenuEntriesOfType: (state) => (type) => {
+    // const entries = [...state.menuList];
+    const drinkTypeValueKeyPairs = Object.entries(
+      DrinkType,
+    ).map(([key, value]) => [value, key]);
+    const drinkTypeValueKeyPairsObject = Object.fromEntries(
+      drinkTypeValueKeyPairs,
+    );
 
-    return sortedList;
+    const keyFromType = drinkTypeValueKeyPairsObject[type];
+
+    const filteredList = state.menuList.filter(
+      (entry) => entry.type === keyFromType,
+    );
+
+    return filteredList;
   },
   getZoomLevelFormatted: (state) => {
     const { zoomLevel } = state;

@@ -39,7 +39,11 @@ export type GettersType = {
     state: StateType,
     getters?: GettersType,
   ) => number;
-  getMenuEntriesOfType: (state: StateType, getters?: GettersType) => MenuItem[];
+  getAllMenuEntries: (state: StateType, getters?: GettersType) => MenuItem[];
+  getMenuEntriesOfType: (
+    state: StateType,
+    getters?: GettersType,
+  ) => (type: DrinkType) => MenuItem[];
   getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
   [key: string]: any;
 };
