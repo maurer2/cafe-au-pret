@@ -25,10 +25,10 @@ export default defineComponent({
     };
     const isBlocked = computed((): boolean => store.getters.isBlocked);
     const menuItems = computed((): MenuItem[] =>
-      store.getters.getMenuEntriesOfType(DrinkType.COFFEE),
+      store.getters.getMenuEntriesOfType(activeDrinkType.value),
     );
     const showOverlay = ref(false);
-    // const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
+    const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
 
     function addDrink({ id, name }: MenuItem) {
       const order: Order = {
@@ -48,7 +48,7 @@ export default defineComponent({
           }, 500);
         })
         .catch(() => {
-          console.log(`${name} couldn't be added to the list`);
+          console.log(`${name} couldn't be added to the list.`);
         });
     }
 
