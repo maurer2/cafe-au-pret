@@ -4,7 +4,7 @@
 
 .menuListsContainerInner {
   display: flex;
-  scroll-snap-type: x mandatory;
+  //scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   overflow: scroll;
   overflow-y: scroll;
@@ -12,6 +12,7 @@
 
 .menuListContainer {
   flex: 1 0 100%;
+  scroll-snap-align: center;
 }
 
 .menuList {
@@ -23,8 +24,6 @@
   list-style: none;
   justify-content: center;
   align-items: center;
-
-  scroll-snap-align: center;
 }
 
 .menuListEntry {
