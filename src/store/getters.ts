@@ -97,18 +97,19 @@ const getters: GettersType = {
     return [...state.menuList];
   },
   getMenuEntriesOfType: (state) => (type) => {
-    // const entries = [...state.menuList];
-    const drinkTypeValueKeyPairs = Object.entries(
-      DrinkType,
-    ).map(([key, value]) => [value, key]);
-    const drinkTypeValueKeyPairsObject = Object.fromEntries(
-      drinkTypeValueKeyPairs,
+    const drinkTypeKeyValuePairs = Object.entries(DrinkType);
+    const drinkTypeValueKeyPairs = drinkTypeKeyValuePairs.map((entry) =>
+      [...entry].reverse(),
     );
+    const drinkTypes = Object.fromEntries(drinkTypeValueKeyPairs);
 
-    const keyFromType = drinkTypeValueKeyPairsObject[type];
+    if (!(type in drinkTypes)) {
+      return [];
+    }
 
+    const keyMapped = drinkTypes[type];
     const filteredList = state.menuList.filter(
-      (entry) => entry.type === keyFromType,
+      (entry) => entry.type === keyMapped,
     );
 
     return filteredList;
