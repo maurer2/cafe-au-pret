@@ -5,15 +5,18 @@
 .menuHeader {
   display: flex;
   margin: 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 10px;
+  background: var(--concrete);
 }
 
 .menuHeaderLabel {
   display: block;
-  padding: 1rem 2rem;
-  flex: 1 1 0;
-  // border-bottom: 3px solid transparent;
+  padding: 1rem 0;
+  flex: 0 0 auto;
+  border-bottom: 3px solid transparent;
   text-align: center;
-  background: var(--concrete);
 
   &::after {
     content: attr(data-label);
@@ -46,47 +49,4 @@
   background: #000;
   transform: translateX(calc(1% * var(--menu-scroll-position)));
   transition: transform 0.5s;
-}
-
-.menuListsContainer {
-  position: relative;
-  display: flex;
-  overflow: hidden;
-  touch-action: pan-y;
-  height: 500px;
-}
-
-.menuListsContainerInner {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateX(calc(1px * var(--content-faux-scroll-position)));
-  will-change: transform;
-}
-
-.menuListContainer {
-  flex: 1 0 100%;
-}
-
-.menuList {
-  display: flex;
-  padding: 0;
-  margin: 0;
-  flex-wrap: wrap;
-  list-style: none;
-}
-
-.menuListEntry {
-  display: contents;
-}
-
-.menuButton {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  flex: 1 0 100%;
-}
-
-.menuButton:disabled,
-.menuButton[disabled] {
-  opacity: 0.5;
 }

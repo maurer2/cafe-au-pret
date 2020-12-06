@@ -28,7 +28,7 @@ export default defineComponent({
       store.getters.getMenuEntriesOfType(activeDrinkType.value),
     );
     const showOverlay = ref(false);
-    const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
+    const visibleDrinkTypes = Object.values(DrinkType);
 
     function addDrink({ id, name }: MenuItem) {
       const order: Order = {
@@ -62,6 +62,7 @@ export default defineComponent({
 
         <menu-head
           activeDrinkType={activeDrinkType.value}
+          visibleDrinkTypes={visibleDrinkTypes}
           onUpdateActiveDrinkType={updateActiveDrinkType}
         />
         <menu-body

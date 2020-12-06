@@ -10,11 +10,13 @@ html {
   font-size: 16px;
   color: var(--tundora);
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
-.app {
+#app {
+  display: grid;
   min-height: 100vh;
-  text-align: center;
+  grid-template-rows: min-content min-content 1fr min-content;
 }
 
 .visually-hidden {

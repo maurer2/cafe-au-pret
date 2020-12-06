@@ -17,6 +17,14 @@ export default defineComponent({
       type: String as PropType<DrinkType>,
       default: DrinkType.COFFEE,
     },
+    visibleDrinkTypes: {
+      type: Array as PropType<DrinkType[]>,
+      default: () => [],
+    },
+    showScrollbar: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
   },
   emits: ['update-active-drink-type', 'updateActiveDrinkType'], // todo fix updateActiveDrinkType warning
   setup(props, { emit }) {
@@ -29,7 +37,6 @@ export default defineComponent({
       },
     });
     const scrollbarPositionX = ref(0);
-    const visibleDrinkTypes = [DrinkType.COFFEE, DrinkType.FRAPPE];
 
     /*
     watch(orderType, (newValue) => {
@@ -49,50 +56,37 @@ export default defineComponent({
     return () => (
       <>
         <div class={styles.menuHeader}>
-          <label
-            class={[
-              styles.menuHeaderLabel,
-              activeDrinkTypeComputed.value === DrinkType.COFFEE
-                ? styles.menuHeaderLabelIsActive
-                : '',
-            ]}
-            data-label={DrinkType.COFFEE}
-          >
-            <input
-              class={styles.menuHeaderButton}
-              type="radio"
-              name="sort-type"
-              value={DrinkType.COFFEE}
-              v-model={activeDrinkTypeComputed.value}
-            />
-            {DrinkType.COFFEE}
-          </label>
-          <label
-            class={[
-              styles.menuHeaderLabel,
-              activeDrinkTypeComputed.value === DrinkType.FRAPPE
-                ? styles.menuHeaderLabelIsActive
-                : '',
-            ]}
-            data-label={DrinkType.FRAPPE}
-          >
-            <input
-              class={styles.menuHeaderButton}
-              type="radio"
-              name="sort-type"
-              value={DrinkType.FRAPPE}
-              v-model={activeDrinkTypeComputed.value}
-            />
-            {DrinkType.FRAPPE}
-          </label>
+          {props.visibleDrinkTypes.map((visibleDrinkType) => (
+            <>
+              <label
+                class={[
+                  styles.menuHeaderLabel,
+                  activeDrinkTypeComputed.value === visibleDrinkType
+                    ? styles.menuHeaderLabelIsActive
+                    : '',
+                ]}
+                data-label={visibleDrinkType}
+              >
+                <input
+                  class={styles.menuHeaderButton}
+                  type="radio"
+                  name="sort-type"
+                  value={visibleDrinkType}
+                  v-model={activeDrinkTypeComputed.value}
+                />
+                {visibleDrinkType}
+              </label>
+            </>
+          ))}
         </div>
-
-        <div class={styles.menuHeaderStateHighlighter}>
-          <div
-            class={styles.menuHeaderStateHighlighterBar}
-            style={cssVars.value as CSSProperties}
-          />
-        </div>
+        {props.showScrollbar && (
+          <div class={styles.menuHeaderStateHighlighter}>
+            <div
+              class={styles.menuHeaderStateHighlighterBar}
+              style={cssVars.value as CSSProperties}
+            />
+          </div>
+        )}
       </>
     );
   },

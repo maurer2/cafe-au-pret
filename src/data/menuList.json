@@ -15,5 +15,5 @@
   { "id": "chocolateFrappe", "name": "Chocolate Frappe", "type": "FRAPPE" },
   { "id": "earlGrey", "name": "Earl Grey", "type": "TEA" },
   { "id": "chaiLatte", "name": "Chai Latte", "type": "TEA" },
-  { "id": "hotChocolate", "name": "Hot Chocolate", "type": "Other" }
+  { "id": "hotChocolate", "name": "Hot Chocolate", "type": "OTHER" }
 ]

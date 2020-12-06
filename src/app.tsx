@@ -19,13 +19,15 @@ export default defineComponent({
     AppHeader,
     ProgressBar,
     ListDaily,
-    Menu,
+    'menu-list': Menu,
     'qr-code': QRCode,
   },
   props: {},
   setup() {
     const store = useStore();
-    const refreshTimeout = computed((): number => store.state.refreshTimeoutInSeconds);
+    const refreshTimeout = computed(
+      (): number => store.state.refreshTimeoutInSeconds,
+    );
     let timeoutId = -1;
 
     function updateTime(): void {
@@ -63,7 +65,7 @@ export default defineComponent({
         <main class={styles.main}>
           <qr-code />
           <list-daily />
-          <Menu />
+          <menu-list />
         </main>
         <app-footer />
       </>
