@@ -3,30 +3,32 @@
 }
 
 .menuHeader {
-  display: flex;
+  display: grid;
   margin: 0;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0 10px;
-  background: var(--concrete);
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
 
 .menuHeaderLabel {
   display: block;
   padding: 1rem 0;
   flex: 0 0 auto;
-  border-bottom: 3px solid transparent;
+  /*border-bottom: 3px solid transparent;*/
   text-align: center;
+  background: var(--concrete);
 
+  /*
   &::after {
     content: attr(data-label);
     font-weight: bold;
     display: none;
   }
+  */
 }
 
 .menuHeaderLabelIsActive {
-  color: var(--old-brick);
+  background: var(--old-brick);
+  color: var(--concrete);
 }
 
 .menuHeaderButton {

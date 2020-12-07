@@ -6,8 +6,3 @@
 .main {
   overflow: hidden; /* contain child margins */
 }
-
-#app {
-  min-height: 100vh;
-  text-align: center;
-}
