@@ -10,11 +10,15 @@ export default defineComponent({
       default: 0,
     },
   },
-  setup(props) {
+  setup() {
     const store = useStore();
     const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const blockingDurationInMinutes = computed((): number => store.state.blockingDuration);
-    const remainingTimeInMs = computed((): number => store.getters.getRemainingBlockingTime);
+    const blockingDurationInMinutes = computed(
+      (): number => store.state.blockingDuration,
+    );
+    const remainingTimeInMs = computed(
+      (): number => store.getters.getRemainingBlockingTime,
+    );
     const gradientTime = computed(() => {
       return remainingTimeInMs.value / 1000 / 60;
     });
@@ -42,7 +46,10 @@ export default defineComponent({
     return () => (
       <>
         {isBlocked.value ? (
-          <div class={styles.qrcodeOverlay} style={cssVars.value as CSSProperties}>
+          <div
+            class={styles.qrcodeOverlay}
+            style={cssVars.value as CSSProperties}
+          >
             <div class={styles.qrcodeOverlayValue}>
               <span>{String(gradientTime.value.toFixed(0))} min </span>
               <span>({String(gradientPercentage.value.toFixed(0))}%)</span>

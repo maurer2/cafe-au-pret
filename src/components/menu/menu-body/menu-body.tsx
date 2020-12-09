@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, CSSProperties, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import styles from './menu-body.module.css';
 import { DrinkType } from '../../../store/types';
 
@@ -19,17 +19,8 @@ export default defineComponent({
       default: [],
     },
   },
-  emits: ['update-active-drink-type', 'add-drink', 'show-overlay'],
+  emits: ['add-drink'],
   setup(props, { emit }) {
-    const activeDrinkTypeComputed = computed({
-      get: () => {
-        return props.activeDrinkType;
-      },
-      set: (newValue: DrinkType) => {
-        emit('update-active-drink-type', newValue);
-      },
-    });
-
     function addDrink(drink: MenuItem) {
       emit('add-drink', drink);
     }

@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, CSSProperties, PropType } from 'vue';
+import { defineComponent, ref, computed, PropType } from 'vue';
 import styles from './menu-body-scrollable.module.css';
 import { DrinkType } from '../../../store/types';
 
@@ -22,7 +22,7 @@ export default defineComponent({
   emits: ['update-active-drink-type', 'add-drink', 'show-overlay'],
   setup(props, { emit }) {
     function addDrink(drink: MenuItem) {
-      // emit('add-drink', drink);
+      emit('add-drink', drink);
     }
 
     const dragPositionX = ref(0);

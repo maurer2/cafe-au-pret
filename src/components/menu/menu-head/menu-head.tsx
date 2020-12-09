@@ -1,11 +1,4 @@
-import {
-  defineComponent,
-  ref,
-  computed,
-  watch,
-  CSSProperties,
-  PropType,
-} from 'vue';
+import { defineComponent, ref, computed, CSSProperties, PropType } from 'vue';
 import styles from './menu-head.module.css';
 import { DrinkType } from '../../../store/types';
 
@@ -26,7 +19,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['update-active-drink-type', 'updateActiveDrinkType'], // todo fix updateActiveDrinkType warning
+  emits: ['update-active-drink-type'],
   setup(props, { emit }) {
     const activeDrinkTypeComputed = computed({
       get: () => {
