@@ -1,3 +1,4 @@
 .qrcode {
+  composes: main-section from '../../app.module.css';
   padding: 1rem;
 }

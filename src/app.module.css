@@ -1,8 +1,13 @@
 .wrapper {
   min-height: 100vh; /* temp */
-  text-align: center;
 }
 
+// https://css-tricks.com/full-bleed/
 .main {
-  overflow: hidden; /* contain child margins */
+  display: grid;
+  grid-template-columns: 1fr min(70ch, 100%) 1fr;
+}
+
+.main-section {
+  grid-column: 2;
 }
