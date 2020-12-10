@@ -4,6 +4,7 @@
 }
 
 .qrcodeImageWrapperOuter {
+  position: relative;
   margin: auto;
   max-width: 100%;
 }
