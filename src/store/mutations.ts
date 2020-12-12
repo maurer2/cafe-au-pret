@@ -1,4 +1,5 @@
 import { StateType, Mutations, MutationsType } from './types';
+import { saveToStorage } from '../util/storageUtil';
 
 const mutations: MutationsType = {
   [Mutations.UPDATE_ZOOM](state: StateType, change: number) {
@@ -13,7 +14,10 @@ const mutations: MutationsType = {
     const newZoomLevel = zoomLevel + (change / 100);
     state.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
   },
-  [Mutations.ADD_DAILY_ORDER](state: StateType, payload: { dateKey: string; order: Order }) {
+  [Mutations.ADD_DAILY_ORDER](
+    state: StateType,
+    payload: { dateKey: string; order: Order },
+  ) {
     const { dateKey, order } = payload;
 
     const { orders } = state;
@@ -38,6 +42,16 @@ const mutations: MutationsType = {
     const blockingTimeoutEnd = new Date(endDateMs);
 
     state.blockingTimeoutEnd = blockingTimeoutEnd;
+  },
+  [Mutations.PERSIST_ORDER](state: StateType, payload: any) {
+    const { orders, currentDateTime } = state;
+
+    const ordersSerialized = JSON.stringify(orders);
+
+    saveToStorage(ordersSerialized);
+  },
+  [Mutations.RESTORE_ORDER](state: StateType, payload: any) {
+    // console.log('restore')
   },
 };
 

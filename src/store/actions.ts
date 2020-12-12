@@ -1,4 +1,5 @@
 import { Mutations, Actions, ActionsType } from './types';
+import { storageIsAvailable } from '../util/storageUtil';
 
 const actions: ActionsType = {
   async [Actions.INCREASE_ZOOM](context) {
@@ -12,14 +13,20 @@ const actions: ActionsType = {
   },
   async [Actions.ADD_ORDER](context, order: Order) {
     const dateKey: string = context.getters.getCurrentDateKey;
+    const { orders } = context.state;
+
     const { isBlocked }: { isBlocked: boolean } = context.getters;
     const { dateTime } = order;
 
     if (isBlocked) {
-      throw new Error('blocked');
+      throw new Error('Blocked');
     } else {
       context.commit(Mutations.ADD_DAILY_ORDER, { dateKey, order });
       context.commit(Mutations.SET_BLOCKING_TIMEOUT, dateTime);
+
+      if (storageIsAvailable()) {
+        context.commit(Mutations.PERSIST_ORDER, { orders });
+      }
     }
   },
   async [Actions.UPDATE_CURRENT_DATE](context, dateTime) {
