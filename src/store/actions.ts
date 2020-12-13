@@ -13,8 +13,6 @@ const actions: ActionsType = {
   },
   async [Actions.ADD_ORDER](context, order: Order) {
     const dateKey: string = context.getters.getCurrentDateKey;
-    const { orders } = context.state;
-
     const { isBlocked }: { isBlocked: boolean } = context.getters;
     const { dateTime } = order;
 
@@ -25,7 +23,7 @@ const actions: ActionsType = {
       context.commit(Mutations.SET_BLOCKING_TIMEOUT, dateTime);
 
       if (storageIsAvailable()) {
-        context.commit(Mutations.PERSIST_ORDER, { orders });
+        context.commit(Mutations.PERSIST_ORDER, { dateKey });
       }
     }
   },

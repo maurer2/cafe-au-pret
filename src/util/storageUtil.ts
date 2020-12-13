@@ -12,14 +12,16 @@ export function storageIsAvailable(): boolean {
   }
 }
 
-export function saveToStorage(payload: string): void {
-  const key = 'test';
-
+export function saveToStorage(
+  key: string,
+  dateKey: string,
+  saveData: string,
+): void {
   try {
-    JSON.parse(payload);
+    JSON.parse(saveData);
   } catch (error) {
     console.log(error);
   }
 
-  window.localStorage.setItem(key, payload);
+  window.localStorage.setItem(key, saveData);
 }

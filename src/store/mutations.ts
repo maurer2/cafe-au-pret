@@ -43,12 +43,20 @@ const mutations: MutationsType = {
 
     state.blockingTimeoutEnd = blockingTimeoutEnd;
   },
-  [Mutations.PERSIST_ORDER](state: StateType, payload: any) {
+  [Mutations.PERSIST_ORDER](state: StateType, payload: { dateKey: string }) {
     const { orders, currentDateTime } = state;
+    const { dateKey } = payload;
+    const key = 'coffeescript';
 
-    const ordersSerialized = JSON.stringify(orders);
+    const saveData = {
+      date: dateKey,
+      currentDateTime,
+      orders,
+    };
 
-    saveToStorage(ordersSerialized);
+    const saveDataSerialized = JSON.stringify(saveData, null, 2);
+
+    saveToStorage(key, dateKey, saveDataSerialized);
   },
   [Mutations.RESTORE_ORDER](state: StateType, payload: any) {
     // console.log('restore')
