@@ -30,6 +30,11 @@ const actions: ActionsType = {
   async [Actions.UPDATE_CURRENT_DATE](context, dateTime) {
     context.commit(Mutations.UPDATE_CURRENT_DATE, dateTime);
   },
+  async [Actions.GET_SAVED_ORDERS](context) {
+    const dateKey: string = context.getters.getCurrentDateKey;
+
+    context.commit(Mutations.RESTORE_ORDER, { dateKey });
+  },
 };
 
 export default actions;

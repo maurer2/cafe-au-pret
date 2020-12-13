@@ -1,5 +1,5 @@
 import { StateType, Mutations, MutationsType } from './types';
-import { saveToStorage } from '../util/storageUtil';
+import { saveToStorage, getFromStorage } from '../util/storageUtil';
 
 const mutations: MutationsType = {
   [Mutations.UPDATE_ZOOM](state: StateType, change: number) {
@@ -58,8 +58,31 @@ const mutations: MutationsType = {
 
     saveToStorage(key, dateKey, saveDataSerialized);
   },
-  [Mutations.RESTORE_ORDER](state: StateType, payload: any) {
-    // console.log('restore')
+  [Mutations.RESTORE_ORDER](state: StateType, payload: { dateKey: string }) {
+    const { dateKey } = payload;
+    const key = 'coffeescript';
+
+    const savedData = getFromStorage(key, dateKey);
+
+    if (!saveToStorage) {
+      return;
+    }
+    const parsedSavedData = JSON.parse(savedData as string);
+
+    console.log(state.orders, parsedSavedData.orders['2020-12-13']);
+
+    // state.orders = parsedSavedData.orders;
+    // state.orders = { ...parsedSavedData.orders };
+    state.orders = {
+      '2020-12-13': [
+        {
+          id: 'latte',
+          name: 'Latte',
+          dateTime: new Date('2020-12-13T22:36:55.232Z'),
+          tz: 'Europe/London',
+        },
+      ],
+    };
   },
 };
 

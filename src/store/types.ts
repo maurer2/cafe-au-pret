@@ -19,6 +19,7 @@ export enum Actions {
   RESET_ZOOM = 'RESET_ZOOM',
   ADD_ORDER = 'ADD_ORDER',
   UPDATE_CURRENT_DATE = 'UPDATE_CURRENT_DATE',
+  GET_SAVED_ORDERS = 'GET_SAVED_ORDERS',
 }
 
 export type ActionsType = {

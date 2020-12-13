@@ -25,3 +25,17 @@ export function saveToStorage(
 
   window.localStorage.setItem(key, saveData);
 }
+
+export function getFromStorage(key: string, dateKey: string): boolean | string {
+  if (!storageIsAvailable()) {
+    return false;
+  }
+
+  const saveData = window.localStorage.getItem(key);
+
+  if (saveData === null) {
+    return false;
+  }
+
+  return saveData;
+}

@@ -27,7 +27,7 @@ const defaultStore: StoreType = {
     orders: {},
     maxDailyOrders: 5,
     menuList,
-    blockingDuration: 5,
+    blockingDuration: 1,
     blockingTimeoutEnd: null,
     refreshTimeoutInSeconds: 10,
   },

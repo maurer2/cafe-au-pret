@@ -19,14 +19,17 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const activeDrinkType = ref(DrinkType.COFFEE);
+    const activeDrinkType = ref<DrinkType | 'All'>(DrinkType.COFFEE);
     const slots = {
       overlayContent: () => <span>Order added</span>,
     };
     const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const menuItems = computed((): MenuItem[] =>
-      store.getters.getMenuEntriesOfType(activeDrinkType.value),
-    );
+    const menuItems = computed((): MenuItem[] => {
+      if (activeDrinkType.value === 'All') {
+        return store.getters.getAllMenuEntries();
+      }
+      return store.getters.getMenuEntriesOfType(activeDrinkType.value);
+    });
     const showOverlay = ref(false);
     const visibleDrinkTypes = Object.values(DrinkType);
 
