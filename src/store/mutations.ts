@@ -56,8 +56,6 @@ const mutations: MutationsType = {
       },
     };
 
-    console.log(JSON.stringify(saveData, null, 2));
-
     const saveDataSerialized = JSON.stringify(saveData, null, 2);
 
     saveToStorage(storageKey, saveDataSerialized);
@@ -69,8 +67,24 @@ const mutations: MutationsType = {
     const savedData = getFromStorage(storageKey, dateKey);
 
     if (!saveToStorage) {
-      // return;
+      return;
     }
+
+    const parsedSavedData = JSON.parse(savedData as string);
+    const { orders }: { orders: any } = parsedSavedData;
+
+    if (!(dateKey in orders)) {
+      return;
+    }
+
+    const deserializedOrders = orders[dateKey].map((order: any) => {
+      return { ...order, dateTime: new Date(order.dateTime) };
+    });
+
+    state.orders = {
+      [dateKey]: deserializedOrders,
+    };
+
     /*
     const parsedSavedData = JSON.parse(savedData as string);
 
