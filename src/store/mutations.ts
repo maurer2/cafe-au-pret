@@ -46,27 +46,32 @@ const mutations: MutationsType = {
   [Mutations.PERSIST_ORDER](state: StateType, payload: { dateKey: string }) {
     const { orders, currentDateTime } = state;
     const { dateKey } = payload;
-    const key = 'coffeescript';
+    const storageKey = 'coffeescript';
+
+    const ordersForDateKey = dateKey in orders ? orders[dateKey] : [];
 
     const saveData = {
-      date: dateKey,
-      currentDateTime,
-      orders,
+      orders: {
+        [dateKey]: ordersForDateKey,
+      },
     };
+
+    console.log(JSON.stringify(saveData, null, 2));
 
     const saveDataSerialized = JSON.stringify(saveData, null, 2);
 
-    saveToStorage(key, dateKey, saveDataSerialized);
+    saveToStorage(storageKey, saveDataSerialized);
   },
   [Mutations.RESTORE_ORDER](state: StateType, payload: { dateKey: string }) {
     const { dateKey } = payload;
-    const key = 'coffeescript';
+    const storageKey = 'coffeescript';
 
-    const savedData = getFromStorage(key, dateKey);
+    const savedData = getFromStorage(storageKey, dateKey);
 
     if (!saveToStorage) {
-      return;
+      // return;
     }
+    /*
     const parsedSavedData = JSON.parse(savedData as string);
 
     console.log(state.orders, parsedSavedData.orders['2020-12-13']);
@@ -83,6 +88,7 @@ const mutations: MutationsType = {
         },
       ],
     };
+    */
   },
 };
 

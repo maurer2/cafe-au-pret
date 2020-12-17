@@ -12,11 +12,7 @@ export function storageIsAvailable(): boolean {
   }
 }
 
-export function saveToStorage(
-  key: string,
-  dateKey: string,
-  saveData: string,
-): void {
+export function saveToStorage(key: string, saveData: string): void {
   try {
     JSON.parse(saveData);
   } catch (error) {
