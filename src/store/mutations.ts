@@ -70,39 +70,25 @@ const mutations: MutationsType = {
       return;
     }
 
-    const parsedSavedData = JSON.parse(savedData as string);
-    const { orders }: { orders: any } = parsedSavedData;
+    const parsedSavedData: {
+      orders: {
+        [dateKey: string]: Order[];
+      };
+    } = JSON.parse(savedData as string);
+
+    const { orders } = parsedSavedData;
 
     if (!(dateKey in orders)) {
       return;
     }
 
-    const deserializedOrders = orders[dateKey].map((order: any) => {
+    const deserializedOrders = orders[dateKey].map((order) => {
       return { ...order, dateTime: new Date(order.dateTime) };
     });
 
     state.orders = {
       [dateKey]: deserializedOrders,
     };
-
-    /*
-    const parsedSavedData = JSON.parse(savedData as string);
-
-    console.log(state.orders, parsedSavedData.orders['2020-12-13']);
-
-    // state.orders = parsedSavedData.orders;
-    // state.orders = { ...parsedSavedData.orders };
-    state.orders = {
-      '2020-12-13': [
-        {
-          id: 'latte',
-          name: 'Latte',
-          dateTime: new Date('2020-12-13T22:36:55.232Z'),
-          tz: 'Europe/London',
-        },
-      ],
-    };
-    */
   },
 };
 
