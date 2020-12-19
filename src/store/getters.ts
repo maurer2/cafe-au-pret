@@ -27,15 +27,6 @@ const getters: GettersType = {
 
     return timeFormatted;
   },
-  /*
-  getNumberOfDailyOrders: (state) => (dateTime) => {
-    if (!(dateTime in state.orders)) {
-      return 0;
-    }
-
-    return state.orders[dateTime].length;
-  },
-  */
   hasDailyOrders: (state) => {
     const dateKey = getters.getCurrentDateKey(state);
 

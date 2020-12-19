@@ -1,6 +1,8 @@
 import { StateType, Mutations, MutationsType } from './types';
 import { saveToStorage, getFromStorage } from '../util/storageUtil';
 
+const storageKey = 'coffeescript';
+
 const mutations: MutationsType = {
   [Mutations.UPDATE_ZOOM](state: StateType, change: number) {
     const { zoomLevel } = state;
@@ -44,16 +46,18 @@ const mutations: MutationsType = {
     state.blockingTimeoutEnd = blockingTimeoutEnd;
   },
   [Mutations.PERSIST_ORDER](state: StateType, payload: { dateKey: string }) {
-    const { orders, currentDateTime } = state;
+    const { orders, blockingTimeoutEnd } = state;
     const { dateKey } = payload;
-    const storageKey = 'coffeescript';
 
     const ordersForDateKey = dateKey in orders ? orders[dateKey] : [];
+    const blockingTimeoutEndConverted =
+      blockingTimeoutEnd !== null ? blockingTimeoutEnd.toISOString() : null;
 
     const saveData = {
       orders: {
         [dateKey]: ordersForDateKey,
       },
+      blockingTimeoutEndConverted,
     };
 
     const saveDataSerialized = JSON.stringify(saveData, null, 2);
@@ -62,7 +66,6 @@ const mutations: MutationsType = {
   },
   [Mutations.RESTORE_ORDER](state: StateType, payload: { dateKey: string }) {
     const { dateKey } = payload;
-    const storageKey = 'coffeescript';
 
     const savedData = getFromStorage(storageKey, dateKey);
 
@@ -74,9 +77,10 @@ const mutations: MutationsType = {
       orders: {
         [dateKey: string]: Order[];
       };
+      blockingTimeoutEndConverted: string | null;
     } = JSON.parse(savedData as string);
 
-    const { orders } = parsedSavedData;
+    const { orders, blockingTimeoutEndConverted } = parsedSavedData;
 
     if (!(dateKey in orders)) {
       return;
@@ -86,9 +90,16 @@ const mutations: MutationsType = {
       return { ...order, dateTime: new Date(order.dateTime) };
     });
 
+    const blockingTimeoutEnd =
+      blockingTimeoutEndConverted !== null
+        ? new Date(blockingTimeoutEndConverted)
+        : null;
+
     state.orders = {
       [dateKey]: deserializedOrders,
     };
+
+    state.blockingTimeoutEnd = blockingTimeoutEnd;
   },
 };
 
