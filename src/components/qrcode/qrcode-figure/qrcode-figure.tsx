@@ -1,4 +1,12 @@
-import { defineComponent, ref, onMounted, PropType, computed, watch, onBeforeMount } from 'vue';
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  PropType,
+  computed,
+  watch,
+  onBeforeMount,
+} from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
 import { useStore } from '../../../store';
@@ -29,18 +37,9 @@ export default defineComponent({
         light: '#fff',
       },
     };
-    const qrCodeSettingsInactive = ref<QRCodeToStringOptions>({
-      ...qrCodeSettings,
-      ...{
-        color: {
-          dark: qrCodeColorBlocked.value,
-          light: '#fff',
-        },
-      },
-    });
 
     async function getQRCodeMarkup(payload: string): Promise<string> {
-      const settings = isBlocked.value ? qrCodeSettingsInactive.value : qrCodeSettings;
+      const settings = qrCodeSettings;
       const qrCodeString = QRCodeGenerator.toString(payload, settings);
 
       return qrCodeString;
@@ -57,9 +56,9 @@ export default defineComponent({
     }
 
     onBeforeMount(() => {
-      qrCodeColorBlocked.value = getComputedStyle(document.documentElement).getPropertyValue(
-        '--concrete',
-      );
+      qrCodeColorBlocked.value = getComputedStyle(
+        document.documentElement,
+      ).getPropertyValue('--concrete');
     });
 
     onMounted(
@@ -90,7 +89,10 @@ export default defineComponent({
                 }}
               >
                 {slots.default !== undefined ? slots.default() : null}
-                <div class={styles.qrcodeImageWrapper} innerHTML={qrCodeMarkup.value} />
+                <div
+                  class={styles.qrcodeImageWrapper}
+                  innerHTML={qrCodeMarkup.value}
+                />
               </div>
               <figcaption class={styles.qrcodeText}>{userId}</figcaption>
             </figure>
