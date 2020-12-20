@@ -22,7 +22,7 @@ export function saveToStorage(key: string, saveData: string): void {
   window.localStorage.setItem(key, saveData);
 }
 
-export function getFromStorage(key: string, dateKey: string): boolean | string {
+export function hasStorageKey(key: string): boolean {
   if (!storageIsAvailable()) {
     return false;
   }
@@ -33,5 +33,15 @@ export function getFromStorage(key: string, dateKey: string): boolean | string {
     return false;
   }
 
-  return saveData;
+  return true;
+}
+
+export function getFromStorage(key: string): null | string {
+  if (!hasStorageKey(key)) {
+    return null;
+  }
+
+  const saveData = window.localStorage.getItem(key);
+
+  return saveData === null ? null : saveData;
 }

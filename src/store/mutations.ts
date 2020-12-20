@@ -1,5 +1,9 @@
 import { StateType, Mutations, MutationsType } from './types';
-import { saveToStorage, getFromStorage } from '../util/storageUtil';
+import {
+  saveToStorage,
+  getFromStorage,
+  hasStorageKey,
+} from '../util/storageUtil';
 
 const storageKey = 'coffeescript';
 
@@ -65,11 +69,14 @@ const mutations: MutationsType = {
     saveToStorage(storageKey, saveDataSerialized);
   },
   [Mutations.RESTORE_ORDER](state: StateType, payload: { dateKey: string }) {
+    if (!hasStorageKey) {
+      return;
+    }
+
     const { dateKey } = payload;
+    const savedData = getFromStorage(storageKey);
 
-    const savedData = getFromStorage(storageKey, dateKey);
-
-    if (!saveToStorage) {
+    if (savedData === null) {
       return;
     }
 
