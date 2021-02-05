@@ -31,8 +31,8 @@
     "regenerator-runtime": "^0.13.7",
     "sanitize.css": "^12.0.1",
     "vite": "^1.0.0-rc.4",
-    "vue": "^v3.0.4",
-    "vuex": "^v4.0.0-rc.2"
+    "vue": "^v3.0.5",
+    "vuex": "^v4.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.11.5",
@@ -52,7 +52,7 @@
     "@vue/cli-plugin-unit-jest": "~4.5.7",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.7",
-    "@vue/compiler-sfc": "^v3.0.4",
+    "@vue/compiler-sfc": "^v3.0.5",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.1.0",
