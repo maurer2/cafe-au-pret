@@ -1,4 +1,5 @@
 import { defineComponent, PropType, computed, CSSProperties } from 'vue';
+import { clamp } from 'lodash-es';
 import { useStore } from '../../../store';
 import styles from './qrcode-overlay.module.css';
 
@@ -32,12 +33,12 @@ export default defineComponent({
       // prettier-ignore
       const percentages = 100 - ((remainingTimeInMs.value * 100) / blockingDurationInMs)
 
-      return (Math as any).clamp(percentages, 0, 100);
+      return clamp(percentages, 0, 100);
     });
     const gradientDegrees = computed(() => {
       const gradients = (gradientPercentage.value / 100) * 360;
 
-      return (Math as any).clamp(gradients, 0, 360);
+      return clamp(gradients, 0, 360);
     });
     const cssVars = computed(() => ({
       '--gradient-switch': `${gradientDegrees.value}`,

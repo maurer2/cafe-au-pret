@@ -1,4 +1,4 @@
-import { ActionContext } from 'vuex';
+import { ActionContext, Module } from 'vuex';
 
 export enum Mutations {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
@@ -48,7 +48,7 @@ export type GettersType = {
     getters?: GettersType,
   ) => (type: DrinkType) => MenuItem[];
   getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
-  [key: string]: any;
+  [key: string]: (state: StateType, getters?: GettersType) => {};
 };
 
 export enum DrinkType {
@@ -75,6 +75,7 @@ export type StoreType = {
     blockingTimeoutEnd: Date | null;
     refreshTimeoutInSeconds: number;
   };
+  // modules?: Module<StateType, () => {}>;
   modules: any;
   mutations: MutationsType;
   actions: ActionsType;

@@ -17,12 +17,15 @@ export default defineComponent({
     const store = useStore();
     const hasOrders = computed(() => store.getters.hasDailyOrders as boolean);
     const ordersList = computed(() => store.getters.getDailyOrders as Order[]);
-    const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
+    const remainingOrders = computed(
+      () => store.getters.getDailyRemainingNumberOfOrders as number,
+    );
     const currentDate = computed(() => store.getters.getCurrentDate as string);
-    const currentDateFull = computed(() => store.state.currentDateTime);
+    // const currentDateFull = computed(() => store.state.currentDateTime);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
-    const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);
+    // const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);
 
+    /*
     const remainingMinutes = computed(() => {
       if (!blockingTimeoutEnd.value) {
         return 0 as number;
@@ -32,6 +35,7 @@ export default defineComponent({
 
       return difference;
     });
+    */
 
     return () => (
       <section class={styles.list}>

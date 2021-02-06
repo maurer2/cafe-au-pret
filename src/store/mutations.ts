@@ -1,3 +1,4 @@
+import { clamp } from 'lodash-es';
 import { StateType, Mutations, MutationsType } from './types';
 import {
   saveToStorage,
@@ -18,7 +19,7 @@ const mutations: MutationsType = {
 
     // prettier-ignore
     const newZoomLevel = zoomLevel + (change / 100);
-    state.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
+    state.zoomLevel = clamp(newZoomLevel, 0.5, 2.5);
   },
   [Mutations.ADD_DAILY_ORDER](
     state: StateType,
