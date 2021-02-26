@@ -20,14 +20,19 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const time = getTimeFormatted(props.dateTimeFormatter, props.rowData.dateTime);
+    const time = getTimeFormatted(
+      props.dateTimeFormatter,
+      props.rowData.dateTime,
+    );
     const indexOneBased = String(props.index + 1).padStart(2, '0');
 
     return () => (
       <tr class={styles.tableBodyRow} key={props.rowData.id}>
         <td class={styles.tableBodyColumn}>{indexOneBased}</td>
         <td class={styles.tableBodyColumn}>{props.rowData.name}</td>
-        <td class={styles.tableBodyColumn}>{time}</td>
+        <td class={styles.tableBodyColumn}>
+          <time datetime={props.rowData.dateTime.toISOString()}>{time}</time>
+        </td>
         <td class={styles.tableBodyColumn}></td>
       </tr>
     );

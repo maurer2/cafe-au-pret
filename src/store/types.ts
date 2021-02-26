@@ -1,4 +1,4 @@
-import { ActionContext, Module } from 'vuex';
+import { ActionContext } from 'vuex';
 
 export enum Mutations {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
