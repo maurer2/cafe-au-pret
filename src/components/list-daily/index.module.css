@@ -1,5 +1,6 @@
 .list {
   composes: main-section from '../../app.module.css';
+
   display: block;
   padding: 1rem;
 }
