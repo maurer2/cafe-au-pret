@@ -4,7 +4,6 @@ import store from './store';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import 'core-js/proposals/math-extensions';
 
 import 'sanitize.css';
 import 'sanitize.css/typography.css';

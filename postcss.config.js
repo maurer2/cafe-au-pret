@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const autoprefixer = require('autoprefixer');
 // const cssnano = require('cssnano');
 const postcssNested = require('postcss-nested'); // needed for unwrapping media queries
