@@ -9,6 +9,6 @@ module.exports = {
   ],
   plugins: [
     "@babel/transform-runtime",
-    "@vue/babel-plugin-jsx",
+    "@vue/babel-plugin-jsx", // https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx
   ],
 };

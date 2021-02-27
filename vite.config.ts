@@ -1,23 +1,7 @@
-import cors from '@koa/cors'; // https://github.com/vitejs/vite/issues/341
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
-import type { UserConfig } from 'vite';
-
-const config: UserConfig = {
-  configureServer({ app }) {
-    app.use(
-      cors({
-        origin: '*',
-      }),
-    );
-  },
-  optimizeDeps: {
-    include: [
-      'vue',
-      'core-js',
-      'core-js/stable',
-      'regenerator-runtime/runtime',
-    ],
-  },
-};
-
-export default config;
+export default defineConfig({
+  plugins: [vue(), vueJsx()],
+});
