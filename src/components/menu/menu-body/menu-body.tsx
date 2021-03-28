@@ -19,9 +19,13 @@ export default defineComponent({
       default: [],
     },
   },
-  emits: ['add-drink'],
+  emits: {
+    'add-drink': ({ type }: { type: MenuItem['type'] }) => {
+      return type !== '';
+    },
+  },
   setup(props, { emit }) {
-    function addDrink(drink: MenuItem) {
+    function addDrink(drink: MenuItem): void {
       emit('add-drink', drink);
     }
 

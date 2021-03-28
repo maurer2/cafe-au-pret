@@ -6,15 +6,15 @@ export default defineComponent({
   props: {},
   emits: ['increase-zoom', 'decrease-zoom', 'reset-zoom'],
   setup(_, { emit }) {
-    function zoomIn() {
+    function zoomIn(): void {
       emit('increase-zoom');
     }
 
-    function zoomOut() {
+    function zoomOut(): void {
       emit('decrease-zoom');
     }
 
-    function zoomReset() {
+    function zoomReset(): void {
       emit('reset-zoom');
     }
 
