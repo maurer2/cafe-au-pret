@@ -2,6 +2,8 @@
   position: relative;
   background: var(--old-brick);
   height: 3px;
+  content-visibility: auto;
+  contain: size layout style paint;
 }
 
 .progressBarElementInner {

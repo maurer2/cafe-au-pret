@@ -13,9 +13,9 @@
   display: block;
   padding: 0.5rem 0;
   flex: 0 0 auto;
-  /*border-bottom: 3px solid transparent;*/
   text-align: center;
   background: var(--concrete);
+  cursor: pointer;
 
   /*
   &::after {

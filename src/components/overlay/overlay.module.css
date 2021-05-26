@@ -9,6 +9,8 @@
   justify-content: center;
   background: var(--white);
   overscroll-behavior: contain;
+  content-visibility: auto;
+  contain: layout;
 
   @supports (backdrop-filter: blur(4px)) and (backdrop-filter: grayscale(100%)) {
     background: none;
