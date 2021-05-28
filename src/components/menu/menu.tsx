@@ -33,7 +33,7 @@ export default defineComponent({
     const showOverlay = ref(false);
     const visibleDrinkTypes = Object.values(DrinkType);
 
-    function addDrink({ id, name }: MenuItem) {
+    async function addDrink({ id, name }: MenuItem) {
       const order: Order = {
         id,
         name,
@@ -41,18 +41,16 @@ export default defineComponent({
         tz: 'Europe/London',
       };
 
-      store
-        .dispatch(Actions.ADD_ORDER, order)
-        .then(() => {
-          showOverlay.value = true;
+      try {
+        await store.dispatch(Actions.ADD_ORDER, order);
 
-          setTimeout(() => {
-            showOverlay.value = false;
-          }, 500);
-        })
-        .catch(() => {
-          console.log(`${name} couldn't be added to the list.`);
-        });
+        showOverlay.value = true;
+        setTimeout(() => {
+          showOverlay.value = false;
+        }, 500);
+      } catch (error) {
+        console.log(`${name} couldn't be added to the list.`);
+      }
     }
 
     function updateActiveDrinkType(newValue: DrinkType) {
