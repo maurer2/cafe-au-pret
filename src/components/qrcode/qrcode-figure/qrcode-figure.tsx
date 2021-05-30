@@ -6,10 +6,23 @@ import {
   computed,
   watch,
   onBeforeMount,
+  onRenderTriggered,
 } from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
 import { useStore } from '../../../store';
+
+import useQrcode from '../../../hooks/useQrcode';
+
+const qrcodeStyle: QRCodeToStringOptions = {
+  errorCorrectionLevel: 'H',
+  type: 'svg',
+  margin: 0,
+  color: {
+    dark: '#000',
+    light: '#fff',
+  },
+};
 
 export default defineComponent({
   name: 'QRCodeFigure',
@@ -25,35 +38,10 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const store = useStore();
+    const qrCodeMarkup = useQrcode(props.userId, qrcodeStyle);
     const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const qrCodeMarkup = ref<string | undefined>(undefined);
+    // const showQrcode = computed((): boolean => qrCodeMarkup !== undefined);
     const qrCodeColorBlocked = ref<string>('#00000');
-    const qrCodeSettings: QRCodeToStringOptions = {
-      errorCorrectionLevel: 'H',
-      type: 'svg',
-      margin: 0,
-      color: {
-        dark: '#000',
-        light: '#fff',
-      },
-    };
-
-    async function getQRCodeMarkup(payload: string): Promise<string> {
-      const settings = qrCodeSettings;
-      const qrCodeString = QRCodeGenerator.toString(payload, settings);
-
-      return qrCodeString;
-    }
-
-    async function setQRCodeMarkup(): Promise<void> {
-      try {
-        const markup = await getQRCodeMarkup(props.userId);
-
-        qrCodeMarkup.value = markup;
-      } catch (error) {
-        console.log(error);
-      }
-    }
 
     onBeforeMount(() => {
       qrCodeColorBlocked.value = getComputedStyle(
@@ -61,6 +49,7 @@ export default defineComponent({
       ).getPropertyValue('--concrete');
     });
 
+    /*
     onMounted(
       async (): Promise<void> => {
         try {
@@ -70,9 +59,10 @@ export default defineComponent({
         }
       },
     );
+    */
 
     watch(isBlocked, () => {
-      setQRCodeMarkup();
+      // setQRCodeMarkup();
     });
 
     return () => {
