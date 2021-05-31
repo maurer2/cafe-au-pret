@@ -65,6 +65,12 @@ export default defineComponent({
       // setQRCodeMarkup();
     });
 
+    console.log(qrCodeMarkup);
+
+    watch(qrCodeMarkup, () => {
+      console.log(qrCodeMarkup);
+    });
+
     return () => {
       const { zoomLevel, userId } = props;
 

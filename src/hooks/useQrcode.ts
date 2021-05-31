@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue';
+import { ref, watch, watchEffect } from 'vue';
 import QRCodeGenerator, { QRCodeToStringOptions } from 'qrcode';
 
 export default function useQrcode(
@@ -7,19 +7,17 @@ export default function useQrcode(
 ) {
   const qrcodeMarkup = ref<string | undefined>(undefined);
 
-  watch(
-    () => content,
-    async () => {
-      try {
-        const qrcodeString = await QRCodeGenerator.toString(content, style);
+  watchEffect(async () => {
+    try {
+      const qrcodeString = await QRCodeGenerator.toString(content, style);
 
-        qrcodeMarkup.value = qrcodeString;
-      } catch (error) {
-        qrcodeMarkup.value = undefined;
-        throw new Error(error);
-      }
-    },
-  );
+      qrcodeMarkup.value = qrcodeString;
+    } catch (error) {
+      qrcodeMarkup.value = undefined;
+
+      throw new Error(error);
+    }
+  });
 
   return qrcodeMarkup;
 }
