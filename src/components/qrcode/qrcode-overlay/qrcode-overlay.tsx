@@ -40,17 +40,14 @@ export default defineComponent({
 
       return clamp(gradients, 0, 360);
     });
-    const cssVars = computed(() => ({
+    const cssVars = computed<Record<string, string>>(() => ({
       '--gradient-switch': `${gradientDegrees.value}`,
     }));
 
     return () => (
       <>
         {isBlocked.value ? (
-          <div
-            class={styles.qrcodeOverlay}
-            style={cssVars.value as CSSProperties}
-          >
+          <div class={styles.qrcodeOverlay} style={cssVars.value}>
             <div class={styles.qrcodeOverlayValue}>
               <span>{String(gradientTime.value.toFixed(0))} min </span>
               <span>({String(gradientPercentage.value.toFixed(0))}%)</span>

@@ -6,7 +6,6 @@ import { Actions, DrinkType } from '../../store/types';
 import Overlay from '../overlay/overlay';
 import MenuHead from './menu-head/menu-head';
 import MenuBody from './menu-body/menu-body';
-// import MenuBodyScrollable from './menu-body-scrollable/menu-body-scrollable';
 
 export default defineComponent({
   name: 'Menu',
@@ -14,7 +13,6 @@ export default defineComponent({
     Overlay,
     MenuHead,
     MenuBody,
-    // MenuBodyScrollable,
   },
   props: {},
   setup() {
@@ -23,14 +21,14 @@ export default defineComponent({
     const slots = {
       overlayContent: () => <span>Order added</span>,
     };
-    const isBlocked = computed((): boolean => store.getters.isBlocked);
-    const menuItems = computed((): MenuItem[] => {
+    const isBlocked = computed<boolean>(() => store.getters.isBlocked);
+    const showOverlay = ref(false);
+    const menuItems = computed<MenuItem[]>(() => {
       if (activeDrinkType.value === 'All') {
         return store.getters.getAllMenuEntries();
       }
       return store.getters.getMenuEntriesOfType(activeDrinkType.value);
     });
-    const showOverlay = ref(false);
     const visibleDrinkTypes = Object.values(DrinkType);
 
     async function addDrink({ id, name }: MenuItem) {

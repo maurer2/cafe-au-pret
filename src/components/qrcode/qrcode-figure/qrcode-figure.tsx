@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from 'vue';
 import { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
-import useQrcode from '../../../hooks/use-qrcode';
+import useQrCode from '../../../hooks/use-qrcode';
 
 const qrcodeStyle: QRCodeToStringOptions = {
   errorCorrectionLevel: 'H',
@@ -26,7 +26,7 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
-    const qrCodeMarkup = useQrcode(props.userId, qrcodeStyle);
+    const qrCodeMarkup = useQrCode(props.userId, qrcodeStyle);
 
     return () => {
       const { zoomLevel, userId } = props;
