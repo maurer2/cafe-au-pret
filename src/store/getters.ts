@@ -1,11 +1,12 @@
-import { GettersType, DrinkType } from './types';
+import { GetterTree } from 'vuex';
+import { GettersType, DrinkType, StateType } from './types';
 import {
   getTimeFormatted,
   getDateFormatted,
   getCurrentDateISO,
 } from '../util/dateUtil';
 
-const getters: GettersType = {
+const getters: GetterTree<StateType, StateType> & GettersType = {
   getCurrentDateKey: (state) => {
     const { currentDateTime, dateTimeFormatter } = state;
 

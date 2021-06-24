@@ -18,7 +18,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 const dateTimeFormatter = new Intl.DateTimeFormat('en-GB', dateTimeOptions);
 
 const defaultStore: StoreType = {
-  namespaced: true as true,
+  namespaced: true,
   state: {
     userId: 'ABC123456789',
     zoomLevel: 1.0,

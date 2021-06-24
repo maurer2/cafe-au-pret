@@ -1,4 +1,19 @@
-import { ActionContext } from 'vuex';
+import { ActionContext, Store, DispatchOptions } from 'vuex';
+
+export type StateType = {
+  userId: string;
+  zoomLevel: number;
+  currentDateTime: Date;
+  dateTimeFormatter: Intl.DateTimeFormat;
+  orders: {
+    [orderDate: string]: Order[];
+  };
+  maxDailyOrders: number;
+  menuList: MenuItem[];
+  blockingDuration: number;
+  blockingTimeoutEnd: Date | null;
+  refreshTimeoutInSeconds: number;
+};
 
 export enum Mutations {
   UPDATE_ZOOM = 'UPDATE_ZOOM',
@@ -48,7 +63,6 @@ export type GettersType = {
     getters?: GettersType,
   ) => (type: DrinkType) => MenuItem[];
   getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
-  [key: string]: (state: StateType, getters?: GettersType) => {};
 };
 
 export const drinks = [
@@ -59,6 +73,15 @@ export const drinks = [
   'Smoothie',
   'Other',
 ] as const;
+
+// test
+const drinks2 = {
+  UP: 'UP',
+  DOWN: 'DOWN',
+} as const;
+
+type DIRECTIONS = typeof drinks2[keyof typeof drinks2];
+
 export type Drinks = typeof drinks[number];
 
 export enum DrinkType {
@@ -70,27 +93,27 @@ export enum DrinkType {
   OTHER = 'Other',
 }
 
-export type StoreType = {
-  state: {
-    userId: string;
-    zoomLevel: number;
-    currentDateTime: Date;
-    dateTimeFormatter: Intl.DateTimeFormat;
-    orders: {
-      [orderDate: string]: Order[];
-    };
-    maxDailyOrders: number;
-    menuList: MenuItem[];
-    blockingDuration: number;
-    blockingTimeoutEnd: Date | null;
-    refreshTimeoutInSeconds: number;
+// https://dev.to/3vilarthas/vuex-typescript-m4j
+type StoreTypeOverrides = {
+  getters2: {
+    [K in keyof GettersType]: ReturnType<GettersType[K]>;
   };
+  dispatch<K extends keyof ActionsType>(
+    key: K,
+    payload: Parameters<ActionsType[K]>[1],
+    options?: DispatchOptions,
+  ): ReturnType<ActionsType[K]>;
+};
+
+export type StoreTypeWithoutWeakTypes = Omit<Store<StateType>, 'dispatch'>;
+
+export type StoreType = {
+  state: StateType;
   // modules?: Module<StateType, () => {}>;
   modules: any;
   mutations: MutationsType;
   actions: ActionsType;
-  getters: GettersType;
   namespaced: boolean;
-};
-
-export type StateType = StoreType['state'];
+  getters: GettersType;
+}; // & StoreTypeWithoutWeakTypes &
+// StoreTypeOverrides;
