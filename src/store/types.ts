@@ -1,4 +1,4 @@
-import { ActionContext, Store, DispatchOptions } from 'vuex';
+import { ActionContext } from 'vuex';
 
 export type StateType = {
   userId: string;
@@ -94,18 +94,24 @@ export enum DrinkType {
 }
 
 // https://dev.to/3vilarthas/vuex-typescript-m4j
-type StoreTypeOverrides = {
+/*
+export type StoreType =Omit<Store<StateType>, 'getters2'> & {
   getters2: {
-    [K in keyof GettersType]: ReturnType<GettersType[K]>;
+    [K in keyof GettersType]: (
+      state: StateType,
+      getters: GettersType,
+    ) => ReturnType<GettersType[K]>;
   };
-  dispatch<K extends keyof ActionsType>(
-    key: K,
-    payload: Parameters<ActionsType[K]>[1],
-    options?: DispatchOptions,
-  ): ReturnType<ActionsType[K]>;
+} & {
+  state: StateType;
+  // modules?: Module<StateType, () => {}>;
+  modules: any;
+  mutations: MutationsType;
+  actions: ActionsType;
+  namespaced: boolean;
+  getters: GettersType;
 };
-
-export type StoreTypeWithoutWeakTypes = Omit<Store<StateType>, 'dispatch'>;
+*/
 
 export type StoreType = {
   state: StateType;
@@ -115,5 +121,4 @@ export type StoreType = {
   actions: ActionsType;
   namespaced: boolean;
   getters: GettersType;
-}; // & StoreTypeWithoutWeakTypes &
-// StoreTypeOverrides;
+};
