@@ -1,5 +1,6 @@
-import { createStore } from 'vuex';
-import { StoreType } from './types';
+import { createStore, useStore as baseUseStore, Store } from 'vuex';
+import { InjectionKey } from 'vue';
+import { StoreType, StateType } from './types';
 import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
@@ -39,8 +40,10 @@ const defaultStore: StoreType = {
 
 const store = createStore(defaultStore);
 
+export const key: InjectionKey<Store<StateType>> = Symbol('storeKey');
+
 export default store;
 
 export function useStore() {
-  return store;
+  return baseUseStore(key);
 }
