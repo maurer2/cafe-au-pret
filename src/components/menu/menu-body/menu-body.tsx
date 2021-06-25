@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, toRefs } from 'vue';
 import styles from './menu-body.module.css';
 import { DrinkType } from '../../../store/types';
 
@@ -25,6 +25,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const { menuItems, isBlocked } = toRefs(props);
+
     function addDrink(drink: MenuItem): void {
       emit('add-drink', drink);
     }
@@ -33,12 +35,12 @@ export default defineComponent({
       <div class={styles.menuListsContainer}>
         <div class={styles.menuListContainer}>
           <ul class={styles.menuList}>
-            {props.menuItems.map((menuEntry) => (
+            {menuItems.value.map((menuEntry) => (
               <li class={styles.menuListEntry}>
                 <button
                   class={styles.menuButton}
                   onClick={() => addDrink(menuEntry)}
-                  disabled={props.isBlocked}
+                  disabled={isBlocked.value}
                   type="button"
                 >
                   {menuEntry.name}

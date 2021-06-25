@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, toRefs } from 'vue';
 import styles from './list-body.module.css';
 
 import { getTimeFormatted } from '../../../util/dateUtil';
@@ -20,18 +20,20 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { dateTimeFormatter, rowData, index } = toRefs(props);
+
     const time = getTimeFormatted(
-      props.dateTimeFormatter,
-      props.rowData.dateTime,
+      dateTimeFormatter.value,
+      rowData.value.dateTime,
     );
-    const indexOneBased = String(props.index + 1).padStart(2, '0');
+    const indexOneBased = String(index.value + 1).padStart(2, '0');
 
     return () => (
-      <tr class={styles.tableBodyRow} key={props.rowData.id}>
+      <tr class={styles.tableBodyRow} key={rowData.value.id}>
         <td class={styles.tableBodyColumn}>{indexOneBased}</td>
-        <td class={styles.tableBodyColumn}>{props.rowData.name}</td>
+        <td class={styles.tableBodyColumn}>{rowData.value.name}</td>
         <td class={styles.tableBodyColumn}>
-          <time datetime={props.rowData.dateTime.toISOString()}>{time}</time>
+          <time datetime={rowData.value.dateTime.toISOString()}>{time}</time>
         </td>
         <td class={styles.tableBodyColumn}></td>
       </tr>

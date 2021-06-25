@@ -1,4 +1,11 @@
-import { defineComponent, ref, computed, CSSProperties, PropType } from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  CSSProperties,
+  PropType,
+  toRefs,
+} from 'vue';
 import styles from './menu-head.module.css';
 import { DrinkType } from '../../../store/types';
 
@@ -21,9 +28,11 @@ export default defineComponent({
   },
   emits: ['update-active-drink-type'],
   setup(props, { emit }) {
+    const { activeDrinkType, visibleDrinkTypes, showScrollbar } = toRefs(props);
+
     const activeDrinkTypeComputed = computed({
       get: () => {
-        return props.activeDrinkType;
+        return activeDrinkType.value;
       },
       set: (newValue: DrinkType) => {
         emit('update-active-drink-type', newValue);
@@ -49,7 +58,7 @@ export default defineComponent({
     return () => (
       <>
         <div class={styles.menuHeader}>
-          {props.visibleDrinkTypes.map((visibleDrinkType) => (
+          {visibleDrinkTypes.value.map((visibleDrinkType) => (
             <>
               <label
                 class={[
@@ -72,7 +81,7 @@ export default defineComponent({
             </>
           ))}
         </div>
-        {props.showScrollbar && (
+        {showScrollbar.value && (
           <div class={styles.menuHeaderStateHighlighter}>
             <div
               class={styles.menuHeaderStateHighlighterBar}

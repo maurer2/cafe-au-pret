@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, toRefs } from 'vue';
 import { QRCodeToStringOptions } from 'qrcode';
 import styles from './qrcode-figure.module.css';
 import useQrCode from '../../../hooks/use-qrcode';
@@ -26,34 +26,31 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
-    const qrCodeMarkup = useQrCode(props.userId, qrcodeStyle);
+    const { userId, zoomLevel } = toRefs(props);
+    const qrCodeMarkup = useQrCode(userId.value, qrcodeStyle);
 
-    return () => {
-      const { zoomLevel, userId } = props;
-
-      return (
-        <>
-          {qrCodeMarkup.value ? (
-            <figure class={styles.qrcodePicture}>
+    return () => (
+      <>
+        {qrCodeMarkup.value ? (
+          <figure class={styles.qrcodePicture}>
+            <div
+              class={styles.qrcodeImageWrapperOuter}
+              style={{
+                width: `calc(50vw * ${zoomLevel.value})`,
+              }}
+            >
+              {slots.default !== undefined ? slots.default() : null}
               <div
-                class={styles.qrcodeImageWrapperOuter}
-                style={{
-                  width: `calc(50vw * ${zoomLevel})`,
-                }}
-              >
-                {slots.default !== undefined ? slots.default() : null}
-                <div
-                  class={styles.qrcodeImageWrapper}
-                  innerHTML={qrCodeMarkup.value}
-                />
-              </div>
-              <figcaption class={styles.qrcodeText}>{userId}</figcaption>
-            </figure>
-          ) : (
-            <div class={styles.qrcodeLoader}>Loading</div>
-          )}
-        </>
-      );
-    };
+                class={styles.qrcodeImageWrapper}
+                innerHTML={qrCodeMarkup.value}
+              />
+            </div>
+            <figcaption class={styles.qrcodeText}>{userId.value}</figcaption>
+          </figure>
+        ) : (
+          <div class={styles.qrcodeLoader}>Loading</div>
+        )}
+      </>
+    );
   },
 });
