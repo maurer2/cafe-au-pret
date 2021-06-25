@@ -1,6 +1,7 @@
 import { defineComponent, computed } from 'vue';
 import styles from './app-header.module.css';
 import { useStore } from '../../store';
+import { GettersType } from '../../store/types';
 
 export default defineComponent({
   name: 'AppHeader',
@@ -8,8 +9,13 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const remainingOrders = computed(() => store.getters.getDailyRemainingNumberOfOrders as number);
-    const isBlocked = computed((): boolean => store.getters.isBlocked);
+
+    const remainingOrders = computed<ReturnType<GettersType['isBlocked']>>(
+      () => store.getters.getDailyRemainingNumberOfOrders,
+    );
+    const isBlocked = computed<ReturnType<GettersType['isBlocked']>>(
+      () => store.getters.isBlocked,
+    );
 
     return () => (
       <header class={styles.header}>
@@ -19,7 +25,9 @@ export default defineComponent({
           <dd class={styles.statusValue}>{remainingOrders.value}</dd>
 
           <dt class={styles.statusTitle}>Status:</dt>
-          <dd class={styles.statusValue}>{isBlocked.value ? 'Blocked' : 'Not Blocked'}</dd>
+          <dd class={styles.statusValue}>
+            {isBlocked.value === true ? 'Blocked' : 'Not Blocked'}
+          </dd>
         </dl>
       </header>
     );

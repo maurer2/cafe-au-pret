@@ -5,6 +5,7 @@ import { useStore } from '../../store';
 
 import ListBody from './list-body/list-body';
 import ListFooter from './list-footer/list-footer';
+import { GettersType } from '../../store/types';
 
 export default defineComponent({
   name: 'ListDaily',
@@ -15,12 +16,19 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
-    const hasOrders = computed(() => store.getters.hasDailyOrders as boolean);
-    const ordersList = computed(() => store.getters.getDailyOrders as Order[]);
-    const remainingOrders = computed(
-      () => store.getters.getDailyRemainingNumberOfOrders as number,
+
+    const hasOrders = computed<ReturnType<GettersType['hasDailyOrders']>>(
+      () => store.getters.hasDailyOrders,
     );
-    const currentDate = computed(() => store.getters.getCurrentDate as string);
+    const ordersList = computed<ReturnType<GettersType['getDailyOrders']>>(
+      () => store.getters.getDailyOrders,
+    );
+    const remainingOrders = computed<
+      ReturnType<GettersType['getDailyRemainingNumberOfOrders']>
+    >(() => store.getters.getDailyRemainingNumberOfOrders);
+    const currentDate = computed<ReturnType<GettersType['getCurrentDate']>>(
+      () => store.getters.getCurrentDate,
+    );
     // const currentDateFull = computed(() => store.state.currentDateTime);
     const dateTimeFormatter = computed(() => store.state.dateTimeFormatter);
     // const blockingTimeoutEnd = computed(() => store.state.blockingTimeoutEnd);

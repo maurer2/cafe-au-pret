@@ -1,4 +1,4 @@
-import { ActionContext } from 'vuex';
+import { ActionContext, GetterTree } from 'vuex';
 
 export type StateType = {
   userId: string;
@@ -44,25 +44,25 @@ export type ActionsType = {
   ) => Promise<void>;
 };
 
-export type GettersType = {
+export type GettersType = GetterTree<StateType, StateType> & {
   getCurrentDateKey(state: StateType, getters?: GettersType): string;
   getCurrentDate(state: StateType, getters?: GettersType): string;
   getCurrentTime(state: StateType, getters?: GettersType): string;
   // getNumberOfDailyOrders(state: StateType, getters?: GettersType): (dateTime: string) => number;
   getDailyOrders(state: StateType, getters?: GettersType): Order[];
-  hasDailyOrders: (state: StateType, getters?: GettersType) => boolean;
-  isBlocked: (state: StateType, getters?: GettersType) => boolean;
-  getRemainingBlockingTime: (state: StateType, getters?: GettersType) => number;
+  hasDailyOrders(state: StateType, getters?: GettersType): boolean;
+  isBlocked(state: StateType, getters?: GettersType): boolean;
+  getRemainingBlockingTime(state: StateType, getters?: GettersType): number;
   getDailyRemainingNumberOfOrders: (
     state: StateType,
     getters?: GettersType,
   ) => number;
-  getAllMenuEntries: (state: StateType, getters?: GettersType) => MenuItem[];
-  getMenuEntriesOfType: (
+  getAllMenuEntries(state: StateType, getters?: GettersType): MenuItem[];
+  getMenuEntriesOfType(
     state: StateType,
     getters?: GettersType,
-  ) => (type: DrinkType) => MenuItem[];
-  getZoomLevelFormatted: (state: StateType, getters?: GettersType) => string;
+  ): (type: DrinkType) => MenuItem[];
+  getZoomLevelFormatted(state: StateType, getters?: GettersType): string;
 };
 
 export const drinks = [

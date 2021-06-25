@@ -1,4 +1,5 @@
 import { GetterTree } from 'vuex';
+// eslint-disable-next-line import/named
 import { GettersType, DrinkType, StateType } from './types';
 import {
   getTimeFormatted,

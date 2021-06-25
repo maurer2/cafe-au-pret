@@ -2,7 +2,7 @@ import { defineComponent, computed } from 'vue';
 import styles from './index.module.css';
 
 import { useStore } from '../../store';
-import { Actions } from '../../store/types';
+import { Actions, GettersType } from '../../store/types';
 import QRCodeFigure from './qrcode-figure/qrcode-figure';
 import QRCodeControls from './qrcode-controls/qrcode-controls';
 import QRCodeOverlay from './qrcode-overlay/qrcode-overlay';
@@ -18,7 +18,9 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const { userId } = store.state;
-    const zoomLevel = computed((): string => store.getters.getZoomLevelFormatted);
+    const zoomLevel = computed<
+      ReturnType<GettersType['getZoomLevelFormatted']>
+    >(() => store.getters.getZoomLevelFormatted);
 
     function zoomIn() {
       store.dispatch(Actions.INCREASE_ZOOM);

@@ -1,7 +1,7 @@
 import { defineComponent, ref, computed } from 'vue';
 import styles from './menu.module.css';
 import { useStore } from '../../store';
-import { Actions, DrinkType } from '../../store/types';
+import { Actions, DrinkType, GettersType } from '../../store/types';
 
 import Overlay from '../overlay/overlay';
 import MenuHead from './menu-head/menu-head';
@@ -21,9 +21,15 @@ export default defineComponent({
     const slots = {
       overlayContent: () => <span>Order added</span>,
     };
-    const isBlocked = computed<boolean>(() => store.getters.isBlocked);
+    const isBlocked = computed<ReturnType<GettersType['isBlocked']>>(
+      () => store.getters.isBlocked,
+    );
     const showOverlay = ref(false);
-    const menuItems = computed<MenuItem[]>(() => {
+    const menuItems = computed<
+      ReturnType<
+        GettersType['getAllMenuEntries'] | GettersType['getMenuEntriesOfType']
+      >
+    >(() => {
       if (activeDrinkType.value === 'All') {
         return store.getters.getAllMenuEntries();
       }
