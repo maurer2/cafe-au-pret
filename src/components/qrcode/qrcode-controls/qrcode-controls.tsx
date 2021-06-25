@@ -1,4 +1,5 @@
 import { defineComponent } from 'vue';
+
 import styles from './qrcode-controls.module.css';
 
 export default defineComponent({

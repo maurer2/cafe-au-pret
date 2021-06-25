@@ -1,11 +1,11 @@
 import { computed, defineComponent } from 'vue';
-import styles from './index.module.css';
 
 import { useStore } from '../../store';
+import { GettersType } from '../../store/types';
 
+import styles from './index.module.css';
 import ListBody from './list-body/list-body';
 import ListFooter from './list-footer/list-footer';
-import { GettersType } from '../../store/types';
 
 export default defineComponent({
   name: 'ListDaily',

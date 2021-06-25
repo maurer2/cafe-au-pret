@@ -1,4 +1,5 @@
 import { defineComponent, onMounted, onUnmounted, computed } from 'vue';
+
 import styles from './app.module.css';
 import AppFooter from './components/app-footer/app-footer';
 import AppHeader from './components/app-header/app-header';
@@ -6,7 +7,6 @@ import ProgressBar from './components/progress-bar/progress-bar';
 import QRCode from './components/qrcode';
 import ListDaily from './components/list-daily';
 import Menu from './components/menu/menu';
-
 import { useStore } from './store';
 import { Actions } from './store/types';
 

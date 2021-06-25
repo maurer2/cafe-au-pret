@@ -1,4 +1,5 @@
 import { defineComponent, PropType } from 'vue';
+
 import styles from './list-footer.module.css';
 
 export default defineComponent({

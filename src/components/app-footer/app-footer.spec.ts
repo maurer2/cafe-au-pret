@@ -1,4 +1,5 @@
 import { shallowMount, VueWrapper } from '@vue/test-utils'
+
 import AppFooter from './app-footer.vue'
 
 describe('AppFooter', () => {

@@ -1,10 +1,12 @@
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { InjectionKey } from 'vue';
+
+import menuList from '../data/menuList.json';
+
 import { StoreType, StateType } from './types';
 import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
-import menuList from '../data/menuList.json';
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',

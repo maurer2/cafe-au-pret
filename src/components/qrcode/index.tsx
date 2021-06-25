@@ -1,8 +1,9 @@
 import { defineComponent, computed } from 'vue';
-import styles from './index.module.css';
 
 import { useStore } from '../../store';
 import { Actions, GettersType } from '../../store/types';
+
+import styles from './index.module.css';
 import QRCodeFigure from './qrcode-figure/qrcode-figure';
 import QRCodeControls from './qrcode-controls/qrcode-controls';
 import QRCodeOverlay from './qrcode-overlay/qrcode-overlay';

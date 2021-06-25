@@ -1,6 +1,8 @@
 import { defineComponent, PropType, computed, CSSProperties } from 'vue';
 import { clamp } from 'lodash-es';
+
 import { useStore } from '../../../store';
+
 import styles from './qrcode-overlay.module.css';
 
 export default defineComponent({

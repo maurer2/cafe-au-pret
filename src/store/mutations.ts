@@ -1,10 +1,12 @@
 import { clamp } from 'lodash-es';
-import { StateType, Mutations, MutationsType } from './types';
+
 import {
   saveToStorage,
   getFromStorage,
   hasStorageKey,
 } from '../util/storageUtil';
+
+import { StateType, Mutations, MutationsType } from './types';
 
 const storageKey = 'coffeescript';
 

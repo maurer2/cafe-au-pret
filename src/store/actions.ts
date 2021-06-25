@@ -1,5 +1,6 @@
-import { Mutations, Actions, ActionsType } from './types';
 import { storageIsAvailable } from '../util/storageUtil';
+
+import { Mutations, Actions, ActionsType } from './types';
 
 const actions: ActionsType = {
   async [Actions.INCREASE_ZOOM](context) {

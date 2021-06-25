@@ -1,7 +1,8 @@
 import { defineComponent, PropType, toRefs } from 'vue';
-import styles from './list-body.module.css';
 
 import { getTimeFormatted } from '../../../util/dateUtil';
+
+import styles from './list-body.module.css';
 
 export default defineComponent({
   name: 'ListBody',

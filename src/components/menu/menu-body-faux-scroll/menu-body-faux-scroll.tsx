@@ -1,6 +1,8 @@
 import { defineComponent, ref, computed, CSSProperties, PropType } from 'vue';
-import styles from './menu-body-faux-scroll.module.css';
+
 import { DrinkType } from '../../../store/types';
+
+import styles from './menu-body-faux-scroll.module.css';
 
 export default defineComponent({
   name: 'Menu',

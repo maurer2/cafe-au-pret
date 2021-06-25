@@ -1,9 +1,10 @@
 import { defineComponent, ref, computed } from 'vue';
-import styles from './menu.module.css';
+
 import { useStore } from '../../store';
 import { Actions, DrinkType, GettersType } from '../../store/types';
-
 import Overlay from '../overlay/overlay';
+
+import styles from './menu.module.css';
 import MenuHead from './menu-head/menu-head';
 import MenuBody from './menu-body/menu-body';
 

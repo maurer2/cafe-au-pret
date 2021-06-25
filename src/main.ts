@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+
 import App from './app';
 import store, { key } from './store';
 

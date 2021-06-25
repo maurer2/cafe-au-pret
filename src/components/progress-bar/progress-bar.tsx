@@ -1,16 +1,18 @@
 import { defineComponent, computed, onMounted, ref, onUnmounted } from 'vue';
 
-import styles from './progress-bar.module.css';
-
 import { useStore } from '../../store';
 import { Mutations } from '../../store/types';
+
+import styles from './progress-bar.module.css';
 
 export default defineComponent({
   name: 'ProgressBar',
   props: {},
   setup() {
     const store = useStore();
-    const refreshTimeout = computed((): number => store.state.refreshTimeoutInSeconds);
+    const refreshTimeout = computed(
+      (): number => store.state.refreshTimeoutInSeconds,
+    );
     const progressBarAnimationDomElement = ref<HTMLElement | null>(null);
     const progressBarAnimation = ref<null | Animation>(null);
     const progressBarValue = ref(0);
@@ -103,8 +105,15 @@ export default defineComponent({
 
     return () => (
       <div class={styles.progressBar}>
-        <div class={styles.progressBarElementInner} ref={progressBarAnimationDomElement} />
-        <progress class={styles.progressBarElement} max="100" value={progressBarValue.value}>
+        <div
+          class={styles.progressBarElementInner}
+          ref={progressBarAnimationDomElement}
+        />
+        <progress
+          class={styles.progressBarElement}
+          max="100"
+          value={progressBarValue.value}
+        >
           {progressBarValue.value}%
         </progress>
       </div>

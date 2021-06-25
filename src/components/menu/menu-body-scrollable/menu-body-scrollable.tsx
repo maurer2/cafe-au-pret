@@ -1,6 +1,8 @@
 import { defineComponent, ref, computed, PropType } from 'vue';
-import styles from './menu-body-scrollable.module.css';
+
 import { DrinkType } from '../../../store/types';
+
+import styles from './menu-body-scrollable.module.css';
 
 export default defineComponent({
   name: 'Menu',

@@ -1,7 +1,9 @@
 import { defineComponent, PropType, toRefs } from 'vue';
 import { QRCodeToStringOptions } from 'qrcode';
-import styles from './qrcode-figure.module.css';
+
 import useQrCode from '../../../hooks/use-qrcode';
+
+import styles from './qrcode-figure.module.css';
 
 const qrcodeStyle: QRCodeToStringOptions = {
   errorCorrectionLevel: 'H',

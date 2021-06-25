@@ -1,5 +1,6 @@
 import { defineComponent, Ref, ref, onMounted } from 'vue';
 import JsBarcode from 'jsbarcode';
+
 import styles from './barcode.module.css';
 
 export default defineComponent({

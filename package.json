@@ -12,8 +12,8 @@
     "build:run": "yarpm run build:vite && yarpm run http-server /dist",
     "build:vite": "vite build",
     "build:webpack": "vue-cli-service build",
-    "format": "prettier --write '**/*.{vue, ts, jsx, tsx, js, json, md, mdx}';",
-    "lint:js": "vue-cli-service lint --no-fix"
+    "format": "prettier --write './src/**/*.tsx';",
+    "lint:js": "vue-cli-service lint --ext .tsx,.ts"
   },
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.10.4",
@@ -24,6 +24,7 @@
     "autoprefixer": "^9.8.6",
     "core-js": "^3.6.5",
     "csstype": "^3.0.4",
+    "eslint-plugin-import": "^2.23.4",
     "jsbarcode": "^3.11.0",
     "lodash-es": "^4.17.20",
     "nanoid": "^3.1.16",

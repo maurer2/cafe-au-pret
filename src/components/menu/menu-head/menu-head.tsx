@@ -6,8 +6,10 @@ import {
   PropType,
   toRefs,
 } from 'vue';
-import styles from './menu-head.module.css';
+
 import { DrinkType } from '../../../store/types';
+
+import styles from './menu-head.module.css';
 
 export default defineComponent({
   name: 'Menu',

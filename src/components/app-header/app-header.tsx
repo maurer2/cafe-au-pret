@@ -1,7 +1,9 @@
 import { defineComponent, computed } from 'vue';
-import styles from './app-header.module.css';
+
 import { useStore } from '../../store';
 import { GettersType } from '../../store/types';
+
+import styles from './app-header.module.css';
 
 export default defineComponent({
   name: 'AppHeader',
