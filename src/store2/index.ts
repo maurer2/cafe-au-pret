@@ -24,6 +24,12 @@ export const useStore2 = defineStore('store2', {
     blockingTimeoutEnd: null,
     refreshTimeoutInSeconds: 10,
   }),
-  getters: {},
+  getters: {
+    getZoomLevelFormatted: (state) => {
+      const { zoomLevel } = state;
+
+      return zoomLevel.toFixed(2);
+    },
+  },
   actions: {},
 })
