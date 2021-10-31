@@ -21,7 +21,7 @@
     "@types/lodash-es": "^4.17.4",
     "@vitejs/plugin-vue": "^1.1.5",
     "@vitejs/plugin-vue-jsx": "^1.1.2",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.4.0",
     "core-js": "^3.6.5",
     "csstype": "^3.0.4",
     "eslint-plugin-import": "^2.23.4",

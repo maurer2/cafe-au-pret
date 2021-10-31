@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import menuList from '../data/menuList.json';
 
 // eslint-disable-next-line import/prefer-default-export
-export const useMainStore = defineStore('store2', {
+export const useStore2 = defineStore('store2', {
   state: () => ({
     userId: 'ABC123456789',
     zoomLevel: 1.0,

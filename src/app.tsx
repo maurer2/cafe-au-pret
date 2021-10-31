@@ -9,6 +9,7 @@ import ListDaily from './components/list-daily';
 import Menu from './components/menu/menu';
 import { useStore } from './store';
 import { Actions } from './store/types';
+import { useStore2 } from './store2/index';
 
 import './app.css';
 
@@ -25,6 +26,8 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
+    const store2 = useStore2();
+
     const refreshTimeout = computed(
       (): number => store.state.refreshTimeoutInSeconds,
     );
