@@ -8,7 +8,8 @@ import { useDateTimeStore } from './date-time'
 
 export const useOrdersStore = defineStore('orders', {
   state: () => ({
-    orders: {},
+    orders: {
+    } as Record<string, any[]>,
     menuList,
     maxDailyOrders: 5,
 
@@ -37,20 +38,22 @@ export const useOrdersStore = defineStore('orders', {
         return filteredList;
       }
     },
-    hasDailyOrders: (state) => {
-      const dateKey = getters.getCurrentDateKey(state);
+    hasDailyOrders: (state): boolean => {
+      const dateTimeStore = useDateTimeStore()
+
+      const dateKey = dateTimeStore.getCurrentDateKey
 
       if (!(dateKey in state.orders)) {
         return false;
       }
 
-      return !!state.orders[dateKey].length;
+      return Boolean(state.orders[dateKey].length);
     },
-    getDailyOrders: (state) => {
+    getDailyOrders: (state): any[] => {
       const dateTimeStore = useDateTimeStore()
 
       const dateKey = dateTimeStore.getCurrentDateKey
-      const hasOrders = this?.hasDailyOrders;
+      const hasOrders: boolean = (this as any).hasDailyOrders;
 
       if (!hasOrders) {
         return [];
@@ -58,9 +61,9 @@ export const useOrdersStore = defineStore('orders', {
 
       return state.orders[dateKey];
     },
-    getDailyRemainingNumberOfOrders: (state) => {
-      const dailyOrders = this.getDailyOrders(state);
-      const hasOrders = getters.hasDailyOrders(state);
+    getDailyRemainingNumberOfOrders: (state): number => {
+      const dailyOrders = (this as any).getDailyOrders(state);
+      const hasOrders: boolean = (this as any).hasDailyOrders(state);
 
       const { maxDailyOrders } = state;
 
@@ -72,8 +75,6 @@ export const useOrdersStore = defineStore('orders', {
 
       return Math.sign(orderDifference) === 1 ? orderDifference : 0;
     },
-
-
   },
   actions: {},
 })

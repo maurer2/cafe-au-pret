@@ -10,6 +10,9 @@ import {
 export const useDateTimeStore = defineStore('dateTime', {
   state: () => ({
     currentDateTime: new Date(),
+    blockingDuration: 1,
+    blockingTimeoutEnd: null,
+    refreshTimeoutInSeconds: 10,
     dateTimeFormatter: new Intl.DateTimeFormat('en-GB', {
       year: 'numeric',
       month: '2-digit',
@@ -19,9 +22,6 @@ export const useDateTimeStore = defineStore('dateTime', {
       second: '2-digit',
       hour12: false,
     }),
-    blockingDuration: 1,
-    blockingTimeoutEnd: null,
-    refreshTimeoutInSeconds: 10,
   }),
   getters: {
     getCurrentDateKey: (state): string => {
@@ -60,12 +60,12 @@ export const useDateTimeStore = defineStore('dateTime', {
     getRemainingBlockingTime: (state) => {
       const { blockingTimeoutEnd, currentDateTime } = state;
 
-      if (!blockingTimeoutEnd) {
+      if (!blockingTimeoutEnd || blockingTimeoutEnd === null) {
         return 0;
       }
 
       const differenceInMS =
-        blockingTimeoutEnd.getTime() - currentDateTime.getTime();
+        (blockingTimeoutEnd as Date).getTime() - currentDateTime.getTime();
 
       return Math.sign(differenceInMS) === 1 ? differenceInMS : 0;
     },
