@@ -53,7 +53,7 @@ export const useDateTimeStore = defineStore('dateTime', {
       }
 
       const differenceInMS =
-        blockingTimeoutEnd.getTime() - currentDateTime.getTime();
+        (blockingTimeoutEnd as any).getTime() - currentDateTime.getTime();
 
       return Math.sign(differenceInMS) === 1;
     },
@@ -70,5 +70,18 @@ export const useDateTimeStore = defineStore('dateTime', {
       return Math.sign(differenceInMS) === 1 ? differenceInMS : 0;
     },
   },
-  actions: {},
+  actions: {
+    async UPDATE_CURRENT_DATE(newDateTime: Date): Promise<void> {
+      this.currentDateTime = newDateTime
+    },
+    async SET_BLOCKING_TIMEOUT(blockingDateTime: Date): Promise<void> {
+      const blockingDurationMs: number = this.blockingDuration * 60 * 1000;
+      const startDateMs: number = blockingDateTime.getTime();
+      const endDateMs: number = startDateMs + blockingDurationMs;
+
+      const blockingTimeoutEnd = new Date(endDateMs);
+
+      ; (this.blockingTimeoutEnd as any) = blockingTimeoutEnd;
+    }
+  },
 })

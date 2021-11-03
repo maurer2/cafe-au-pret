@@ -13,5 +13,19 @@ export const useUserStore = defineStore('userStore', {
       return zoomLevel.toFixed(2);
     }
   },
-  actions: {},
+  actions: {
+    async INCREASE_ZOOM(): Promise<void> {
+      // prettier-ignore
+      const newZoomLevel = this.zoomLevel + (10 / 100);
+      this.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
+    },
+    async DECREASE_ZOOM() {
+      // prettier-ignore
+      const newZoomLevel = this.zoomLevel + (-10 / 100);
+      this.zoomLevel = (Math as any).clamp(newZoomLevel, 0.5, 2.5);
+    },
+    async RESET_ZOOM() {
+      this.zoomLevel = 1.0
+    },
+  },
 })
