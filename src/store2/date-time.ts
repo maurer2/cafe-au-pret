@@ -11,7 +11,7 @@ export const useDateTimeStore = defineStore('dateTime', {
   state: () => ({
     currentDateTime: new Date(),
     blockingDuration: 1,
-    blockingTimeoutEnd: null,
+    blockingTimeoutEnd: null as Date | null,
     refreshTimeoutInSeconds: 10,
     dateTimeFormatter: new Intl.DateTimeFormat('en-GB', {
       year: 'numeric',
@@ -52,8 +52,7 @@ export const useDateTimeStore = defineStore('dateTime', {
         return false;
       }
 
-      const differenceInMS =
-        (blockingTimeoutEnd as any).getTime() - currentDateTime.getTime();
+      const differenceInMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
 
       return Math.sign(differenceInMS) === 1;
     },
@@ -64,8 +63,7 @@ export const useDateTimeStore = defineStore('dateTime', {
         return 0;
       }
 
-      const differenceInMS =
-        (blockingTimeoutEnd as Date).getTime() - currentDateTime.getTime();
+      const differenceInMS = blockingTimeoutEnd.getTime() - currentDateTime.getTime();
 
       return Math.sign(differenceInMS) === 1 ? differenceInMS : 0;
     },
@@ -81,7 +79,7 @@ export const useDateTimeStore = defineStore('dateTime', {
 
       const blockingTimeoutEnd = new Date(endDateMs);
 
-      ; (this.blockingTimeoutEnd as any) = blockingTimeoutEnd;
+      this.blockingTimeoutEnd = blockingTimeoutEnd;
     }
   },
 })
