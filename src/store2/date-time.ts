@@ -72,7 +72,13 @@ export const useDateTimeStore = defineStore('dateTime', {
     async UPDATE_CURRENT_DATE(newDateTime: Date): Promise<void> {
       this.currentDateTime = newDateTime
     },
-    async SET_BLOCKING_TIMEOUT(blockingDateTime: Date): Promise<void> {
+    async SET_BLOCKING_TIMEOUT(blockingDateTime: Date | null): Promise<void> {
+      if (blockingDateTime === null) {
+        this.blockingTimeoutEnd = null;
+
+        return
+      }
+
       const blockingDurationMs: number = this.blockingDuration * 60 * 1000;
       const startDateMs: number = blockingDateTime.getTime();
       const endDateMs: number = startDateMs + blockingDurationMs;

@@ -3,8 +3,11 @@ import { defineStore } from 'pinia'
 
 import { DrinkType } from '../types/store2'
 import menuList from '../data/menuList.json';
+import { saveToStorage, storageIsAvailable, hasStorageKey, getFromStorage } from '../util/storageUtil'
 
 import { useDateTimeStore } from './date-time'
+
+const storageKey = 'coffeescript';
 
 export const useOrdersStore = defineStore('orders', {
   state: () => ({
@@ -101,11 +104,11 @@ export const useOrdersStore = defineStore('orders', {
         throw new Error('Blocked');
       } else {
         this.ADD_DAILY_ORDER({ dateKey, order });
-        // this.SET_BLOCKING_TIMEOUT(dateTime);
+        dateTimeStore.SET_BLOCKING_TIMEOUT(dateTime)
 
-        // if (storageIsAvailable()) {
-        // this.PERSIST_ORDER({ dateKey });
-        // }
+        if (storageIsAvailable()) {
+          this.PERSIST_ORDER({ dateKey });
+        }
       }
     },
     async GET_SAVED_ORDERS() {
@@ -136,47 +139,49 @@ export const useOrdersStore = defineStore('orders', {
 
       const saveDataSerialized = JSON.stringify(saveData, null, 2);
 
-      // saveToStorage(storageKey, saveDataSerialized);
+      saveToStorage(storageKey, saveDataSerialized);
     },
     async RESTORE_ORDER(payload: { dateKey: string }) {
-      // // if (!hasStorageKey) {
-      // //   return;
-      // // }
+      if (!hasStorageKey) {
+        return;
+      }
 
-      // const { dateKey } = payload;
-      // // const savedData = getFromStorage(storageKey);
+      const dateTimeStore = useDateTimeStore()
+      const { dateKey } = payload;
+      const savedData = getFromStorage(storageKey);
 
-      // if (savedData === null) {
-      //   return;
-      // }
+      if (savedData === null) {
+        return;
+      }
 
-      // const parsedSavedData: {
-      //   orders: {
-      //     [dateKey: string]: Order[];
-      //   };
-      //   blockingTimeoutEndConverted: string | null;
-      // } = JSON.parse(savedData as string);
+      const parsedSavedData: {
+        orders: {
+          [dateKey: string]: Order[];
+        };
+        blockingTimeoutEndConverted: string | null;
+      } = JSON.parse(savedData as string);
 
-      // const { orders, blockingTimeoutEndConverted } = parsedSavedData;
+      const { orders, blockingTimeoutEndConverted } = parsedSavedData;
 
-      // if (!(dateKey in orders)) {
-      //   return;
-      // }
+      if (!(dateKey in orders)) {
+        return;
+      }
 
-      // const deserializedOrders = orders[dateKey].map((order) => {
-      //   return { ...order, dateTime: new Date(order.dateTime) };
-      // });
+      const deserializedOrders = orders[dateKey].map((order) => {
+        return { ...order, dateTime: new Date(order.dateTime) };
+      });
 
-      // const blockingTimeoutEnd =
-      //   blockingTimeoutEndConverted !== null
-      //     ? new Date(blockingTimeoutEndConverted)
-      //     : null;
+      const blockingTimeoutEnd =
+        blockingTimeoutEndConverted !== null
+          ? new Date(blockingTimeoutEndConverted)
+          : null;
 
-      // this.orders = {
-      //   [dateKey]: deserializedOrders,
-      // };
+      this.orders = {
+        [dateKey]: deserializedOrders,
+      };
 
-      // // state.blockingTimeoutEnd = blockingTimeoutEnd;
+
+      dateTimeStore.SET_BLOCKING_TIMEOUT(blockingTimeoutEnd)
     },
   },
 })
