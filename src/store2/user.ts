@@ -5,7 +5,7 @@ import clamp from 'core-js/features/math/clamp'
 // eslint-disable-next-line import/prefer-default-export
 export const useUserStore = defineStore('userStore', {
   state: () => ({
-    userId: 'ABC123456789',
+    userId: null as string | null,
     zoomLevel: 1.0,
     zoomLevelMin: 0.5,
     zoomLevelMax: 2.5,
@@ -15,6 +15,15 @@ export const useUserStore = defineStore('userStore', {
       const { zoomLevel } = state;
 
       return zoomLevel.toFixed(2);
+    },
+    hasUserId: (state) => {
+      const { userId } = state;
+
+      if (userId === null) {
+        return false
+      }
+
+      return Boolean(userId.length)
     }
   },
   actions: {
@@ -32,6 +41,9 @@ export const useUserStore = defineStore('userStore', {
     },
     async RESET_ZOOM(): Promise<void> {
       this.zoomLevel = 1.0
+    },
+    async SET_USER_ID(newUserId: string): Promise<void> {
+      this.userId = newUserId
     },
   },
 })
