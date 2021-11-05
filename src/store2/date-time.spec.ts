@@ -62,11 +62,25 @@ describe('useUserStore', () => {
   });
 
   it.skip('getter isBlocked returns false if blockingTimeoutEnd is earlier than now + blockingDuration', async () => {
-    expect(dateTimeStore.blockingTimeoutEnd).not.toBe(null);
+    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
+
+    const newDate = new Date(mockDateNow.getTime())
+    newDate.setSeconds(newDate.getSeconds() + 50);
+
+    dateTimeStore.SET_BLOCKING_TIMEOUT(newDate)
+
+    expect(dateTimeStore.isBlocked).toBe(true);
   });
 
-  it.skip('getter isBlocked returns true if blockingTimeoutEnd is later than now + blockingDuration', async () => {
-    expect(dateTimeStore.blockingTimeoutEnd).not.toBe(null);
+  it('getter isBlocked returns true if blockingTimeoutEnd is later than now + blockingDuration', async () => {
+    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
+
+    const newDate = new Date(mockDateNow.getTime())
+    newDate.setSeconds(newDate.getSeconds() + 100);
+
+    dateTimeStore.SET_BLOCKING_TIMEOUT(newDate)
+
+    expect(dateTimeStore.isBlocked).toBe(false);
   });
 
   // actions
@@ -92,24 +106,9 @@ describe('useUserStore', () => {
     expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
 
     const newDate = new Date(mockDateNow.getTime())
-    console.log(mockDateNow)
-    console.log(newDate)
-
     newDate.setDate(newDate.getDate() + 1)
-    console.log(mockDateNow)
-    console.log(newDate)
-
-    // console.log(newDate)
-    // console.log(mockDateNow)
 
     dateTimeStore.SET_BLOCKING_TIMEOUT(newDate)
-
     expect(dateTimeStore.blockingTimeoutEnd).toBe(newDate);
   });
-
-
-
-
-
-
 });
