@@ -31,7 +31,7 @@ export const useDateTimeStore = defineStore('dateTime', {
 
       return isoString;
     },
-    getCurrentDate: (state) => {
+    getCurrentDate: (state): string => {
       const { currentDateTime, dateTimeFormatter } = state;
 
       const dateFormatted = getDateFormatted(dateTimeFormatter, currentDateTime);
@@ -48,7 +48,7 @@ export const useDateTimeStore = defineStore('dateTime', {
     isBlocked: (state) => {
       const { blockingTimeoutEnd, currentDateTime } = state;
 
-      if (!blockingTimeoutEnd) {
+      if (blockingTimeoutEnd === null) {
         return false;
       }
 
@@ -59,7 +59,7 @@ export const useDateTimeStore = defineStore('dateTime', {
     getRemainingBlockingTime: (state) => {
       const { blockingTimeoutEnd, currentDateTime } = state;
 
-      if (!blockingTimeoutEnd || blockingTimeoutEnd === null) {
+      if (blockingTimeoutEnd === null) {
         return 0;
       }
 
@@ -69,7 +69,7 @@ export const useDateTimeStore = defineStore('dateTime', {
     },
   },
   actions: {
-    async UPDATE_CURRENT_DATE(newDateTime: Date): Promise<void> {
+    async SET_CURRENT_DATE(newDateTime: Date): Promise<void> {
       this.currentDateTime = newDateTime
     },
     async SET_BLOCKING_TIMEOUT(blockingDateTime: Date | null): Promise<void> {
