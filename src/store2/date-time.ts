@@ -38,14 +38,14 @@ export const useDateTimeStore = defineStore('dateTime', {
 
       return dateFormatted;
     },
-    getCurrentTime: (state) => {
+    getCurrentTime: (state): string => {
       const { currentDateTime, dateTimeFormatter } = state;
 
       const timeFormatted = getTimeFormatted(dateTimeFormatter, currentDateTime);
 
       return timeFormatted;
     },
-    isBlocked: (state) => {
+    isBlocked: (state): boolean => {
       const { blockingTimeoutEnd, currentDateTime } = state;
 
       if (blockingTimeoutEnd === null) {

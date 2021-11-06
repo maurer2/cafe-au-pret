@@ -3,25 +3,28 @@ import { setActivePinia, createPinia } from 'pinia';
 
 import { useDateTimeStore } from './date-time';
 
+const mockDate: Readonly<Date> = new Date(2021, 8, 1, 12, 12, 12);
+const mockDateBefore: Readonly<Date> = new Date(mockDate.getTime() - (30 * 1000));
+const mockDateAfter: Readonly<Date> = new Date(mockDate.getTime() + (30 * 1000));
+
 describe('useUserStore', () => {
   let dateTimeStore: ReturnType<typeof useDateTimeStore>;
-  let dateSpy: any
-  const mockDateNow: Readonly<Date> = new Date(2021, 8, 1, 12, 12, 12);
+  let dateSpy: jest.SpyInstance
 
   beforeAll(() => {
     dateSpy = jest
       .spyOn(global, 'Date')
-      .mockImplementation(() => mockDateNow as unknown as string)
+      .mockImplementation(() => mockDate as unknown as string)
   })
 
   beforeEach(() => {
     setActivePinia(createPinia());
 
-
     dateTimeStore = useDateTimeStore();
   });
 
   afterAll(() => {
+    // dateSpy.mockClear();
     jest.clearAllMocks();
   })
 
@@ -55,39 +58,32 @@ describe('useUserStore', () => {
     expect(dateTimeStore.isBlocked).toBe(false);
   });
 
-  it('getter isBlocked returns false if blockingTimeoutEnd is not set', async () => {
+  it('getter isBlocked returns true if blockingTimeoutEnd is later than now', async () => {
     expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
 
-    expect(dateTimeStore.isBlocked).toBe(false);
-  });
-
-  it.skip('getter isBlocked returns false if blockingTimeoutEnd is earlier than now + blockingDuration', async () => {
-    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
-
-    const newDate = new Date(mockDateNow.getTime())
-    newDate.setSeconds(newDate.getSeconds() + 50);
-
-    dateTimeStore.SET_BLOCKING_TIMEOUT(newDate)
+    dateTimeStore.$patch({
+      blockingTimeoutEnd: mockDateAfter,
+    })
 
     expect(dateTimeStore.isBlocked).toBe(true);
   });
 
-  it('getter isBlocked returns true if blockingTimeoutEnd is later than now + blockingDuration', async () => {
+  it('getter isBlocked returns false if blockingTimeoutEnd is earlier than now', async () => {
     expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
 
-    const newDate = new Date(mockDateNow.getTime())
-    newDate.setSeconds(newDate.getSeconds() + 100);
 
-    dateTimeStore.SET_BLOCKING_TIMEOUT(newDate)
+    dateTimeStore.$patch({
+      blockingTimeoutEnd: mockDateBefore,
+    })
 
     expect(dateTimeStore.isBlocked).toBe(false);
   });
 
   // actions
   it.skip('action SET_CURRENT_DATE sets new date', async () => {
-    expect(dateTimeStore.currentDateTime).toBe(mockDateNow);
+    expect(dateTimeStore.currentDateTime).toBe(mockDate);
 
-    const newDate = new Date(mockDateNow)
+    const newDate = new Date(mockDate)
     newDate.setDate(newDate.getDate() + 1)
 
     dateTimeStore.SET_CURRENT_DATE(newDate)
@@ -105,7 +101,7 @@ describe('useUserStore', () => {
   it('action SET_BLOCKING_TIMEOUT sets blocking timeout', async () => {
     expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
 
-    const newDate = new Date(mockDateNow.getTime())
+    const newDate = new Date(mockDate.getTime())
     newDate.setDate(newDate.getDate() + 1)
 
     dateTimeStore.SET_BLOCKING_TIMEOUT(newDate)
