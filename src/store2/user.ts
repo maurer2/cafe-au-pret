@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 // @ts-ignore
 import clamp from 'core-js/features/math/clamp'
 
-// eslint-disable-next-line import/prefer-default-export
 export const useUserStore = defineStore('userStore', {
   state: () => ({
     userId: null as string | null,
@@ -11,12 +10,12 @@ export const useUserStore = defineStore('userStore', {
     zoomLevelMax: 2.5,
   }),
   getters: {
-    getZoomLevelFormatted: (state) => {
+    getZoomLevelFormatted: (state): string => {
       const { zoomLevel } = state;
 
       return zoomLevel.toFixed(2);
     },
-    hasUserId: (state) => {
+    hasUserId: (state): boolean => {
       const { userId } = state;
 
       if (userId === null) {

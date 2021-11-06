@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { defineStore } from 'pinia'
 
 import { DrinkType } from '../types/store2'

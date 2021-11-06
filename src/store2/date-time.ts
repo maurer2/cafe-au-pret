@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { defineStore } from 'pinia'
 
 import {
@@ -56,7 +55,7 @@ export const useDateTimeStore = defineStore('dateTime', {
 
       return Math.sign(differenceInMS) === 1;
     },
-    getRemainingBlockingTime: (state) => {
+    getRemainingBlockingTime: (state): number => {
       const { blockingTimeoutEnd, currentDateTime } = state;
 
       if (blockingTimeoutEnd === null) {

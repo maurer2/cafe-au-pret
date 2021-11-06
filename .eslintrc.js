@@ -34,7 +34,7 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
-        'import/no-anonymous-default-export': 'error'
+        'import/no-anonymous-default-export': 'error',
       }
     },
     {
@@ -50,9 +50,10 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    "import/order": ["error", {
-      groups: ["builtin", "external", "internal", "parent", "sibling", "index", "object"],
-      "newlines-between": "always"
-    }]
+    'import/order': ['error', {
+      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+      'newlines-between': 'always'
+    }],
+    'import/prefer-default-export': 'off',
   },
 }
