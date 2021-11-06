@@ -64,19 +64,45 @@ describe('useUserStore', () => {
     dateTimeStore.$patch({
       blockingTimeoutEnd: mockDateAfter,
     })
-
     expect(dateTimeStore.isBlocked).toBe(true);
   });
 
   it('getter isBlocked returns false if blockingTimeoutEnd is earlier than now', async () => {
     expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
 
+    dateTimeStore.$patch({
+      blockingTimeoutEnd: mockDateBefore,
+    })
+    expect(dateTimeStore.isBlocked).toBe(false);
+  });
+
+  it('getter getRemainingBlockingTime returns 0 if blockingTimeoutEnd is not set', async () => {
+    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
+
+    expect(dateTimeStore.getRemainingBlockingTime).toBe(0);
+  });
+
+  it('getter getRemainingBlockingTime returns 0 if blockingTimeoutEnd is in the past or equal to current date time', async () => {
+    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
 
     dateTimeStore.$patch({
       blockingTimeoutEnd: mockDateBefore,
     })
+    expect(dateTimeStore.getRemainingBlockingTime).toBe(0);
 
-    expect(dateTimeStore.isBlocked).toBe(false);
+    dateTimeStore.$patch({
+      blockingTimeoutEnd: mockDate,
+    })
+    expect(dateTimeStore.getRemainingBlockingTime).toBe(0);
+  });
+
+  it('getter getRemainingBlockingTime returns a positive number if blockingTimeoutEnd is in the future', async () => {
+    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
+
+    dateTimeStore.$patch({
+      blockingTimeoutEnd: mockDateAfter,
+    })
+    expect(dateTimeStore.getRemainingBlockingTime).toBeGreaterThan(0);
   });
 
   // actions
