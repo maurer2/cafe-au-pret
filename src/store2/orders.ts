@@ -14,10 +14,9 @@ export const useOrdersStore = defineStore('orders', {
     } as Record<string, any[]>,
     menuList,
     maxDailyOrders: 5,
-
   }),
   getters: {
-    getAllMenuEntries: (state) => {
+    getAllMenuEntries: (state): typeof menuList => {
       return [...state.menuList];
     },
     getMenuEntriesOfType: (state) => {
@@ -44,6 +43,8 @@ export const useOrdersStore = defineStore('orders', {
       const dateTimeStore = useDateTimeStore()
 
       const dateKey = dateTimeStore.getCurrentDateKey
+
+      console.log("dateKey", dateKey)
 
       if (!(dateKey in state.orders)) {
         return false;
