@@ -1,6 +1,31 @@
 import { setActivePinia, createPinia } from 'pinia';
 
 import { useOrdersStore } from './orders';
+import { useDateTimeStore } from './date-time';
+
+// jest.mock('./date-time.ts', (): ReturnType<typeof useDateTimeStore> => {
+//   return {
+//     ...useDateTimeStore,
+//     getCurrentDateKey:  'wfwe',
+//       return 'wefewfew'
+//     }
+//   }
+// })
+
+// jest.mock("./date-time.ts", () => {
+//   const original = jest.requireActual("./date-time.ts");
+
+//   console.log(original)
+
+//   return {
+//     __esModule: true,
+//     ...original,
+//     // default: jest.fn(),
+//     // myFunc: jest.fn()
+//   }
+// });
+
+// jest.spyOn(useDateTimeStore, '_pinia').mockImplementation(() => 'WEFWE')
 
 describe('useUserStore', () => {
   let ordersStore: ReturnType<typeof useOrdersStore>;
@@ -9,6 +34,11 @@ describe('useUserStore', () => {
     setActivePinia(createPinia());
 
     ordersStore = useOrdersStore();
+
+    const dateTimeStore = useDateTimeStore();
+
+    // @ts-ignore
+    jest.fn(dateTimeStore, 'getCurrentDateKey').mockReturnValue('qefqewf')
   });
 
   it('has state entries', () => {
