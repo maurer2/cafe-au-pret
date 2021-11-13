@@ -17,3 +17,10 @@ export enum DrinkType {
   SMOOTHIE = 'Smoothie',
   OTHER = 'Other',
 }
+
+export type Order = {
+  id: string;
+  name: string;
+  dateTime: Date;
+  tz: string;
+}

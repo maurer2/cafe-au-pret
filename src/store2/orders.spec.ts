@@ -3,42 +3,18 @@ import { setActivePinia, createPinia } from 'pinia';
 import { useOrdersStore } from './orders';
 import { useDateTimeStore } from './date-time';
 
-// jest.mock('./date-time.ts', (): ReturnType<typeof useDateTimeStore> => {
-//   return {
-//     ...useDateTimeStore,
-//     getCurrentDateKey:  'wfwe',
-//       return 'wefewfew'
-//     }
-//   }
-// })
-
-// jest.mock("./date-time.ts", () => {
-//   const original = jest.requireActual("./date-time.ts");
-
-//   console.log(original)
-
-//   return {
-//     __esModule: true,
-//     ...original,
-//     // default: jest.fn(),
-//     // myFunc: jest.fn()
-//   }
-// });
-
-// jest.spyOn(useDateTimeStore, '_pinia').mockImplementation(() => 'WEFWE')
-
 describe('useUserStore', () => {
   let ordersStore: ReturnType<typeof useOrdersStore>;
+  let dateTimeStore: ReturnType<typeof useDateTimeStore>;
 
   beforeEach(() => {
     setActivePinia(createPinia());
 
     ordersStore = useOrdersStore();
 
-    const dateTimeStore = useDateTimeStore();
-
-    // @ts-ignore
-    jest.fn(dateTimeStore, 'getCurrentDateKey').mockReturnValue('qefqewf')
+    // lock down other store state
+    dateTimeStore = useDateTimeStore();
+    dateTimeStore.$patch({ currentDateTime: new Date(2021, 8, 1, 12, 12, 12) })
   });
 
   it('has state entries', () => {
@@ -59,14 +35,60 @@ describe('useUserStore', () => {
     })
   });
 
-  it('getter hasDailyOrders returns false if dateKey is missing', async () => {
-    expect(ordersStore.hasDailyOrders).toBe(false)
-
+  it('getter getMenuEntriesOfType returns empty array if type is not found or type is empty', async () => {
+    expect(ordersStore.getMenuEntriesOfType('cat')).toEqual([])
+    expect(ordersStore.getMenuEntriesOfType('')).toEqual([])
   });
 
+  it('getter getMenuEntriesOfType returns list of menu entries if type is found', async () => {
+    const filteredEntries = ordersStore.getMenuEntriesOfType('Coffee')
 
+    expect(Array.isArray(filteredEntries)).toBe(true)
 
+    filteredEntries.forEach((entry) => {
+      expect(entry).toHaveProperty('id')
+      expect(entry).toHaveProperty('name')
+      expect(entry).toHaveProperty('type')
+    })
+  });
 
+  it('getter hasDailyOrders returns false if entries with dateKey are not found or orders are empty', async () => {
+    expect(dateTimeStore.getCurrentDateKey).toBe('2021-09-01')
+    expect(Object.values(ordersStore.orders).length).toBe(0)
 
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2020, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
 
+    ordersStore.$patch({
+      orders: {
+        '2020-09-01': [testOrder]
+      }
+    })
+
+    expect(ordersStore.hasDailyOrders).toBe(false)
+  });
+
+  it('getter hasDailyOrders returns true if orders for datekey are available', async () => {
+    expect(ordersStore.hasDailyOrders).toBe(false)
+    expect(dateTimeStore.getCurrentDateKey).toBe('2021-09-01')
+
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2021, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
+
+    ordersStore.$patch({
+      orders: {
+        '2021-09-01': [testOrder]
+      }
+    })
+
+    expect(ordersStore.hasDailyOrders).toBe(true)
+  });
 });

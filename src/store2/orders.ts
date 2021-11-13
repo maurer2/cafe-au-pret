@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { DrinkType } from '../types/store2'
+import { DrinkType, Order } from '../types/store2'
 import menuList from '../data/menuList.json';
 import { saveToStorage, storageIsAvailable, hasStorageKey, getFromStorage } from '../util/storageUtil'
 
@@ -11,7 +11,8 @@ const storageKey = 'coffeescript';
 export const useOrdersStore = defineStore('orders', {
   state: () => ({
     orders: {
-    } as Record<string, any[]>,
+      // datekey, orders
+    } as Record<string, Order[]>,
     menuList,
     maxDailyOrders: 5,
   }),
@@ -19,14 +20,14 @@ export const useOrdersStore = defineStore('orders', {
     getAllMenuEntries: (state): typeof menuList => {
       return [...state.menuList];
     },
-    getMenuEntriesOfType: (state) => {
+    getMenuEntriesOfType: (state): (type: string) => Record<string, string>[] => {
       const drinkTypeKeyValuePairs = Object.entries(DrinkType);
       const drinkTypeValueKeyPairs = drinkTypeKeyValuePairs.map((entry) =>
         [...entry].reverse(),
       );
-      const drinkTypes = Object.fromEntries(drinkTypeValueKeyPairs);
+      const drinkTypes: Record<string, string> = Object.fromEntries(drinkTypeValueKeyPairs);
 
-      return (type: string) => {
+      return (type) => {
         if (!(type in drinkTypes)) {
           return [];
         }
@@ -43,8 +44,6 @@ export const useOrdersStore = defineStore('orders', {
       const dateTimeStore = useDateTimeStore()
 
       const dateKey = dateTimeStore.getCurrentDateKey
-
-      console.log("dateKey", dateKey)
 
       if (!(dateKey in state.orders)) {
         return false;
