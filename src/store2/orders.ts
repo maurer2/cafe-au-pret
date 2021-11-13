@@ -2,19 +2,11 @@ import { defineStore } from 'pinia'
 
 import { DrinkType, Order } from '../types/store2'
 import menuList from '../data/menuList.json';
-import { saveToStorage, storageIsAvailable, hasStorageKey, getFromStorage } from '../util/storageUtil'
-
+// import { saveToStorage, storageIsAvailable, hasStorageKey, getFromStorage } from '../util/storageUtil'
 
 import { useDateTimeStore } from './date-time'
 
-type Order2 = {
-  id: string;
-  name: string;
-  dateTime: Date;
-  tz: string;
-}
-
-const storageKey = 'coffeescript';
+// const storageKey = 'coffeescript';
 
 export const useOrdersStore = defineStore('orders', {
   state: () => ({
@@ -83,20 +75,22 @@ export const useOrdersStore = defineStore('orders', {
     },
   },
   actions: {
-    async ADD_DAILY_ORDER(payload: { dateKey: string; order: Order }) {
+    async ADD_DAILY_ORDER(payload: { dateKey: string; order: Order }): Promise<void> {
       const { dateKey, order } = payload;
       const { orders } = this;
-      const newOrders = { ...orders };
+      const existingOrders = { ...orders };
 
-      if (!(dateKey in newOrders)) {
-        newOrders[dateKey] = [];
+      if (!(dateKey in existingOrders)) {
+        existingOrders[dateKey] = [];
       }
 
-      newOrders[dateKey].push(order);
+      // todo check dateTime of order
 
-      this.orders = newOrders;
+      existingOrders[dateKey].push(order);
+
+      this.orders = existingOrders;
     },
-    async ADD_ORDER(order: Order) {
+    async ADD_ORDER(order: Order): Promise<void | Error> {
       const dateTimeStore = useDateTimeStore()
 
       const dateKey = dateTimeStore.getCurrentDateKey
@@ -109,82 +103,82 @@ export const useOrdersStore = defineStore('orders', {
         this.ADD_DAILY_ORDER({ dateKey, order });
         dateTimeStore.SET_BLOCKING_TIMEOUT(dateTime)
 
-        if (storageIsAvailable()) {
-          this.PERSIST_ORDER({ dateKey });
-        }
+        // if (storageIsAvailable()) {
+        //   this.PERSIST_ORDER({ dateKey });
+        // }
       }
     },
-    async GET_SAVED_ORDERS() {
-      const dateTimeStore = useDateTimeStore()
+    // async GET_SAVED_ORDERS() {
+    //   const dateTimeStore = useDateTimeStore()
 
-      const dateKey = dateTimeStore.getCurrentDateKey
+    //   const dateKey = dateTimeStore.getCurrentDateKey
 
-      this.RESTORE_ORDER({ dateKey });
-    },
-    async PERSIST_ORDER(payload: { dateKey: string }) {
-      const dateTimeStore = useDateTimeStore()
+    //   this.RESTORE_ORDER({ dateKey });
+    // },
+    // async PERSIST_ORDER(payload: { dateKey: string }) {
+    //   const dateTimeStore = useDateTimeStore()
 
-      const { blockingTimeoutEnd } = dateTimeStore
+    //   const { blockingTimeoutEnd } = dateTimeStore
 
-      const { orders } = this;
-      const { dateKey } = payload;
+    //   const { orders } = this;
+    //   const { dateKey } = payload;
 
-      const ordersForDateKey = dateKey in orders ? orders[dateKey] : [];
-      const blockingTimeoutEndConverted =
-        blockingTimeoutEnd !== null ? (blockingTimeoutEnd as any).toISOString() : null;
+    //   const ordersForDateKey = dateKey in orders ? orders[dateKey] : [];
+    //   const blockingTimeoutEndConverted =
+    //     blockingTimeoutEnd !== null ? (blockingTimeoutEnd as any).toISOString() : null;
 
-      const saveData = {
-        orders: {
-          [dateKey]: ordersForDateKey,
-        },
-        blockingTimeoutEndConverted,
-      };
+    //   const saveData = {
+    //     orders: {
+    //       [dateKey]: ordersForDateKey,
+    //     },
+    //     blockingTimeoutEndConverted,
+    //   };
 
-      const saveDataSerialized = JSON.stringify(saveData, null, 2);
+    //   const saveDataSerialized = JSON.stringify(saveData, null, 2);
 
-      saveToStorage(storageKey, saveDataSerialized);
-    },
-    async RESTORE_ORDER(payload: { dateKey: string }) {
-      if (!hasStorageKey) {
-        return;
-      }
+    //   saveToStorage(storageKey, saveDataSerialized);
+    // },
+    // async RESTORE_ORDER(payload: { dateKey: string }) {
+    //   if (!hasStorageKey) {
+    //     return;
+    //   }
 
-      const dateTimeStore = useDateTimeStore()
-      const { dateKey } = payload;
-      const savedData = getFromStorage(storageKey);
+    //   const dateTimeStore = useDateTimeStore()
+    //   const { dateKey } = payload;
+    //   const savedData = getFromStorage(storageKey);
 
-      if (savedData === null) {
-        return;
-      }
+    //   if (savedData === null) {
+    //     return;
+    //   }
 
-      const parsedSavedData: {
-        orders: {
-          [dateKey: string]: Order[];
-        };
-        blockingTimeoutEndConverted: string | null;
-      } = JSON.parse(savedData as string);
+    //   const parsedSavedData: {
+    //     orders: {
+    //       [dateKey: string]: Order[];
+    //     };
+    //     blockingTimeoutEndConverted: string | null;
+    //   } = JSON.parse(savedData as string);
 
-      const { orders, blockingTimeoutEndConverted } = parsedSavedData;
+    //   const { orders, blockingTimeoutEndConverted } = parsedSavedData;
 
-      if (!(dateKey in orders)) {
-        return;
-      }
+    //   if (!(dateKey in orders)) {
+    //     return;
+    //   }
 
-      const deserializedOrders = orders[dateKey].map((order) => {
-        return { ...order, dateTime: new Date(order.dateTime) };
-      });
+    //   const deserializedOrders = orders[dateKey].map((order) => {
+    //     return { ...order, dateTime: new Date(order.dateTime) };
+    //   });
 
-      const blockingTimeoutEnd =
-        blockingTimeoutEndConverted !== null
-          ? new Date(blockingTimeoutEndConverted)
-          : null;
+    //   const blockingTimeoutEnd =
+    //     blockingTimeoutEndConverted !== null
+    //       ? new Date(blockingTimeoutEndConverted)
+    //       : null;
 
-      this.orders = {
-        [dateKey]: deserializedOrders,
-      };
+    //   this.orders = {
+    //     [dateKey]: deserializedOrders,
+    //   };
 
 
-      dateTimeStore.SET_BLOCKING_TIMEOUT(blockingTimeoutEnd)
-    },
+    //   dateTimeStore.SET_BLOCKING_TIMEOUT(blockingTimeoutEnd)
+    // },
   },
 })

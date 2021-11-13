@@ -183,6 +183,83 @@ describe('useUserStore', () => {
     expect(ordersStore.getDailyRemainingNumberOfOrders).toBe(0)
   });
 
+  // actions
+  it('action ADD_DAILY_ORDER creates entry in orders for current date if not already present', async () => {
+    expect(ordersStore.orders['2021-09-01']).toBeUndefined()
+    expect(ordersStore.orders['2021-10-01']).toBeUndefined()
 
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2021, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
 
+    ordersStore.ADD_DAILY_ORDER({ dateKey: '2021-09-01', order: testOrder })
+    expect(ordersStore.orders['2021-09-01']).toBeDefined()
+    expect(ordersStore.orders['2021-10-01']).toBeUndefined()
+  });
+
+  it('action ADD_DAILY_ORDER adds order to orders of current date', async () => {
+    expect(ordersStore.orders['2021-09-01']).toBeUndefined()
+
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2021, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
+
+    ordersStore.ADD_DAILY_ORDER({ dateKey: '2021-09-01', order: testOrder })
+    expect(ordersStore.orders['2021-09-01'].length).toBe(1)
+
+    ordersStore.ADD_DAILY_ORDER({ dateKey: '2021-09-01', order: testOrder })
+    expect(ordersStore.orders['2021-09-01'].length).toBe(2)
+  });
+
+  it.skip('action ADD_DAILY_ORDER should throw error if date of order and current date mismatch', async () => {
+    // todo
+  });
+
+  it('action ADD_ORDER adds order to current date if not blocked', async () => {
+    jest.spyOn(ordersStore, 'ADD_DAILY_ORDER');
+
+    expect(ordersStore.orders['2021-09-01']).toBeUndefined()
+
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2020, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
+
+    await ordersStore.ADD_ORDER(testOrder)
+    expect(ordersStore.orders['2021-09-01']).toBeDefined()
+    expect(ordersStore.orders['2021-09-01'].length).toBe(1)
+    expect(ordersStore.ADD_DAILY_ORDER).toBeCalled()
+  });
+
+  it('action ADD_ORDER adds returns error if blocked', async () => {
+    jest.spyOn(ordersStore, 'ADD_DAILY_ORDER');
+
+    expect(dateTimeStore.blockingTimeoutEnd).toBe(null);
+    expect(dateTimeStore.isBlocked).toBe(false)
+
+    // set blocking state
+    // dateTimeStore.$patch({ currentDateTime: new Date(2021, 8, 1, 12, 12, 12) })
+    dateTimeStore.$patch({ blockingTimeoutEnd: new Date(2021, 8, 1, 12, 12, 42) })
+
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2021, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
+
+    await expect(ordersStore.ADD_ORDER(testOrder))
+      .rejects
+      .toThrow();
+    expect(dateTimeStore.isBlocked).toBe(true)
+    expect(ordersStore.ADD_DAILY_ORDER).not.toBeCalled()
+  });
 });
