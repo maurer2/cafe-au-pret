@@ -4,7 +4,15 @@ import { DrinkType, Order } from '../types/store2'
 import menuList from '../data/menuList.json';
 import { saveToStorage, storageIsAvailable, hasStorageKey, getFromStorage } from '../util/storageUtil'
 
+
 import { useDateTimeStore } from './date-time'
+
+type Order2 = {
+  id: string;
+  name: string;
+  dateTime: Date;
+  tz: string;
+}
 
 const storageKey = 'coffeescript';
 
@@ -51,21 +59,23 @@ export const useOrdersStore = defineStore('orders', {
 
       return Boolean(state.orders[dateKey].length);
     },
-    getDailyOrders: (state): any[] => {
+    getDailyOrders(state): Order[] { // regular function since accessing this is required
       const dateTimeStore = useDateTimeStore()
 
       const dateKey = dateTimeStore.getCurrentDateKey
-      const hasOrders: boolean = (this as any).hasDailyOrders;
+      const hasOrders: boolean = this.hasDailyOrders;
 
       if (!hasOrders) {
         return [];
       }
 
-      return state.orders[dateKey];
+      const dailyOrders = state.orders[dateKey];
+
+      return dailyOrders
     },
-    getDailyRemainingNumberOfOrders: (state): number => {
-      const dailyOrders = (this as any).getDailyOrders(state);
-      const hasOrders: boolean = (this as any).hasDailyOrders(state);
+    getDailyRemainingNumberOfOrders(state): number {
+      const dailyOrders = this.getDailyOrders;
+      const hasOrders: boolean = this.hasDailyOrders;
 
       const { maxDailyOrders } = state;
 
