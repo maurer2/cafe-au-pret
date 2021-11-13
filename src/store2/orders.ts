@@ -73,15 +73,9 @@ export const useOrdersStore = defineStore('orders', {
 
       return dailyOrders
     },
-    getDailyRemainingNumberOfOrders(state): number {
+    getDailyRemainingNumberOfOrders(state): number { // regular function since accessing this is required
       const dailyOrders = this.getDailyOrders;
-      const hasOrders: boolean = this.hasDailyOrders;
-
       const { maxDailyOrders } = state;
-
-      if (!hasOrders) {
-        return maxDailyOrders;
-      }
 
       const orderDifference = maxDailyOrders - dailyOrders.length;
 
