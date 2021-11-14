@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { DrinkType, Order } from '../types/store2'
 import menuList from '../data/menuList.json';
 // import { saveToStorage, storageIsAvailable, hasStorageKey, getFromStorage } from '../util/storageUtil'
+import { getDateFormatted, } from '../util/dateUtil';
 
 import { useDateTimeStore } from './date-time'
 
@@ -84,8 +85,6 @@ export const useOrdersStore = defineStore('orders', {
         existingOrders[dateKey] = [];
       }
 
-      // todo check dateTime of order
-
       existingOrders[dateKey].push(order);
 
       this.orders = existingOrders;
@@ -94,19 +93,27 @@ export const useOrdersStore = defineStore('orders', {
       const dateTimeStore = useDateTimeStore()
 
       const dateKey = dateTimeStore.getCurrentDateKey
+      const currentDate = dateTimeStore.getCurrentDate
       const { isBlocked } = dateTimeStore
       const { dateTime } = order;
 
       if (isBlocked) {
         throw new Error('Blocked');
-      } else {
-        this.ADD_DAILY_ORDER({ dateKey, order });
-        dateTimeStore.SET_BLOCKING_TIMEOUT(dateTime)
-
-        // if (storageIsAvailable()) {
-        //   this.PERSIST_ORDER({ dateKey });
-        // }
       }
+
+      const orderTimeFormatted = getDateFormatted(dateTimeStore.dateTimeFormatter, dateTime);
+
+      // exclude dates that are from a different day
+      if (currentDate !== orderTimeFormatted) {
+        throw new Error('Date of order and current date mismatch');
+      }
+
+      this.ADD_DAILY_ORDER({ dateKey, order });
+      dateTimeStore.SET_BLOCKING_TIMEOUT(dateTime)
+
+      // if (storageIsAvailable()) {
+      //   this.PERSIST_ORDER({ dateKey });
+      // }
     },
     // async GET_SAVED_ORDERS() {
     //   const dateTimeStore = useDateTimeStore()

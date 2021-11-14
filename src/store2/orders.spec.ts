@@ -217,8 +217,21 @@ describe('useUserStore', () => {
     expect(ordersStore.orders['2021-09-01'].length).toBe(2)
   });
 
-  it.skip('action ADD_DAILY_ORDER should throw error if date of order and current date mismatch', async () => {
-    // todo
+  it('action ADD_DAILY_ORDER should throw error if date of order and current date mismatch', async () => {
+    jest.spyOn(ordersStore, 'ADD_DAILY_ORDER');
+
+    expect(ordersStore.orders['2020-09-01']).toBeUndefined()
+
+    const testOrder = {
+      id: 'test',
+      name: 'test',
+      dateTime: new Date(2020, 8, 1, 12, 12, 12),
+      tz: 'GMT'
+    }
+
+    await expect(ordersStore.ADD_ORDER(testOrder)).rejects.toThrow()
+    expect(ordersStore.orders['2020-09-01']).toBeUndefined()
+    expect(ordersStore.ADD_DAILY_ORDER).not.toBeCalled()
   });
 
   it('action ADD_ORDER adds order to current date if not blocked', async () => {
@@ -229,7 +242,7 @@ describe('useUserStore', () => {
     const testOrder = {
       id: 'test',
       name: 'test',
-      dateTime: new Date(2020, 8, 1, 12, 12, 12),
+      dateTime: new Date(2021, 8, 1, 12, 12, 12),
       tz: 'GMT'
     }
 
