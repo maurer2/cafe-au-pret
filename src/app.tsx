@@ -25,6 +25,7 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
+
     const refreshTimeout = computed(
       (): number => store.state.refreshTimeoutInSeconds,
     );

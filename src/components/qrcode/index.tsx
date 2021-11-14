@@ -1,7 +1,9 @@
 import { defineComponent, computed } from 'vue';
+import { storeToRefs } from 'pinia';
 
 import { useStore } from '../../store';
 import { Actions, GettersType } from '../../store/types';
+// import { useStore2 } from '../../store2/index';
 
 import styles from './index.module.css';
 import QRCodeFigure from './qrcode-figure/qrcode-figure';
@@ -18,6 +20,10 @@ export default defineComponent({
   props: {},
   setup() {
     const store = useStore();
+    // const store2 = useStore2();
+
+    // const { zoomLevel: zoomLevel2 } = storeToRefs(store2);
+
     const { userId } = store.state;
     const zoomLevel = computed<
       ReturnType<GettersType['getZoomLevelFormatted']>
@@ -37,7 +43,7 @@ export default defineComponent({
 
     return () => (
       <section class={styles.qrcode}>
-        <h2>QRCode (Zoom level: {zoomLevel.value})</h2>
+        <h2>QRCode (Zoom level: {zoomLevel.value}</h2>
 
         <qr-code-figure zoomLevel={zoomLevel.value} userId={userId}>
           <qr-code-overlay percentage-done={40} />
